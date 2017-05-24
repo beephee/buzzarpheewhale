@@ -23,7 +23,20 @@
             android:text="Large Text"
             android:id="@+id/textViewUserEmail"
             android:layout_gravity="center_horizontal" />
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Courier"
+            android:id="@+id/buttonCourierDashboard"
+            android:layout_gravity="center_horizontal" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Buyer"
+            android:id="@+id/buttonBuyerDashboard"
+            android:layout_gravity="center_horizontal" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
