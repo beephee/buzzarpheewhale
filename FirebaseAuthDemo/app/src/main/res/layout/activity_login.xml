@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bgGray"
     tools:context="com.example.android.firebaseauthdemo.LoginActivity">
 
     <LinearLayout
@@ -14,11 +15,16 @@
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="8dp">
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="User Login"
+            android:text="DaBao4Me"
+            android:fontFamily="casual"
+            android:textStyle="bold"
+            android:textSize="48sp"
+            android:height="133sp"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal" />
 
@@ -27,7 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="Enter email"
+            android:hint="EMAIL ADDRESS"
+            android:fontFamily="sans-serif-condensed"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -35,7 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="Enter password"
+            android:hint="PASSWORD"
+            android:fontFamily="sans-serif-condensed"
             android:inputType="textPassword" />
 
         <Button
@@ -43,12 +51,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="Login" />
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-condensed"
+            android:background="@color/yellow"
+            android:textStyle="bold"
+            android:text="LOG IN" />
 
         <TextView
-            android:text="No account? Signup here!"
+            android:text="No Account Yet? Sign Up Here!"
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/textViewSignUp"
             android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="18sp"
             android:layout_margin="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

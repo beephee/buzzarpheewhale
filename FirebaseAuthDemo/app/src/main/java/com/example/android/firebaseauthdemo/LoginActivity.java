@@ -63,6 +63,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         textViewSignup.setOnClickListener(this);
     }
 
+    private boolean isEmailValid (String email) {
+        return email.contains("@");
+    }
+
     //method for user login
     private void userLogin(){
         String email = editTextEmail.getText().toString().trim();
@@ -70,13 +74,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         //checking if email and passwords are empty
-        if(TextUtils.isEmpty(email)){
-            Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+        if(TextUtils.isEmpty(email) || !isEmailValid(email)){
+            Toast.makeText(this,"Please enter valid email",Toast.LENGTH_LONG).show();
             return;
         }
 
         if(TextUtils.isEmpty(password)){
-            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Please enter valid password",Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -92,7 +96,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
-                        //if the task is successfull
+                        //if the task is successful
                         if(task.isSuccessful()){
                             //start the profile activity
                             finish();
