@@ -19,10 +19,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     //view objects
     private TextView textViewUserEmail;
     private Button buttonLogout;
-
+    String userEmail;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
@@ -47,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         //displaying logged in user name
         textViewUserEmail.setText("Welcome "+user.getEmail());
+        userEmail = user.getEmail();
 
         //adding listener to button
         buttonLogout.setOnClickListener(this);
@@ -76,6 +77,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void viewBuyerPage(View view)
     {
         Intent intent = new Intent(this, BuyerActivity.class);
+        //Pass the email string to next activity
+        intent.putExtra("email", userEmail);
         startActivity(intent);
     }
 }
