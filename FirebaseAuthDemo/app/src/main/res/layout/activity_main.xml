@@ -22,7 +22,7 @@
             android:fontFamily="casual"
             android:textStyle="bold"
             android:textSize="48sp"
-            android:id="@+id/textView"
+            android:id="@+id/textViewLogo"
             android:layout_gravity="center_horizontal" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:textSize="25sp"
             android:textStyle="bold"
             android:textAllCaps="true"
-            android:id="@+id/textView"
+            android:id="@+id/textViewDesc"
             android:layout_gravity="center_horizontal" />
 
         <EditText

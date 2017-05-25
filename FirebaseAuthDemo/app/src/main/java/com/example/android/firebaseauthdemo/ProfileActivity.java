@@ -64,4 +64,18 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(new Intent(this, LoginActivity.class));
         }
     }
+
+    //Goto Courier Dashboard
+    public void viewCourierPage(View view)
+    {
+        Intent intent = new Intent(this, CourierActivity.class);
+        startActivity(intent);
+    }
+
+    //Goto Buyer Dashboard
+    public void viewBuyerPage(View view)
+    {
+        Intent intent = new Intent(this, BuyerActivity.class);
+        startActivity(intent);
+    }
 }

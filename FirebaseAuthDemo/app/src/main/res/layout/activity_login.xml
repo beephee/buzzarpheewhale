@@ -28,6 +28,7 @@
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal" />
 
+
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"

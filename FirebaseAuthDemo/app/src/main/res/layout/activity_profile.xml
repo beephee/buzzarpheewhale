@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -26,9 +26,9 @@
             android:fontFamily="casual"
             android:textStyle="bold"
             android:textSize="48sp"
-
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,6 +38,7 @@
             android:textStyle="bold"
             android:id="@+id/textViewUserEmail"
             android:layout_gravity="center_horizontal" />
+
         <ImageButton
             android:layout_width="match_parent"
             android:layout_height="150dp"
@@ -45,7 +46,9 @@
             android:background="@drawable/courier_description"
             android:id="@+id/buttonCourierDashboard"
             android:layout_marginBottom="20dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:onClick="viewCourierPage"/>
+
         <ImageButton
             android:layout_width="match_parent"
             android:layout_height="150dp"
@@ -53,7 +56,9 @@
             android:background="@drawable/buyer_description"
             android:id="@+id/buttonBuyerDashboard"
             android:layout_marginBottom="30dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:onClick="viewBuyerPage"/>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,4 +67,4 @@
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
