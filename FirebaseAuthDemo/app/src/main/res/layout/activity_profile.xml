@@ -33,10 +33,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="What would you like to do today?\n"
+            android:text="email"
             android:fontFamily="sans-serif-condensed"
             android:textStyle="bold"
             android:id="@+id/textViewUserEmail"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="What would you like to do today?\n"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
+            android:id="@+id/textViewWelcomeMessage"
             android:layout_gravity="center_horizontal" />
 
         <ImageButton
@@ -47,6 +57,7 @@
             android:id="@+id/buttonCourierDashboard"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center_horizontal"
+
             android:onClick="viewCourierPage"/>
 
         <ImageButton
