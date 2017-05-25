@@ -64,4 +64,11 @@ public class AddRequestActivity extends AppCompatActivity {
             Toast.makeText(this, "Please select a product type.", Toast.LENGTH_LONG).show();
         }
     }
+
+    public void cancel(View view)
+    {
+        Intent intent = new Intent(this, BuyerActivity.class);
+        startActivity(intent);
+    }
+
 }

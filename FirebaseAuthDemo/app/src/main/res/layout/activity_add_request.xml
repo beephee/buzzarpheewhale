@@ -4,19 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bgBlue"
     tools:context="com.example.android.firebaseauthdemo.AddRequestActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/textViewBuyerDashboard"
         android:text="Buyer Dashboard"
+        android:textAllCaps="true"
         android:fontFamily="casual"
         android:textStyle="bold"
+        android:textColor="@color/black"
         android:textSize="25sp"
         android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="x"
+        android:fontFamily="casual"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:background="@color/yellow"
+        android:textSize="30sp"
+        android:onClick="cancel"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,6 +51,7 @@
             android:layout_gravity="center_horizontal"
             android:id="@+id/textViewNewRequest"
             android:text="Enter Product Details Below"
+            android:textColor="@color/black"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"/>
 
@@ -42,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Product Type:"
+            android:textColor="@color/black"
             android:id="@+id/textViewProductType"
             android:layout_marginTop="10dp"
             android:layout_below="@id/textViewNewRequest"/>
@@ -78,11 +96,12 @@
             </RelativeLayout>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:id="@+id/buttonNewListing"
             android:text="Submit"
+            android:background="@color/yellow"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"/>
 
