@@ -26,7 +26,8 @@
         android:background="@drawable/customborder"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/textViewBuyerDashboard">
+        android:layout_below="@id/textViewBuyerDashboard"
+        android:id="@+id/relativeLayout">
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,6 +37,45 @@
             android:text="Enter Product Details Below"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product Type:"
+            android:id="@+id/textViewProductType"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/textViewNewRequest"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".28"
+            android:background="@drawable/spinnerbg"
+            android:orientation="horizontal"
+            android:layout_below="@+id/textViewProductType"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <Spinner
+                android:id="@+id/spinnerProductType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:layout_marginLeft="5dp"
+                android:spinnerMode="dropdown"
+                android:entries="@array/product_types" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@drawable/drop" />
+            </RelativeLayout>
 
         <Button
             android:layout_width="wrap_content"
@@ -47,5 +87,7 @@
             android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
+
+
 
 </RelativeLayout>
