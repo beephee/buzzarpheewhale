@@ -18,8 +18,9 @@
         </activity>
         <activity android:name=".ProfileActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".CourierActivity"></activity>
-        <activity android:name=".BuyerActivity"></activity>
+        <activity android:name=".CourierActivity" />
+        <activity android:name=".BuyerActivity" />
+        <activity android:name=".AddRequestActivity"></activity>
     </application>
 
 </manifest>

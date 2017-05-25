@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="email"
+            android:text="email-placeholder"
             android:fontFamily="sans-serif-condensed"
             android:textStyle="bold"
             android:id="@+id/textViewUserEmail"

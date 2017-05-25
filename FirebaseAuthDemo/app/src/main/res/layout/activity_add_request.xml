@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.firebaseauthdemo.BuyerActivity">
+    tools:context="com.example.android.firebaseauthdemo.AddRequestActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,20 +26,26 @@
         android:background="@drawable/customborder"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-
         android:layout_below="@id/textViewBuyerDashboard">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/textViewNewRequest"
+            android:text="Enter Product Details Below"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:id="@+id/buttonNewListing"
-            android:text="Add New Request"
-            android:onClick="viewAddRequest"
+            android:text="Submit"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
-
 
 </RelativeLayout>
