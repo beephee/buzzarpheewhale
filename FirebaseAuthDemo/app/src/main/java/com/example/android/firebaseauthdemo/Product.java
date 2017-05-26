@@ -8,6 +8,7 @@ public class Product {
 
     String productId;
     String productBuyer;
+    String productName;
     String productType;
     String productCoords;
 
@@ -15,9 +16,10 @@ public class Product {
 
     }
 
-    public Product(String productId, String productBuyer, String productType, String productCoords) {
+    public Product(String productId, String productBuyer, String productName, String productType, String productCoords) {
         this.productId = productId;
         this.productBuyer = productBuyer;
+        this.productName = productName;
         this.productType = productType;
         this.productCoords = productCoords;
     }
@@ -28,6 +30,10 @@ public class Product {
 
     public String getProductBuyer() {
         return productBuyer;
+    }
+
+    public String getProductName() {
+        return productName;
     }
 
     public String getProductType() {

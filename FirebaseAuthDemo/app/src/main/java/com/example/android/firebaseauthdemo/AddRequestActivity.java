@@ -37,7 +37,6 @@ public class AddRequestActivity extends AppCompatActivity {
             userEmail = extras.getString("email");
         }
 
-
         buttonGetCoordinates = (Button) findViewById(R.id.buttonGetCoordinates);
         buttonGetCoordinates.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,19 +45,18 @@ public class AddRequestActivity extends AppCompatActivity {
             }
         });
 
-
         //Values will be submitted to the "products" node in the JSON tree
         databaseProducts = FirebaseDatabase.getInstance().getReference("products");
 
         buttonNewListing = (Button) findViewById(R.id.buttonNewListing);
-        spinnerProductType = (Spinner) findViewById(R.id.spinnerProductType);
-
         buttonNewListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 addProductType();
             }
         });
+
+        spinnerProductType = (Spinner) findViewById(R.id.spinnerProductType);
 
     }
 
@@ -82,21 +80,24 @@ public class AddRequestActivity extends AppCompatActivity {
     }
 
     private void addProductType(){
+
         String buyer = userEmail;
         String producttype = spinnerProductType.getSelectedItem().toString();
+        EditText editProductName = (EditText) findViewById(R.id.editTextProductName);
+        String productname = editProductName.getText().toString();
 
-        if(!TextUtils.isEmpty(producttype)){
+        if(!TextUtils.isEmpty(producttype) && !TextUtils.isEmpty(productname)){
 
             //Get the unique id of the branch
             String id = databaseProducts.push().getKey();
             //Define the parameters for the database entry
-            Product product = new Product(id, buyer, producttype, productcoords);
+            Product product = new Product(id, buyer, productname, producttype, productcoords);
             //Submit value to database
             databaseProducts.child(id).setValue(product);
             Toast.makeText(this, "Request added!", Toast.LENGTH_LONG).show();
 
         }else{
-            Toast.makeText(this, "Please select a product type.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please ensure all fields are completed.", Toast.LENGTH_LONG).show();
         }
     }
 

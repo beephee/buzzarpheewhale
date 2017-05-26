@@ -46,35 +46,54 @@
         android:id="@+id/relativeLayout">
 
         <TextView
+            android:id="@+id/textViewNewRequest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/textViewNewRequest"
-            android:text="Enter Product Details Below"
-            android:textColor="@color/black"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:text="Enter Product Details Below"
+            android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/textViewProductName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/textViewNewRequest"
+            android:text="Product Name:"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextProductName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewProductName"
+            android:hint="Enter item name / description here"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/textViewProductType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/editTextProductName"
             android:text="Product Type:"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:id="@+id/textViewProductType"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/textViewNewRequest"/>
+            />
 
         <RelativeLayout
             android:id="@+id/spinnerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".28"
-            android:background="@drawable/spinnerbg"
-            android:orientation="horizontal"
             android:layout_below="@+id/textViewProductType"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:background="@drawable/spinnerbg"
+            android:orientation="horizontal">
 
             <Spinner
                 android:id="@+id/spinnerProductType"
@@ -82,9 +101,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
                 android:background="@android:color/transparent"
                 android:gravity="center"
-                android:layout_marginLeft="5dp"
                 android:spinnerMode="dropdown"
                 android:entries="@array/product_types" />
 
@@ -98,34 +117,35 @@
             </RelativeLayout>
 
         <TextView
+            android:id="@+id/textViewLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/spinnerLayout"
             android:text="Location:"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:id="@+id/textViewLocation"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/spinnerLayout"/>
+            android:textStyle="bold" />
 
         <Button
+            android:id="@+id/buttonGetCoordinates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Click here to select coordinates"
-            android:textColor="@color/black"
-            android:id="@+id/buttonGetCoordinates"
             android:layout_marginTop="0dp"
             android:layout_below="@id/textViewLocation"
+            android:text="Click here to select coordinates"
+            android:textColor="@color/black"
             android:onClick="selectCoords"/>
 
         <Button
+            android:id="@+id/buttonNewListing"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/buttonNewListing"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:text="Submit"
             android:background="@drawable/roundedbutton"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"/>
+/>
 
     </RelativeLayout>
 
