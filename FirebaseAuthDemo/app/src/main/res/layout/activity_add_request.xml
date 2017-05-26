@@ -30,7 +30,7 @@
         android:fontFamily="casual"
         android:textStyle="bold"
         android:textAllCaps="false"
-        android:background="@color/yellow"
+        android:background="@drawable/roundedbutton"
         android:textSize="30sp"
         android:onClick="cancel"/>
 
@@ -60,6 +60,7 @@
             android:layout_height="wrap_content"
             android:text="Product Type:"
             android:textColor="@color/black"
+            android:textStyle="bold"
             android:id="@+id/textViewProductType"
             android:layout_marginTop="10dp"
             android:layout_below="@id/textViewNewRequest"/>
@@ -101,7 +102,7 @@
             android:layout_gravity="center_horizontal"
             android:id="@+id/buttonNewListing"
             android:text="Submit"
-            android:background="@color/yellow"
+            android:background="@drawable/roundedbutton"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"/>
 
