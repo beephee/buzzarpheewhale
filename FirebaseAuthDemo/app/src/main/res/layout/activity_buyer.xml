@@ -49,7 +49,7 @@
             android:id="@+id/buttonNewListing"
             android:text="Add New Request"
             android:onClick="viewAddRequest"
-            android:background="@color/yellow"
+            android:background="@drawable/roundedbutton"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"/>
 
