@@ -8,15 +8,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import static android.R.attr.button;
 
 public class AddRequestActivity extends AppCompatActivity {
 
 
     Button buttonNewListing;
+    Button buttonGetCoordinates;
     Spinner spinnerProductType;
     DatabaseReference databaseProducts;
     String userEmail;
@@ -30,6 +35,16 @@ public class AddRequestActivity extends AppCompatActivity {
         if(extras != null){
             userEmail = extras.getString("email");
         }
+
+
+        buttonGetCoordinates = (Button) findViewById(R.id.buttonGetCoordinates);
+        buttonGetCoordinates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickPointOnMap();
+            }
+        });
+
 
         //Values will be submitted to the "products" node in the JSON tree
         databaseProducts = FirebaseDatabase.getInstance().getReference("products");
@@ -46,10 +61,22 @@ public class AddRequestActivity extends AppCompatActivity {
 
     }
 
-    public void selectCoords(View view)
-    {
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
+    static final int PICK_MAP_POINT_REQUEST = 999;  // The request code
+    private void pickPointOnMap() {
+        Intent pickPointIntent = new Intent(this, MapsActivity.class);
+        startActivityForResult(pickPointIntent, PICK_MAP_POINT_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_MAP_POINT_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                LatLng latLng = (LatLng) data.getParcelableExtra("picked_point");
+                Toast.makeText(this, "Point Chosen: " + latLng.latitude + " " + latLng.longitude, Toast.LENGTH_LONG).show();
+                buttonGetCoordinates.setText(latLng.latitude + "," + latLng.longitude);
+            }
+        }
     }
 
     private void addProductType(){

@@ -107,12 +107,12 @@
             android:layout_marginTop="10dp"
             android:layout_below="@id/spinnerLayout"/>
 
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Click here to select coordinates"
             android:textColor="@color/black"
-            android:id="@+id/textViewCoordinates"
+            android:id="@+id/buttonGetCoordinates"
             android:layout_marginTop="0dp"
             android:layout_below="@id/textViewLocation"
             android:onClick="selectCoords"/>
