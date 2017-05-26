@@ -6,4 +6,5 @@
         <item>Electronics</item>
         <item>Food</item>
     </array>
+    <string name="title_activity_maps">Map</string>
 </resources>

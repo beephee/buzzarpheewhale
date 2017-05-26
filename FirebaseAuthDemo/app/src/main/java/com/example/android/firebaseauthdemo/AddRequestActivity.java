@@ -46,6 +46,12 @@ public class AddRequestActivity extends AppCompatActivity {
 
     }
 
+    public void selectCoords(View view)
+    {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
+
     private void addProductType(){
         String buyer = userEmail;
         String producttype = spinnerProductType.getSelectedItem().toString();

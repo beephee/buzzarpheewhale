@@ -66,6 +66,7 @@
             android:layout_below="@id/textViewNewRequest"/>
 
         <RelativeLayout
+            android:id="@+id/spinnerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".28"
@@ -95,6 +96,26 @@
                 android:layout_gravity="center"
                 android:src="@drawable/drop" />
             </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location: (WIP)"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:id="@+id/textViewLocation"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/spinnerLayout"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click here to select coordinates"
+            android:textColor="@color/black"
+            android:id="@+id/textViewCoordinates"
+            android:layout_marginTop="0dp"
+            android:layout_below="@id/textViewLocation"
+            android:onClick="selectCoords"/>
 
         <Button
             android:layout_width="300dp"
