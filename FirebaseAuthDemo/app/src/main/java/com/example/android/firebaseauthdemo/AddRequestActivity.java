@@ -25,6 +25,7 @@ public class AddRequestActivity extends AppCompatActivity {
     Spinner spinnerProductType;
     DatabaseReference databaseProducts;
     String userEmail;
+    String productcoords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class AddRequestActivity extends AppCompatActivity {
                 LatLng latLng = (LatLng) data.getParcelableExtra("picked_point");
                 Toast.makeText(this, "Point Chosen: " + latLng.latitude + " " + latLng.longitude, Toast.LENGTH_LONG).show();
                 buttonGetCoordinates.setText(latLng.latitude + "," + latLng.longitude);
+                productcoords = (latLng.latitude + "," + latLng.longitude);
             }
         }
     }
@@ -88,7 +90,7 @@ public class AddRequestActivity extends AppCompatActivity {
             //Get the unique id of the branch
             String id = databaseProducts.push().getKey();
             //Define the parameters for the database entry
-            Product product = new Product(id, buyer, producttype);
+            Product product = new Product(id, buyer, producttype, productcoords);
             //Submit value to database
             databaseProducts.child(id).setValue(product);
             Toast.makeText(this, "Request added!", Toast.LENGTH_LONG).show();
