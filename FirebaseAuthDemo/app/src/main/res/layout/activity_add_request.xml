@@ -30,7 +30,7 @@
         android:fontFamily="casual"
         android:textStyle="bold"
         android:textAllCaps="false"
-        android:background="@drawable/buyerRoundedButton"
+        android:background="@drawable/buyerroundedbutton"
         android:textSize="30sp"
         android:textColor="@color/white"
         android:onClick="cancel"/>
@@ -148,7 +148,7 @@
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="@color/white"
-            android:background="@drawable/buyerRoundedButton"
+            android:background="@drawable/buyerroundedbutton"
 />
 
     </RelativeLayout>

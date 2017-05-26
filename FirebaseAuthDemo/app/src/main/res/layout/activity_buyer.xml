@@ -52,7 +52,7 @@
             android:textStyle="bold"
             android:textColor="@color/white"
             android:onClick="viewAddRequest"
-            android:background="@drawable/buyerRoundedButton"
+            android:background="@drawable/buyerroundedbutton"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"/>
 
