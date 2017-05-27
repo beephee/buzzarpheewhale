@@ -39,6 +39,7 @@ public class AddRequestActivity extends AppCompatActivity {
     private static final String TAG = "AddRequestActivity";
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +99,7 @@ public class AddRequestActivity extends AppCompatActivity {
                 month = month + 1;
                 Log.d(TAG, "onDateSet: dd/mm/yyyy: " + day + "/" + month + "/" + year);
 
-                String date = day + "/" + month + "/" + year;
+                date = day + "/" + month + "/" + year;
                 mDisplayDate.setText(date);
             }
         };
@@ -140,7 +141,6 @@ public class AddRequestActivity extends AppCompatActivity {
         String weight = editWeight.getText().toString();
         EditText editPrice = (EditText) findViewById(R.id.priceValue);
         String price = editPrice.getText().toString();
-        Integer date = dateValue;
 
         if(!TextUtils.isEmpty(producttype) && !TextUtils.isEmpty(productname) && !TextUtils.isEmpty(length) && !TextUtils.isEmpty(width) && !TextUtils.isEmpty(height) && !TextUtils.isEmpty(weight) && !TextUtils.isEmpty(price)){
 

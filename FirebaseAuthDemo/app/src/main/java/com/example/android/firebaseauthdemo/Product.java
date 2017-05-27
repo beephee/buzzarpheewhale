@@ -16,13 +16,13 @@ public class Product {
     String height;
     String weight;
     String price;
-    Integer date;
+    String date;
 
     public Product(){
 
     }
 
-    public Product(String productId, String productBuyer, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, Integer date) {
+    public Product(String productId, String productBuyer, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date) {
         this.productId = productId;
         this.productBuyer = productBuyer;
         this.productName = productName;
@@ -76,7 +76,7 @@ public class Product {
         return price;
     }
 
-    public Integer getDate() {
+    public String getDate() {
         return date;
     }
 }
