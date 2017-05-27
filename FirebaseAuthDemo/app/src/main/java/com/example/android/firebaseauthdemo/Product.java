@@ -1,5 +1,7 @@
 package com.example.android.firebaseauthdemo;
 
+import java.util.Date;
+
 /**
  * Created by Admin on 25/5/2017.
  */
@@ -11,17 +13,29 @@ public class Product {
     String productName;
     String productType;
     String productCoords;
+    String length;
+    String width;
+    String height;
+    String weight;
+    String price;
+    Integer date;
 
     public Product(){
 
     }
 
-    public Product(String productId, String productBuyer, String productName, String productType, String productCoords) {
+    public Product(String productId, String productBuyer, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, Integer date) {
         this.productId = productId;
         this.productBuyer = productBuyer;
         this.productName = productName;
         this.productType = productType;
         this.productCoords = productCoords;
+        this.length = length;
+        this.width = width;
+        this.height = height;
+        this.weight = weight;
+        this.price = price;
+        this.date = date;
     }
 
     public String getProductId() {
@@ -42,5 +56,29 @@ public class Product {
 
     public String getProductCoords() {
         return productCoords;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public String getWidth() {
+        return width;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public Integer getDate() {
+        return date;
     }
 }
