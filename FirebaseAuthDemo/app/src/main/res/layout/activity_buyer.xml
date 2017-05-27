@@ -31,21 +31,23 @@
         android:background="@drawable/courier_icon"
         android:onClick="goCourierPage"/>
 
-    <RelativeLayout
+    <ListView
+        android:id="@+id/listViewProducts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="10dp"
-        android:background="@drawable/customborder"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-
-        android:layout_below="@id/textViewBuyerDashboard">
+        android:layout_below="@id/textViewBuyerDashboard"
+        android:layout_above="@id/buttonNewListing"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/customborder"/>
 
         <Button
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
             android:id="@+id/buttonNewListing"
             android:text="Add New Request"
             android:textSize="20dp"
@@ -56,7 +58,6 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"/>
 
-    </RelativeLayout>
 
 
 </RelativeLayout>

@@ -23,7 +23,6 @@ public class CourierActivity extends AppCompatActivity {
 
     DatabaseReference databaseProducts;
     ListView listViewProducts;
-
     List<Product> productList;
     String userEmail;
 

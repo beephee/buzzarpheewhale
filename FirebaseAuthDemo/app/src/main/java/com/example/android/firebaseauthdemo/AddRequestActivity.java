@@ -152,6 +152,8 @@ public class AddRequestActivity extends AppCompatActivity {
             databaseProducts.child(id).setValue(product);
             Toast.makeText(this, "Request added!", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, BuyerActivity.class);
+            //Pass the email string to next activity
+            intent.putExtra("email", userEmail);
             startActivity(intent);
         }else{
             Toast.makeText(this, "Please ensure all fields are completed.", Toast.LENGTH_LONG).show();
@@ -161,6 +163,8 @@ public class AddRequestActivity extends AppCompatActivity {
     public void cancel(View view)
     {
         Intent intent = new Intent(this, BuyerActivity.class);
+        //Pass the email string to next activity
+        intent.putExtra("email", userEmail);
         startActivity(intent);
     }
 
