@@ -1,7 +1,5 @@
 package com.example.android.firebaseauthdemo;
 
-import java.util.Date;
-
 /**
  * Created by Admin on 25/5/2017.
  */

@@ -1,12 +1,12 @@
 package com.example.android.firebaseauthdemo;
 
+import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.util.Calendar;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -75,6 +75,7 @@ public class AddRequestActivity extends AppCompatActivity {
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
+            @TargetApi(Build.VERSION_CODES.M)
             public void onClick(View view) {
                 Calendar cal = Calendar.getInstance();
                 int year = cal.get(Calendar.YEAR);
@@ -101,6 +102,7 @@ public class AddRequestActivity extends AppCompatActivity {
                 mDisplayDate.setText(date);
             }
         };
+
     }
 
     static final int PICK_MAP_POINT_REQUEST = 999;  // The request code

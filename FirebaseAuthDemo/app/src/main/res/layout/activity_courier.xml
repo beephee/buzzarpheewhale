@@ -28,6 +28,18 @@
         android:layout_height="45dp"
         android:layout_marginTop = "10dp"
         android:background="@drawable/buyer_icon"
-        android:onClick="goBuyerPage"/>
+        android:onClick="goBuyerPage"
+        android:id="@+id/imageButton" />
+
+    <ListView
+        android:id="@+id/listViewProducts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imageButton"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/customborder"/>
 
 </RelativeLayout>
