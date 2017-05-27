@@ -66,7 +66,7 @@ public class AddRequestActivity extends AppCompatActivity {
         buttonNewListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                addProductType();
+                addProduct();
             }
         });
 
@@ -125,7 +125,7 @@ public class AddRequestActivity extends AppCompatActivity {
         }
     }
 
-    private void addProductType(){
+    private void addProduct(){
 
         String buyer = userEmail;
         String producttype = spinnerProductType.getSelectedItem().toString();
@@ -151,7 +151,8 @@ public class AddRequestActivity extends AppCompatActivity {
             //Submit value to database
             databaseProducts.child(id).setValue(product);
             Toast.makeText(this, "Request added!", Toast.LENGTH_LONG).show();
-
+            Intent intent = new Intent(this, BuyerActivity.class);
+            startActivity(intent);
         }else{
             Toast.makeText(this, "Please ensure all fields are completed.", Toast.LENGTH_LONG).show();
         }

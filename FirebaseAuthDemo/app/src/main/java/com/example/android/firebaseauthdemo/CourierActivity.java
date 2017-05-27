@@ -25,6 +25,7 @@ public class CourierActivity extends AppCompatActivity {
     ListView listViewProducts;
 
     List<Product> productList;
+    String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,12 @@ public class CourierActivity extends AppCompatActivity {
         listViewProducts = (ListView) findViewById(R.id.listViewProducts);
 
         productList = new ArrayList<>();
+
+        //Grabs email string from previous activity
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            userEmail = extras.getString("email");
+        }
     }
 
     @Override
@@ -68,6 +75,8 @@ public class CourierActivity extends AppCompatActivity {
     public void goBuyerPage(View view)
     {
         Intent intent = new Intent(this, BuyerActivity.class);
+        //Pass the email string to next activity
+        intent.putExtra("email", userEmail);
         startActivity(intent);
     }
 

@@ -70,6 +70,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void viewCourierPage(View view)
     {
         Intent intent = new Intent(this, CourierActivity.class);
+        //Pass the email string to next activity
+        intent.putExtra("email", userEmail);
         startActivity(intent);
     }
 
