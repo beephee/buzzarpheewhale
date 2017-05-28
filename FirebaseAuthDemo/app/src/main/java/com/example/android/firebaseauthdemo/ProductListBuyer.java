@@ -64,18 +64,7 @@ public class ProductListBuyer extends ArrayAdapter<Product>{
         textViewLength.setText(product.getLength());
         textViewDate.setText(product.getDate());
 
-        Button deleteBtn = (Button) listViewItem.findViewById(R.id.buttonDelete);
         final DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(textViewProductName.getText().toString());
-
-        deleteBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                /* <Insert here an actual method to remove object from Firebase */
-                dR.removeValue(); // Server-side Removal: This ain't working
-                productList.remove(position); //Local Removal: This works but redundant
-                notifyDataSetChanged();
-            }
-        });
 
         return listViewItem;
     }
