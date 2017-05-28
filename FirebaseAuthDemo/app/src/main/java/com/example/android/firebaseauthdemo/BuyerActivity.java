@@ -42,7 +42,6 @@ import static com.example.android.firebaseauthdemo.R.id.editTextProductDate;
 import static com.example.android.firebaseauthdemo.R.id.editTextProductLength;
 import static com.example.android.firebaseauthdemo.R.id.editTextProductName;
 import static com.example.android.firebaseauthdemo.R.id.editTextProductName;
-import static com.example.android.firebaseauthdemo.R.id.editTextProductType;
 
 public class BuyerActivity extends AppCompatActivity {
 
@@ -56,6 +55,7 @@ public class BuyerActivity extends AppCompatActivity {
     String date;
     String newDate;
     String getCoords;
+    Spinner spinnerProductType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,8 +133,10 @@ public class BuyerActivity extends AppCompatActivity {
 
         final EditText editTextProductName = (EditText) dialogView.findViewById(R.id.editTextProductName);
         editTextProductName.setText(productName);
-        final EditText editTextProductType = (EditText) dialogView.findViewById(R.id.editTextProductType);
-        editTextProductType.setText(productType);
+        spinnerProductType = (Spinner) dialogView.findViewById(R.id.spinnerProductType);
+
+        //final EditText editTextProductType = (EditText) dialogView.findViewById(R.id.editTextProductType);
+        //editTextProductType.setText(productType);
         final EditText editTextProductLength = (EditText) dialogView.findViewById(R.id.editTextProductLength);
         editTextProductLength.setText(length);
         final EditText editTextProductWidth = (EditText) dialogView.findViewById(R.id.editTextProductWidth);
@@ -167,7 +169,7 @@ public class BuyerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String newName = editTextProductName.getText().toString();
-                String newType = editTextProductType.getText().toString();
+                String newType = spinnerProductType.getSelectedItem().toString();
                 String newLength = editTextProductLength.getText().toString();
                 String newWidth = editTextProductWidth.getText().toString();
                 String newHeight = editTextProductHeight.getText().toString();
