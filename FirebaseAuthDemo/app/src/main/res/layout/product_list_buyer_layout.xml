@@ -146,7 +146,7 @@
         android:layout_alignParentRight="true"
         android:orientation="vertical">
         <Button
-            android:id="@+id/buttonAcceptReq"
+            android:id="@+id/buttonModify"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginTop="25dp"
@@ -155,12 +155,13 @@
             android:text="Modify"
             android:textStyle="bold"/>
         <Button
-            android:id="@+id/buttonRejectReq"
+            android:id="@+id/buttonDelete"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:background="@drawable/deletebutton"
             android:text="Delete"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:onClick="deleteProduct"/>
     </LinearLayout>
 
 </RelativeLayout>

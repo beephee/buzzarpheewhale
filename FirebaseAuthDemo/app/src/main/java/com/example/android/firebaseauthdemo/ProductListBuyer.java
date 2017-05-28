@@ -7,9 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
+
+import static android.R.id.list;
 
 /**
  * Created by Admin on 27/5/2017.
@@ -28,7 +34,8 @@ public class ProductListBuyer extends ArrayAdapter<Product>{
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        View view = convertView;
         LayoutInflater inflater = context.getLayoutInflater();
 
         View listViewItem = inflater.inflate(R.layout.product_list_buyer_layout, null, true);
@@ -55,6 +62,20 @@ public class ProductListBuyer extends ArrayAdapter<Product>{
         textViewWidth.setText(product.getWidth());
         textViewLength.setText(product.getLength());
 
+        Button deleteBtn = (Button) listViewItem.findViewById(R.id.buttonDelete);
+        final DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(textViewProductName.getText().toString());
+
+        deleteBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                /* <Insert here an actual method to remove object from Firebase */
+                dR.removeValue(); // Server-side Removal: This ain't working
+                productList.remove(position); //Local Removal: This works but redundant
+                notifyDataSetChanged();
+            }
+        });
+
         return listViewItem;
     }
+
 }
