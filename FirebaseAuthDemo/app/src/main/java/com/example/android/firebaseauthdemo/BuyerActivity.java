@@ -134,9 +134,6 @@ public class BuyerActivity extends AppCompatActivity {
         final EditText editTextProductName = (EditText) dialogView.findViewById(R.id.editTextProductName);
         editTextProductName.setText(productName);
         spinnerProductType = (Spinner) dialogView.findViewById(R.id.spinnerProductType);
-
-        //final EditText editTextProductType = (EditText) dialogView.findViewById(R.id.editTextProductType);
-        //editTextProductType.setText(productType);
         final EditText editTextProductLength = (EditText) dialogView.findViewById(R.id.editTextProductLength);
         editTextProductLength.setText(length);
         final EditText editTextProductWidth = (EditText) dialogView.findViewById(R.id.editTextProductWidth);
@@ -148,6 +145,7 @@ public class BuyerActivity extends AppCompatActivity {
         final EditText editTextProductPrice = (EditText) dialogView.findViewById(R.id.editTextProductPrice);
         editTextProductPrice.setText(price);
         final TextView showDatePicker = (TextView) dialogView.findViewById(R.id.editTextProductDate);
+        showDatePicker.setText(date);
         final EditText editTextProductCoords = (EditText) dialogView.findViewById(R.id.editTextProductCoords);
         editTextProductCoords.setText(productCoords);
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateProduct);
