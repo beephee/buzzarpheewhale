@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Text;
+
 import java.util.List;
 
 import static com.example.android.firebaseauthdemo.R.id.textView;
@@ -44,6 +46,7 @@ public class ProductList extends ArrayAdapter<Product>{
         TextView textViewHeight = (TextView) listViewItem.findViewById(R.id.textViewHeight);
         TextView textViewWidth = (TextView) listViewItem.findViewById(R.id.textViewWidth);
         TextView textViewLength = (TextView) listViewItem.findViewById(R.id.textViewLength);
+        TextView textViewDate = (TextView) listViewItem.findViewById(R.id.textViewDate);
 
         Product product = productList.get(position);
 
@@ -56,6 +59,7 @@ public class ProductList extends ArrayAdapter<Product>{
         textViewHeight.setText(product.getHeight());
         textViewWidth.setText(product.getWidth());
         textViewLength.setText(product.getLength());
+        textViewDate.setText(product.getDate());
 
         return listViewItem;
     }

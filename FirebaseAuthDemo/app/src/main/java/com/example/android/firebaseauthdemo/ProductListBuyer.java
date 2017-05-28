@@ -49,6 +49,7 @@ public class ProductListBuyer extends ArrayAdapter<Product>{
         TextView textViewHeight = (TextView) listViewItem.findViewById(R.id.textViewHeight);
         TextView textViewWidth = (TextView) listViewItem.findViewById(R.id.textViewWidth);
         TextView textViewLength = (TextView) listViewItem.findViewById(R.id.textViewLength);
+        TextView textViewDate = (TextView) listViewItem.findViewById(R.id.textViewDate);
 
         Product product = productList.get(position);
 
@@ -61,6 +62,7 @@ public class ProductListBuyer extends ArrayAdapter<Product>{
         textViewHeight.setText(product.getHeight());
         textViewWidth.setText(product.getWidth());
         textViewLength.setText(product.getLength());
+        textViewDate.setText(product.getDate());
 
         Button deleteBtn = (Button) listViewItem.findViewById(R.id.buttonDelete);
         final DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(textViewProductName.getText().toString());

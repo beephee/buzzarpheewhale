@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "250453777067",
-    "firebase_url": "https://myfirebasedemoapp-2a134.firebaseio.com",
-    "project_id": "myfirebasedemoapp-2a134",
-    "storage_bucket": "myfirebasedemoapp-2a134.appspot.com"
+    "project_number": "473336398434",
+    "firebase_url": "https://orbitalapp.firebaseio.com",
+    "project_id": "orbitalapp",
+    "storage_bucket": "orbitalapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:250453777067:android:678a399689280789",
+        "mobilesdk_app_id": "1:473336398434:android:678a399689280789",
         "android_client_info": {
           "package_name": "com.example.android.firebaseauthdemo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "250453777067-069jprs8n8jbkv1cj65l8k0gfd264jr0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.android.firebaseauthdemo",
-            "certificate_hash": "e2cc56e5a814ddfe065b8f186f0661b440a42b36"
-          }
-        },
-        {
-          "client_id": "250453777067-ob2snc4gn19kelcle6919s8vv35trmp9.apps.googleusercontent.com",
+          "client_id": "473336398434-8hh3dvp7qjkkkjce36ba0issn36pt6f4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAHQ-D3My616ja-8SuTbe5-HdA9xSOMfm0"
+          "current_key": "AIzaSyAM_WptLGeCliWhYKZs8EtiY0A4F3FbBqI"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "250453777067-ob2snc4gn19kelcle6919s8vv35trmp9.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
