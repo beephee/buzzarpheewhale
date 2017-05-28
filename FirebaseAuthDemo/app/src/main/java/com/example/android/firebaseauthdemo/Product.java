@@ -8,6 +8,7 @@ public class Product {
 
     String productId;
     String productBuyer;
+    String productCourier;
     String productName;
     String productType;
     String productCoords;
@@ -22,9 +23,10 @@ public class Product {
 
     }
 
-    public Product(String productId, String productBuyer, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date) {
+    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date) {
         this.productId = productId;
         this.productBuyer = productBuyer;
+        this.productCourier = productCourier;
         this.productName = productName;
         this.productType = productType;
         this.productCoords = productCoords;
@@ -42,6 +44,10 @@ public class Product {
 
     public String getProductBuyer() {
         return productBuyer;
+    }
+
+    public String getProductCourier() {
+        return productCourier;
     }
 
     public String getProductName() {

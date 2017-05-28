@@ -25,7 +25,7 @@
                 android:id="@+id/textProductType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Type:"
+                android:text="Type: "
                 android:textColor="@color/black"/>
             <TextView
                 android:id="@+id/textViewProductType"
@@ -43,7 +43,7 @@
             android:id="@+id/textBuyerEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Buyer:"
+            android:text="Buyer: "
             android:textColor="@color/black" />
         <TextView
             android:id="@+id/textViewBuyerEmail"
@@ -60,7 +60,7 @@
             android:id="@+id/textPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Price:"
+            android:text="Price: "
             android:textColor="@color/black"/>
         <TextView
             android:id="@+id/textViewPrice"
@@ -77,7 +77,7 @@
             android:id="@+id/textWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Weight:"
+            android:text="Weight: "
             android:textColor="@color/black"/>
         <TextView
             android:id="@+id/textViewWeight"
@@ -94,7 +94,7 @@
                 android:id="@+id/textHWL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="H/W/L:"
+                android:text="H/W/L: "
                 android:textColor="@color/black"/>
             <TextView
                 android:id="@+id/textViewHeight"
@@ -132,7 +132,7 @@
                 android:id="@+id/textDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Date Required By:"
+                android:text="Date Required By: "
                 android:textColor="@color/black"/>
             <TextView
                 android:id="@+id/textViewDate"
@@ -149,7 +149,7 @@
             android:id="@+id/textCoords"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Store location:"
+            android:text="Store Location:"
             android:textColor="@color/black"/>
         <TextView
             android:id="@+id/textViewCoords"

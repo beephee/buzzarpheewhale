@@ -42,6 +42,16 @@ public class CourierActivity extends AppCompatActivity {
         if(extras != null){
             userEmail = extras.getString("email");
         }
+
+        //Registers product courier as user email
+        /*Button buttonAccept = (Button) findViewById(R.id.buttonAcceptReq);
+        buttonAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String newCourier = userEmail;
+            }
+        });*/
+
     }
 
     @Override
