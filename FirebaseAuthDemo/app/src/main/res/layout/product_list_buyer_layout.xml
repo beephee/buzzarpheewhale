@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
         android:id="@+id/linearProductList"
@@ -164,6 +165,7 @@
         android:layout_alignParentRight="true"
         android:orientation="vertical">
         <Button
+            android:visibility="invisible"
             android:id="@+id/buttonModify"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
@@ -173,6 +175,7 @@
             android:text="Modify"
             android:textStyle="bold"/>
         <Button
+            android:visibility="invisible"
             android:id="@+id/buttonDelete"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
