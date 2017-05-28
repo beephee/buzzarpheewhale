@@ -111,6 +111,7 @@ public class BuyerActivity extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
 
         final EditText editTextProductName = (EditText) dialogView.findViewById(R.id.editTextProductName);
+        editTextProductName.setText(productName);
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateProduct);
         final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteProduct);
 
