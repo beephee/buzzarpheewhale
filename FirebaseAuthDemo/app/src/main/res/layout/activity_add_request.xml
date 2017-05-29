@@ -47,21 +47,10 @@
         android:id="@+id/relativeLayout">
 
         <TextView
-            android:id="@+id/textViewNewRequest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="Enter Product Details Below"
-            android:textColor="@color/black"/>
-
-        <TextView
             android:id="@+id/textViewProductName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/textViewNewRequest"
+            android:layout_marginTop="5dp"
             android:text="Product Name:"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -257,12 +246,18 @@
             android:textColor="@color/black"
             android:textStyle="bold" />
 
+        <ImageView
+            android:id="@+id/imageViewProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewImage"/>
+
         <Button
             android:id="@+id/buttonGetImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
-            android:layout_below="@id/textViewImage"
+            android:layout_below="@id/imageViewProduct"
             android:text="Click here to upload image"
             android:textColor="@color/black"
             android:onClick="selectCoords"/>

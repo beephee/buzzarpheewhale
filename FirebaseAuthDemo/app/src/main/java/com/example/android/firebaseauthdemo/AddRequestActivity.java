@@ -16,11 +16,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Calendar;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -47,6 +49,7 @@ public class AddRequestActivity extends AppCompatActivity {
     private static final int GALLERY_INTENT = 2;
     private ProgressDialog mProgressDialog;
     Uri downloadUrl;
+    ImageView productImage;
 
     String userEmail;
     String productcoords;
@@ -119,6 +122,7 @@ public class AddRequestActivity extends AppCompatActivity {
         };
 
         //Image Upload
+        productImage = (ImageView) findViewById(R.id.imageViewProduct);
         mProgressDialog = new ProgressDialog(this);
         mStorage = FirebaseStorage.getInstance().getReference();
         buttonGetImage = (Button) findViewById(R.id.buttonGetImage);
@@ -163,6 +167,11 @@ public class AddRequestActivity extends AppCompatActivity {
                     mProgressDialog.dismiss();
                     Toast.makeText(AddRequestActivity.this, "Image uploaded...", Toast.LENGTH_LONG).show();
                     buttonGetImage.setText(downloadUrl.toString()); //Temporary, just for checking if its uploaded
+                    //Slightly overlapped by the submit button
+                    Glide
+                            .with(AddRequestActivity.this)
+                            .load(downloadUrl.toString())
+                            .into(productImage);
                 }
             });
         }
