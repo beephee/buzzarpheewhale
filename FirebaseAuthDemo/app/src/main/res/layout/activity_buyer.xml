@@ -37,9 +37,8 @@
     <ListView
         android:id="@+id/listViewProducts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="450dp"
         android:layout_below="@id/textViewMyRequests"
-        android:layout_above="@id/buttonNewListing"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -53,14 +52,25 @@
             android:layout_marginBottom="10dp"
             android:id="@+id/buttonNewListing"
             android:text="Add New Request"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:onClick="viewAddRequest"
             android:background="@drawable/buyerroundedbutton"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/listViewProducts"
             android:layout_centerHorizontal="true"/>
 
+    <!-- Content Container -->
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNaviBarBuyer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/black"
+        app:itemIconTint="@drawable/navcolour"
+        app:itemTextColor="@drawable/navcolour"
+        app:menu="@menu/bottomnavi" />
 
 
 </RelativeLayout>

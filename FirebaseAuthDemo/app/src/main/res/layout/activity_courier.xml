@@ -27,12 +27,24 @@
     <ListView
         android:id="@+id/listViewProducts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="525dp"
         android:layout_below="@+id/imageButton"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/customborder"/>
+
+    <!-- Content Container -->
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNaviBarCourier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/black"
+        app:itemIconTint="@drawable/navcolour"
+        app:itemTextColor="@drawable/navcolour"
+        app:menu="@menu/bottomnavi" />
 
 </RelativeLayout>

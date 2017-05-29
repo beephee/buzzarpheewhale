@@ -1,8 +1,11 @@
 package com.example.android.firebaseauthdemo;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,11 +29,14 @@ public class CourierActivity extends AppCompatActivity {
     ListView listViewProducts;
     List<Product> productList;
     String userEmail;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courier);
+
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNaviBarCourier);
 
         databaseProducts = FirebaseDatabase.getInstance().getReference("products");
 
@@ -52,6 +58,36 @@ public class CourierActivity extends AppCompatActivity {
                 String newCourier = userEmail;
             }
         });*/
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.actionHome:
+                                //to change
+                                return true;
+
+                            case R.id.actionSettings:
+                                //to change
+                                return true;
+
+                            case R.id.actionOrders:
+                                //to change
+                                return true;
+
+                            case R.id.actionChats:
+                                //to change
+                                return true;
+
+                            case R.id.actionMaps:
+                                //to change
+                                return true;
+
+                        }
+                        return true;
+                    }
+                });
 
     }
 
