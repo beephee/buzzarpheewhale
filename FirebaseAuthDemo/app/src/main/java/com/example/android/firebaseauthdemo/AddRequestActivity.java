@@ -52,6 +52,7 @@ public class AddRequestActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     Uri downloadUrl;
     ImageView productImage;
+    TextView textViewImageName;
 
     String userEmail;
     String productcoords;
@@ -126,6 +127,7 @@ public class AddRequestActivity extends AppCompatActivity {
         };
 
         //Image Upload
+        textViewImageName = (TextView) findViewById(R.id.textViewImageName);
         productImage = (ImageView) findViewById(R.id.imageViewProduct);
         mProgressDialog = new ProgressDialog(this);
         mStorage = FirebaseStorage.getInstance().getReference();
@@ -162,6 +164,7 @@ public class AddRequestActivity extends AppCompatActivity {
             mProgressDialog.setMessage("Uploading...");
             mProgressDialog.show();
             Uri uri = data.getData();
+            final String fileName = uri.getPath().toString();
             StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @SuppressWarnings("VisibleForTests")
@@ -171,6 +174,7 @@ public class AddRequestActivity extends AppCompatActivity {
                     mProgressDialog.dismiss();
                     Toast.makeText(AddRequestActivity.this, "Image uploaded!", Toast.LENGTH_LONG).show();
                     // buttonGetImage.setText(downloadUrl.toString()); //Temporary, just for checking if its uploaded
+                    textViewImageName.setText(fileName);
                     buttonGetImage.setText("SELECT ANOTHER IMAGE");
                     Glide
                             .with(AddRequestActivity.this)
@@ -181,7 +185,7 @@ public class AddRequestActivity extends AppCompatActivity {
                         public void run(){
                             productScrollView.fullScroll(ScrollView.FOCUS_DOWN);
                         }
-                    }, 2000);
+                    }, 3000);
 
                 }
             });

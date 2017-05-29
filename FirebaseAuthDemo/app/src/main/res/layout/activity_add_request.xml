@@ -231,29 +231,44 @@
                 android:textColor="@color/black"
                 android:onClick="selectCoords"/>
 
-            <TextView
-                android:id="@+id/textViewImage"
+            <LinearLayout
+                android:id="@+id/imageLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/buttonGetCoordinates"
-                android:text="Image:"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textViewImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/buttonGetCoordinates"
+                    android:text="Image:"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/buttonGetImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textViewImage"
-                android:text="select image"
-                android:textColor="@color/black"
-                android:onClick="selectCoords"/>
+                <TextView
+                    android:id="@+id/textViewImageName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/imageViewProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/buttonGetImage"/>
+                android:layout_below="@id/imageLayout"/>
+
+            <Button
+                android:id="@+id/buttonGetImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageViewProduct"
+                android:text="select image"
+                android:textColor="@color/black"
+                android:onClick="selectCoords"/>
         </RelativeLayout>
     </ScrollView>
     <LinearLayout
