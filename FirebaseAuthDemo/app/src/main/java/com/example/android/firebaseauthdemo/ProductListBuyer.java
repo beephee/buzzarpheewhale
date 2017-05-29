@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -50,12 +52,13 @@ public class ProductListBuyer extends ArrayAdapter<Product>{
         TextView textViewWidth = (TextView) listViewItem.findViewById(R.id.textViewWidth);
         TextView textViewLength = (TextView) listViewItem.findViewById(R.id.textViewLength);
         TextView textViewDate = (TextView) listViewItem.findViewById(R.id.textViewDate);
+        ImageView imageViewProduct = (ImageView) listViewItem.findViewById(R.id.imageViewProduct);
 
         Product product = productList.get(position);
 
         textViewProductName.setText(product.getProductName());
         textViewProductType.setText(product.getProductType());
-        textViewCoords.setText(product.getProductCoords());
+        textViewCoords.setText(product.getProductCoords().substring(0,35));
         textViewBuyerEmail.setText(product.getProductBuyer());
         textViewPrice.setText(product.getPrice());
         textViewWeight.setText(product.getWeight());
@@ -63,6 +66,11 @@ public class ProductListBuyer extends ArrayAdapter<Product>{
         textViewWidth.setText(product.getWidth());
         textViewLength.setText(product.getLength());
         textViewDate.setText(product.getDate());
+        Glide
+                .with(context)
+                .load(product.getImgurl().toString())
+                .transform(new CircleTransform(context))
+                .into(imageViewProduct);
 
         final DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(textViewProductName.getText().toString());
 

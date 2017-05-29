@@ -24,13 +24,23 @@
         android:background="@drawable/courier_icon"
         android:onClick="goCourierPage"/>
 
+    <TextView
+        android:id="@+id/textViewMyRequests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewBuyerDashboard"
+        android:layout_centerHorizontal="true"
+        android:text="My Current Requests"
+        android:textColor="@color/black"
+        android:textSize="20dp"/>
+
     <ListView
         android:id="@+id/listViewProducts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/textViewBuyerDashboard"
+        android:layout_below="@id/textViewMyRequests"
         android:layout_above="@id/buttonNewListing"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
