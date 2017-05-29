@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgBlue"
+    android:orientation="vertical"
     tools:context="com.example.android.firebaseauthdemo.AddRequestActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/textViewBuyerDashboard"
-        android:text="Buyer Dashboard"
+        android:text="Add new request"
         android:textAllCaps="true"
         android:fontFamily="casual"
         android:textStyle="bold"
@@ -21,263 +22,278 @@
         android:textSize="25sp"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:text="x"
-        android:fontFamily="casual"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:background="@drawable/buyerroundedbutton"
-        android:textSize="30sp"
-        android:textColor="@color/white"
-        android:onClick="cancel"/>
-
-    <RelativeLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ScrollView01"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_margin="10dp"
-        android:background="@drawable/customborder"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/textViewBuyerDashboard"
-        android:id="@+id/relativeLayout">
-
-        <TextView
-            android:id="@+id/textViewProductName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Product Name:"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/editTextProductName"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewProductName"
-            android:hint="Enter item name / description here"
-            android:inputType="text" />
-
-        <TextView
-            android:id="@+id/textViewProductType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/editTextProductName"
-            android:text="Product Type:"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            />
-
+        android:layout_weight="1"
+        android:isScrollContainer="false"
+        android:background="@drawable/customborder">
         <RelativeLayout
-            android:id="@+id/spinnerLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight=".28"
-            android:layout_below="@+id/textViewProductType"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/spinnerbg"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textViewBuyerDashboard"
+            android:id="@+id/informationLayout">
 
-            <Spinner
-                android:id="@+id/spinnerProductType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:background="@android:color/transparent"
-                android:gravity="center"
-                android:spinnerMode="dropdown"
-                android:entries="@array/product_types" />
-
-            <ImageView
+            <TextView
+                android:id="@+id/textViewProductName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:src="@drawable/drop" />
-            </RelativeLayout>
+                android:layout_marginTop="5dp"
+                android:text="Product Name:"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/productSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_below="@id/spinnerLayout"
-            android:text="Product Dimensions:"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/editTextProductName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewProductName"
+                android:hint="Enter item name / description here"
+                android:inputType="text" />
 
-        <EditText
-            android:id="@+id/dim1"
-            android:layout_width="115dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/productSize"
-            android:hint="Length (cm)"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            android:inputType="text" />
+            <TextView
+                android:id="@+id/textViewProductType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/editTextProductName"
+                android:text="Product Type:"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
 
-        <EditText
-            android:id="@+id/dim2"
-            android:layout_width="115dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/productSize"
-            android:layout_toRightOf="@id/dim1"
-            android:hint="Width (cm)"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            android:inputType="text" />
+            <RelativeLayout
+                android:id="@+id/spinnerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".28"
+                android:layout_below="@+id/textViewProductType"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/spinnerbg"
+                android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/dim3"
-            android:layout_width="115dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/productSize"
-            android:layout_toRightOf="@id/dim2"
-            android:hint="Height (cm)"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            android:inputType="text" />
+                <Spinner
+                    android:id="@+id/spinnerProductType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown"
+                    android:entries="@array/product_types" />
 
-        <TextView
-            android:id="@+id/productWeight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_below="@id/dim1"
-            android:text="Product Weight:"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/drop" />
+                </RelativeLayout>
 
-        <EditText
-            android:id="@+id/weightValue"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/dim2"
-            android:layout_toRightOf="@id/productWeight"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="25dp"
-            android:hint="Approximate Weight (kg)"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            android:inputType="text" />
+            <TextView
+                android:id="@+id/productSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/spinnerLayout"
+                android:text="Product Dimensions:"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/productPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_below="@id/productWeight"
-            android:text="Product Price:"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/dim1"
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/productSize"
+                android:hint="Length (cm)"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:inputType="text" />
 
-        <EditText
-            android:id="@+id/priceValue"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/productWeight"
-            android:layout_toRightOf="@id/productPrice"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="37dp"
-            android:hint="Price in Local Currency"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            android:inputType="text" />
+            <EditText
+                android:id="@+id/dim2"
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/productSize"
+                android:layout_toRightOf="@id/dim1"
+                android:hint="Width (cm)"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:inputType="text" />
 
-        <TextView
-            android:id="@+id/productDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_below="@id/productPrice"
-            android:text="Date Required By:"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/dim3"
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/productSize"
+                android:layout_toRightOf="@id/dim2"
+                android:hint="Height (cm)"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:inputType="text" />
 
-        <TextView
-            android:id="@+id/dateValue"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/priceValue"
-            android:layout_toRightOf="@id/productDate"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="16dp"
-            android:hint="Tap for Date Picker"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/productWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/dim1"
+                android:text="Product Weight:"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textViewLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_below="@id/productDate"
-            android:text="Store Location:"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/weightValue"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dim2"
+                android:layout_toRightOf="@id/productWeight"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="25dp"
+                android:hint="Approximate Weight (kg)"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:inputType="text" />
 
+            <TextView
+                android:id="@+id/productPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/productWeight"
+                android:text="Product Price:"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/priceValue"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/productWeight"
+                android:layout_toRightOf="@id/productPrice"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="37dp"
+                android:hint="Price in Local Currency"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/productDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/productPrice"
+                android:text="Date Required By:"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dateValue"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/priceValue"
+                android:layout_toRightOf="@id/productDate"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="16dp"
+                android:hint="Tap for Date Picker"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textViewLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/productDate"
+                android:text="Store Location:"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/buttonGetCoordinates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_below="@id/textViewLocation"
+                android:text="select coordinates"
+                android:textColor="@color/black"
+                android:onClick="selectCoords"/>
+
+            <TextView
+                android:id="@+id/textViewImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/buttonGetCoordinates"
+                android:text="Image:"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/buttonGetImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewImage"
+                android:text="select image"
+                android:textColor="@color/black"
+                android:onClick="selectCoords"/>
+
+            <ImageView
+                android:id="@+id/imageViewProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/buttonGetImage"/>
+        </RelativeLayout>
+    </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="6"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
         <Button
-            android:id="@+id/buttonGetCoordinates"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_below="@id/textViewLocation"
-            android:text="Click here to select coordinates"
-            android:textColor="@color/black"
-            android:onClick="selectCoords"/>
-
-        <TextView
-            android:id="@+id/textViewImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/buttonGetCoordinates"
-            android:text="Image:"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/imageViewProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewImage"/>
-
-        <Button
-            android:id="@+id/buttonGetImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_below="@id/imageViewProduct"
-            android:text="Click here to upload image"
-            android:textColor="@color/black"
-            android:onClick="selectCoords"/>
-
-        <Button
-            android:id="@+id/buttonNewListing"
-            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="Submit"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:text="cancel"
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="@color/white"
             android:background="@drawable/buyerroundedbutton"
-/>
+            android:onClick="cancel"/>
+        <Button
+            android:id="@+id/buttonNewListing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="5dp"
+            android:text="Submit"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:background="@drawable/buyerroundedbutton"/>
+    </LinearLayout>
 
-    </RelativeLayout>
 
 
-
-</RelativeLayout>
+</LinearLayout>

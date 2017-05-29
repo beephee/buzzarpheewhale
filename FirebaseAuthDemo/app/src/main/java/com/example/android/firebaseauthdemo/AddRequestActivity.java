@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ public class AddRequestActivity extends AppCompatActivity {
     Button buttonNewListing;
     Button buttonGetCoordinates;
     Spinner spinnerProductType;
+    ScrollView productScrollView;
 
     //Image Storage Variables
     Button buttonGetImage;
@@ -88,6 +90,8 @@ public class AddRequestActivity extends AppCompatActivity {
         });
 
         spinnerProductType = (Spinner) findViewById(R.id.spinnerProductType);
+
+        productScrollView = (ScrollView) findViewById(R.id.ScrollView01);
 
         mDisplayDate = (TextView) findViewById(dateValue);
 
@@ -165,13 +169,20 @@ public class AddRequestActivity extends AppCompatActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     downloadUrl = taskSnapshot.getDownloadUrl();
                     mProgressDialog.dismiss();
-                    Toast.makeText(AddRequestActivity.this, "Image uploaded...", Toast.LENGTH_LONG).show();
-                    buttonGetImage.setText(downloadUrl.toString()); //Temporary, just for checking if its uploaded
-                    //Slightly overlapped by the submit button
+                    Toast.makeText(AddRequestActivity.this, "Image uploaded!", Toast.LENGTH_LONG).show();
+                    // buttonGetImage.setText(downloadUrl.toString()); //Temporary, just for checking if its uploaded
+                    buttonGetImage.setText("SELECT ANOTHER IMAGE");
                     Glide
                             .with(AddRequestActivity.this)
                             .load(downloadUrl.toString())
                             .into(productImage);
+                    productScrollView.postDelayed(new Runnable() {
+                        @Override
+                        public void run(){
+                            productScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                        }
+                    }, 2000);
+
                 }
             });
         }
