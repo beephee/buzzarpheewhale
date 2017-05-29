@@ -2,9 +2,11 @@ package com.example.android.firebaseauthdemo;
 
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,8 +22,12 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import static android.R.attr.button;
 import static android.R.attr.id;
@@ -33,7 +39,15 @@ public class AddRequestActivity extends AppCompatActivity {
     Button buttonNewListing;
     Button buttonGetCoordinates;
     Spinner spinnerProductType;
+
+    //Image Storage Variables
+    Button buttonGetImage;
     DatabaseReference databaseProducts;
+    StorageReference mStorage;
+    private static final int GALLERY_INTENT = 2;
+    private ProgressDialog mProgressDialog;
+    Uri downloadUrl;
+
     String userEmail;
     String productcoords;
     private static final String TAG = "AddRequestActivity";
@@ -104,6 +118,19 @@ public class AddRequestActivity extends AppCompatActivity {
             }
         };
 
+        //Image Upload
+        mProgressDialog = new ProgressDialog(this);
+        mStorage = FirebaseStorage.getInstance().getReference();
+        buttonGetImage = (Button) findViewById(R.id.buttonGetImage);
+        buttonGetImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, GALLERY_INTENT);
+            }
+        });
+
     }
 
     static final int PICK_MAP_POINT_REQUEST = 999;  // The request code
@@ -122,6 +149,22 @@ public class AddRequestActivity extends AppCompatActivity {
                 buttonGetCoordinates.setText(latLng.latitude + "," + latLng.longitude);
                 productcoords = (latLng.latitude + "," + latLng.longitude);
             }
+        }
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK){
+            mProgressDialog.setMessage("Uploading...");
+            mProgressDialog.show();
+            Uri uri = data.getData();
+            StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
+            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @SuppressWarnings("VisibleForTests")
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    downloadUrl = taskSnapshot.getDownloadUrl();
+                    mProgressDialog.dismiss();
+                    Toast.makeText(AddRequestActivity.this, "Image uploaded...", Toast.LENGTH_LONG).show();
+                    buttonGetImage.setText(downloadUrl.toString()); //Temporary, just for checking if its uploaded
+                }
+            });
         }
     }
 
@@ -142,13 +185,14 @@ public class AddRequestActivity extends AppCompatActivity {
         String weight = editWeight.getText().toString();
         EditText editPrice = (EditText) findViewById(R.id.priceValue);
         String price = editPrice.getText().toString();
+        String url = downloadUrl.toString();
 
         if(!TextUtils.isEmpty(producttype) && !TextUtils.isEmpty(productname) && !TextUtils.isEmpty(length) && !TextUtils.isEmpty(width) && !TextUtils.isEmpty(height) && !TextUtils.isEmpty(weight) && !TextUtils.isEmpty(price)){
 
             //Get the unique id of the branch
             String id = databaseProducts.push().getKey();
             //Define the parameters for the database entry
-            Product product = new Product(id, buyer, courier, productname, producttype, productcoords, length, width, height, weight, price, date);
+            Product product = new Product(id, buyer, courier, productname, producttype, productcoords, length, width, height, weight, price, date, url);
             //Submit value to database
             databaseProducts.child(id).setValue(product);
             Toast.makeText(this, "Request added!", Toast.LENGTH_LONG).show();

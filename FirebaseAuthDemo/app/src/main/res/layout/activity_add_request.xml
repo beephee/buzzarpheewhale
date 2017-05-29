@@ -240,11 +240,30 @@
 
         <Button
             android:id="@+id/buttonGetCoordinates"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             android:layout_below="@id/textViewLocation"
             android:text="Click here to select coordinates"
+            android:textColor="@color/black"
+            android:onClick="selectCoords"/>
+
+        <TextView
+            android:id="@+id/textViewImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonGetCoordinates"
+            android:text="Image:"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/buttonGetImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_below="@id/textViewImage"
+            android:text="Click here to upload image"
             android:textColor="@color/black"
             android:onClick="selectCoords"/>
 

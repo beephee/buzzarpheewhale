@@ -18,12 +18,13 @@ public class Product {
     String weight;
     String price;
     String date;
+    String imgurl;
 
     public Product(){
 
     }
 
-    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date) {
+    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String imgurl) {
         this.productId = productId;
         this.productBuyer = productBuyer;
         this.productCourier = productCourier;
@@ -36,6 +37,7 @@ public class Product {
         this.weight = weight;
         this.price = price;
         this.date = date;
+        this.imgurl = imgurl;
     }
 
     public String getProductId() {
@@ -85,4 +87,6 @@ public class Product {
     public String getDate() {
         return date;
     }
+
+    public String getImgurl() { return imgurl; }
 }
