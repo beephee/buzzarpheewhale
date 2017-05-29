@@ -13,19 +13,48 @@
         android:textStyle="bold"/>
 
     <LinearLayout
+        android:id="@+id/productHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewProductName"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true">
+        <Button
+            android:id="@+id/buttonAcceptReq"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:background="@drawable/acceptreqbutton"
+            android:text="Accept"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/imageViewProduct"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/textViewProductName"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/buttonRejectReq"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:background="@drawable/rejectreqbutton"
+            android:text="Reject"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/linearProductList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/textViewProductName"
+        android:layout_below="@+id/productHeader"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <ImageView
-            android:id="@+id/imageViewProduct"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="10dp"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -155,29 +184,6 @@
                 android:text="Geocoordinates"
                 android:textColor="@color/black"/>
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
-        <Button
-            android:id="@+id/buttonAcceptReq"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_marginTop="60dp"
-            android:background="@drawable/acceptreqbutton"
-            android:text="Accept"
-            android:textStyle="bold"/>
-        <Button
-            android:id="@+id/buttonRejectReq"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:background="@drawable/rejectreqbutton"
-            android:text="Reject"
-            android:textStyle="bold"/>
     </LinearLayout>
 
 </RelativeLayout>
