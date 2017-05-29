@@ -17,13 +17,9 @@
         android:text="Buyer Dashboard"
         android:textAllCaps="true"
         android:fontFamily="casual"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="25sp"
-        android:shadowColor="#000000"
-        android:shadowDx="3.5"
-        android:shadowDy="3.3"
-        android:shadowRadius="1.6"
         android:layout_gravity="center_horizontal"/>
 
     <ImageButton

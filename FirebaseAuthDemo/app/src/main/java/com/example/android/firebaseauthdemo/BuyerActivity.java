@@ -3,6 +3,7 @@ package com.example.android.firebaseauthdemo;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -130,7 +131,6 @@ public class BuyerActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.update_dialog, null);
         dialogBuilder.setView(dialogView);
-
         final EditText editTextProductName = (EditText) dialogView.findViewById(R.id.editTextProductName);
         editTextProductName.setText(productName);
         spinnerProductType = (Spinner) dialogView.findViewById(R.id.spinnerProductType);
@@ -151,8 +151,8 @@ public class BuyerActivity extends AppCompatActivity {
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateProduct);
         final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteProduct);
 
-        dialogBuilder.setTitle(productName);
         final AlertDialog b = dialogBuilder.create();
+        b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         b.show();
 
         showDatePicker.setOnClickListener(new View.OnClickListener() {
