@@ -19,7 +19,7 @@
         android:fontFamily="casual"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:layout_gravity="center_horizontal" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"

@@ -1,14 +1,12 @@
 package com.example.android.firebaseauthdemo;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,15 +34,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static android.R.attr.id;
-import static android.R.attr.name;
 import static android.media.CamcorderProfile.get;
-import static com.example.android.firebaseauthdemo.R.id.dateValue;
-import static com.example.android.firebaseauthdemo.R.id.editTextProductCoords;
-import static com.example.android.firebaseauthdemo.R.id.editTextProductDate;
-import static com.example.android.firebaseauthdemo.R.id.editTextProductLength;
-import static com.example.android.firebaseauthdemo.R.id.editTextProductName;
-import static com.example.android.firebaseauthdemo.R.id.editTextProductName;
 
 public class BuyerActivity extends AppCompatActivity {
 
@@ -68,6 +57,7 @@ public class BuyerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buyer);
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNaviBarBuyer);
+        bottomNavigationView.setSelectedItemId(R.id.actionBuyer);
 
         databaseProducts = FirebaseDatabase.getInstance().getReference("products");
 
@@ -95,17 +85,21 @@ public class BuyerActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.actionHome:
-                                //to change
+                            case R.id.actionBuyer:
+                                //no change
                                 return true;
+
+                            case R.id.actionCourier:
+                                Intent intentBuyCourier = new Intent(BuyerActivity.this, CourierActivity.class);
+                                //Pass the email string to next activity
+                                intentBuyCourier.putExtra("email", userEmail);
+                                startActivity(intentBuyCourier);
 
                             case R.id.actionSettings:
-                                //to change
-                                return true;
-
-                            case R.id.actionOrders:
-                                //to change
-                                return true;
+                                Intent intentBuySettings = new Intent(BuyerActivity.this, SettingsActivity.class);
+                                //Pass the email string to next activity
+                                intentBuySettings.putExtra("email", userEmail);
+                                startActivity(intentBuySettings);
 
                             case R.id.actionChats:
                                 //to change

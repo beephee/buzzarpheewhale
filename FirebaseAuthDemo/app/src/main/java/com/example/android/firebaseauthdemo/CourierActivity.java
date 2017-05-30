@@ -7,11 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +36,7 @@ public class CourierActivity extends AppCompatActivity {
         setContentView(R.layout.activity_courier);
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNaviBarCourier);
+        bottomNavigationView.setSelectedItemId(R.id.actionCourier);
 
         databaseProducts = FirebaseDatabase.getInstance().getReference("products");
 
@@ -64,17 +64,21 @@ public class CourierActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.actionHome:
-                                //to change
+                            case R.id.actionBuyer:
+                                Intent intentCouBuyer = new Intent(CourierActivity.this, BuyerActivity.class);
+                                //Pass the email string to next activity
+                                intentCouBuyer.putExtra("email", userEmail);
+                                startActivity(intentCouBuyer);
+
+                            case R.id.actionCourier:
+                                //no change
                                 return true;
 
                             case R.id.actionSettings:
-                                //to change
-                                return true;
-
-                            case R.id.actionOrders:
-                                //to change
-                                return true;
+                                Intent intentCouSettings = new Intent(CourierActivity.this, SettingsActivity.class);
+                                //Pass the email string to next activity
+                                intentCouSettings.putExtra("email", userEmail);
+                                startActivity(intentCouSettings);
 
                             case R.id.actionChats:
                                 //to change

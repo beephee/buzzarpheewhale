@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/actionHome"
+        android:id="@+id/actionBuyer"
         android:enabled="true"
-        android:icon="@drawable/homeicon"
-        android:title="HOME"
+        android:icon="@drawable/buyermenuicon"
+        android:title="BUYER"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/actionCourier"
+        android:enabled="true"
+        android:icon="@drawable/couriermenuicon"
+        android:title="COURIER"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/actionSettings"
         android:enabled="true"
         android:icon="@drawable/settingsicon"
         android:title="SETTINGS"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/actionOrders"
-        android:enabled="true"
-        android:icon="@drawable/ordersicon"
-        android:title="ORDERS"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/actionChats"
