@@ -21,6 +21,22 @@
         android:fontFamily="casual"
         android:textSize="20sp"/>
 
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/buttonNewListing"
+        android:text="+"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:onClick="viewAddRequest"
+        android:background="@drawable/buyerroundedbutton"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true" />
+
     <ListView
         android:id="@+id/listViewProducts"
         android:layout_width="match_parent"
@@ -33,24 +49,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/customborder"/>
 
-        <Button
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/buttonNewListing"
-            android:text="Add New Request"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:onClick="viewAddRequest"
-            android:background="@drawable/buyerroundedbutton"
-            android:layout_below="@+id/listViewProducts"
-            android:layout_centerHorizontal="true"/>
-
-    <!-- Content Container -->
-
-    <android.support.design.widget.BottomNavigationView
+    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/bottomNaviBarBuyer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

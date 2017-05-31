@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ittianyu.bottomnavigationviewex.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +29,18 @@ public class CourierActivity extends AppCompatActivity {
     ListView listViewProducts;
     List<Product> productList;
     String userEmail;
-    private BottomNavigationView bottomNavigationView;
+    private BottomNavigationViewEx bottomNavigationViewCourier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courier);
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNaviBarCourier);
-        bottomNavigationView.setSelectedItemId(R.id.actionCourier);
+        BottomNavigationViewEx bottomNavigationViewCourier = (BottomNavigationViewEx) findViewById(R.id.bottomNaviBarCourier);
+        bottomNavigationViewCourier.setSelectedItemId(R.id.actionCourier);
+        bottomNavigationViewCourier.enableAnimation(false);
+        bottomNavigationViewCourier.enableShiftingMode(false);
+        bottomNavigationViewCourier.enableItemShiftingMode(false);
 
         databaseProducts = FirebaseDatabase.getInstance().getReference("products");
 
@@ -59,7 +63,7 @@ public class CourierActivity extends AppCompatActivity {
             }
         });*/
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(
+        bottomNavigationViewCourier.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -69,10 +73,6 @@ public class CourierActivity extends AppCompatActivity {
                                 //Pass the email string to next activity
                                 intentCouBuyer.putExtra("email", userEmail);
                                 startActivity(intentCouBuyer);
-
-                            case R.id.actionCourier:
-                                //no change
-                                return true;
 
                             case R.id.actionSettings:
                                 Intent intentCouSettings = new Intent(CourierActivity.this, SettingsActivity.class);
@@ -120,14 +120,6 @@ public class CourierActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    public void goBuyerPage(View view)
-    {
-        Intent intent = new Intent(this, BuyerActivity.class);
-        //Pass the email string to next activity
-        intent.putExtra("email", userEmail);
-        startActivity(intent);
     }
 
 }

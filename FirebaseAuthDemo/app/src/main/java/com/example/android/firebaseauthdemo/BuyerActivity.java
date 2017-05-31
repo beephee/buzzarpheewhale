@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ittianyu.bottomnavigationviewex.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,15 +50,18 @@ public class BuyerActivity extends AppCompatActivity {
     String newDate;
     String getCoords;
     Spinner spinnerProductType;
-    private BottomNavigationView bottomNavigationView;
+    private BottomNavigationViewEx bottomNavigationViewBuyer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer);
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNaviBarBuyer);
-        bottomNavigationView.setSelectedItemId(R.id.actionBuyer);
+        BottomNavigationViewEx bottomNavigationViewBuyer = (BottomNavigationViewEx) findViewById(R.id.bottomNaviBarBuyer);
+        bottomNavigationViewBuyer.setSelectedItemId(R.id.actionBuyer);
+        bottomNavigationViewBuyer.enableAnimation(false);
+        bottomNavigationViewBuyer.enableShiftingMode(false);
+        bottomNavigationViewBuyer.enableItemShiftingMode(false);
 
         databaseProducts = FirebaseDatabase.getInstance().getReference("products");
 
@@ -80,14 +84,11 @@ public class BuyerActivity extends AppCompatActivity {
             userEmail = extras.getString("email");
         }
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(
+        bottomNavigationViewBuyer.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.actionBuyer:
-                                //no change
-                                return true;
 
                             case R.id.actionCourier:
                                 Intent intentBuyCourier = new Intent(BuyerActivity.this, CourierActivity.class);
@@ -231,18 +232,10 @@ public class BuyerActivity extends AppCompatActivity {
         return true;
     }
 
-    //Goto Courier Dashboard
+    //Goto Add Request
     public void viewAddRequest(View view)
     {
         Intent intent = new Intent(this, AddRequestActivity.class);
-        //Pass the email string to next activity
-        intent.putExtra("email", userEmail);
-        startActivity(intent);
-    }
-
-    public void goCourierPage(View view)
-    {
-        Intent intent = new Intent(this, CourierActivity.class);
         //Pass the email string to next activity
         intent.putExtra("email", userEmail);
         startActivity(intent);
@@ -274,10 +267,6 @@ public class BuyerActivity extends AppCompatActivity {
             }
         };
     };
-
-    // to fix
-    private void chooseCoords (View view) {
-    }
 
 }
 

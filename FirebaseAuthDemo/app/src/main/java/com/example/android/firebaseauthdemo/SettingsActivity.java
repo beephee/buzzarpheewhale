@@ -6,26 +6,31 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import com.ittianyu.bottomnavigationviewex.*;
+
 
 public class SettingsActivity extends AppCompatActivity {
 
     String userEmail;
-    BottomNavigationView bottomNavigationView;
+    BottomNavigationViewEx bottomNavigationViewSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNaviBarSettings);
-        bottomNavigationView.setSelectedItemId(R.id.actionSettings);
+        BottomNavigationViewEx bottomNavigationViewSettings = (BottomNavigationViewEx) findViewById(R.id.bottomNaviBarSettings);
+        bottomNavigationViewSettings.setSelectedItemId(R.id.actionSettings);
+        bottomNavigationViewSettings.enableAnimation(false);
+        bottomNavigationViewSettings.enableShiftingMode(false);
+        bottomNavigationViewSettings.enableItemShiftingMode(false);
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             userEmail = extras.getString("email");
         }
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(
+        bottomNavigationViewSettings.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -41,10 +46,6 @@ public class SettingsActivity extends AppCompatActivity {
                                 //Pass the email string to next activity
                                 intentSetCourier.putExtra("email", userEmail);
                                 startActivity(intentSetCourier);
-
-                            case R.id.actionSettings:
-                                //to change
-                                return true;
 
                             case R.id.actionChats:
                                 //to change
