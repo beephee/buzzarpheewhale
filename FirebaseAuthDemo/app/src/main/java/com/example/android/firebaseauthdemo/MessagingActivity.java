@@ -14,10 +14,10 @@ import android.view.ViewGroup;
 import com.ittianyu.bottomnavigationviewex.*;
 
 
-public class SettingsActivity extends Fragment {
+public class MessagingActivity extends Fragment {
 
-    public static SettingsActivity newInstance() {
-        SettingsActivity fragment = new SettingsActivity();
+    public static MessagingActivity newInstance() {
+        MessagingActivity fragment = new MessagingActivity();
         return fragment;
     }
 
@@ -25,7 +25,7 @@ public class SettingsActivity extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_settings, container, false);
+        View rootView = inflater.inflate(R.layout.activity_messaging, container, false);
 
         Bundle extras = getActivity().getIntent().getExtras();
         if(extras != null){

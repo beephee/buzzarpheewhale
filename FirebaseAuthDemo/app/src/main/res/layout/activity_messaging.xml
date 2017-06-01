@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgGreen"
+    android:background="@color/bgYellow"
     android:orientation="vertical"
     tools:context="com.example.android.firebaseauthdemo.AddRequestActivity">
 
@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/settingsTop"
-        android:text="Settings"
+        android:id="@+id/messagingTop"
+        android:text="Messaging"
         android:textAllCaps="true"
         android:fontFamily="casual"
         android:textStyle="bold"
@@ -22,4 +22,4 @@
         android:textSize="20sp"
         android:layout_gravity="center_horizontal" />
 
-    </RelativeLayout>
+</RelativeLayout>

@@ -54,7 +54,7 @@
             android:layout_margin="15dp"
             android:textSize="18sp"
             android:fontFamily="sans-serif-condensed"
-            android:background="@color/yellow"
+            android:background="@color/bgYellow"
             android:textStyle="bold"
             android:text="LOG IN" />
 

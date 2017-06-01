@@ -32,14 +32,4 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/customborder"/>
 
-    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-        android:id="@+id/bottomNaviBarCourier"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:itemBackground="@color/black"
-        app:itemIconTint="@drawable/navicolour"
-        app:itemTextColor="@drawable/navicolour"
-        app:menu="@menu/bottomnavi" />
-
 </RelativeLayout>

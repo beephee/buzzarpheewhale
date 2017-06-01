@@ -63,7 +63,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:fontFamily="sans-serif-condensed"
-            android:background="@color/yellow"
+            android:background="@color/bgYellow"
             android:text="SIGN UP" />
 
         <TextView

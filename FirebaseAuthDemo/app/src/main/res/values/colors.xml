@@ -5,10 +5,11 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="yellow">#FFE699</color>
     <color name="blue">#0000FF</color>
+    <color name="bgYellow">#FFE699</color>
     <color name="bgGray">#F2F2F2</color>
     <color name="bgBlue">#B4C7E7</color>
     <color name="bgPink">#FFAFAF</color>
     <color name="bgGreen">#A5F5C3</color>
+    <color name="bgPeach">#F8CEB2</color>
 </resources>

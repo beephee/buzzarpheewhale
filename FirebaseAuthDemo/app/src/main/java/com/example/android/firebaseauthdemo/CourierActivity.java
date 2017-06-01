@@ -1,12 +1,15 @@
 package com.example.android.firebaseauthdemo;
 
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -21,9 +24,12 @@ import com.ittianyu.bottomnavigationviewex.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourierActivity extends AppCompatActivity {
+public class CourierActivity extends Fragment {
 
-    private Button buyerButton;
+    public static CourierActivity newInstance() {
+        CourierActivity fragment = new CourierActivity();
+        return fragment;
+    }
 
     DatabaseReference databaseProducts;
     ListView listViewProducts;
@@ -32,71 +38,22 @@ public class CourierActivity extends AppCompatActivity {
     private BottomNavigationViewEx bottomNavigationViewCourier;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_courier);
-
-        BottomNavigationViewEx bottomNavigationViewCourier = (BottomNavigationViewEx) findViewById(R.id.bottomNaviBarCourier);
-        bottomNavigationViewCourier.setSelectedItemId(R.id.actionCourier);
-        bottomNavigationViewCourier.enableAnimation(false);
-        bottomNavigationViewCourier.enableShiftingMode(false);
-        bottomNavigationViewCourier.enableItemShiftingMode(false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.activity_courier, container, false);
 
         databaseProducts = FirebaseDatabase.getInstance().getReference("products");
-
-        listViewProducts = (ListView) findViewById(R.id.listViewProducts);
-
         productList = new ArrayList<>();
 
         //Grabs email string from previous activity
-        Bundle extras = getIntent().getExtras();
+        Bundle extras = getActivity().getIntent().getExtras();
         if(extras != null){
             userEmail = extras.getString("email");
         }
-
-        //Registers product courier as user email
-        /*Button buttonAccept = (Button) findViewById(R.id.buttonAcceptReq);
-        buttonAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String newCourier = userEmail;
-            }
-        });*/
-
-        bottomNavigationViewCourier.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.actionBuyer:
-                                Intent intentCouBuyer = new Intent(CourierActivity.this, BuyerActivity.class);
-                                //Pass the email string to next activity
-                                intentCouBuyer.putExtra("email", userEmail);
-                                startActivity(intentCouBuyer);
-
-                            case R.id.actionSettings:
-                                Intent intentCouSettings = new Intent(CourierActivity.this, SettingsActivity.class);
-                                //Pass the email string to next activity
-                                intentCouSettings.putExtra("email", userEmail);
-                                startActivity(intentCouSettings);
-
-                            case R.id.actionChats:
-                                //to change
-                                return true;
-
-                            case R.id.actionMaps:
-                                //to change
-                                return true;
-
-                        }
-                        return true;
-                    }
-                });
-
+        return rootView;
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
 
         databaseProducts.addValueEventListener(new ValueEventListener() {
@@ -110,7 +67,7 @@ public class CourierActivity extends AppCompatActivity {
                     productList.add(product);
                 }
 
-                ProductList adapter = new ProductList(CourierActivity.this, productList);
+                ProductList adapter = new ProductList(getActivity(), productList);
                 listViewProducts.setAdapter(adapter);
 
             }

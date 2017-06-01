@@ -70,8 +70,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void viewCourierPage(View view)
     {
         Intent intent = new Intent(this, Loggedin.class);
-        //Pass the email string to next activity
-        intent.putExtra("email", userEmail);
+        //Pass the email string and page choice to next activity
+        Bundle extras = new Bundle();
+        extras.putString("email", userEmail);
+        extras.putString("page", "courier");
+        intent.putExtras(extras);
         startActivity(intent);
     }
 
@@ -79,8 +82,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void viewBuyerPage(View view)
     {
         Intent intent = new Intent(this, Loggedin.class);
-        //Pass the email string to next activity
-        intent.putExtra("email", userEmail);
+        //Pass the email string and page choice to next activity
+        Bundle extras = new Bundle();
+        extras.putString("email", userEmail);
+        extras.putString("page", "buyer");
+        intent.putExtras(extras);
         startActivity(intent);
     }
 }

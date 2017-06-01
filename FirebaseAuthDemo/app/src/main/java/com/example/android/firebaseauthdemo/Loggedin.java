@@ -9,20 +9,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import com.ittianyu.bottomnavigationviewex.*;
 
+import static com.example.android.firebaseauthdemo.R.layout.activity_loggedin;
+
 public class Loggedin extends AppCompatActivity {
+
+    String userEmail;
+    String directedPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loggedin);
+        setContentView(activity_loggedin);
+
+        //Grabs email string and page choice from previous activity
+        Bundle extras = getIntent().getExtras();
+        userEmail = extras.getString("email");
+        directedPage = extras.getString("page");
 
         //Default fragment opened upon activity's creation
         if (savedInstanceState == null) {
             BuyerActivity defaultFrag = new BuyerActivity();
+            CourierActivity defaultFrag2 = new CourierActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.frame_layout, defaultFrag);
+            if (directedPage=="buyer") {
+                fragmentTransaction.add(R.id.frame_layout, defaultFrag);
+            }
+            else {
+                fragmentTransaction.add(R.id.frame_layout, defaultFrag2);
+            }
             fragmentTransaction.commit();
-
         }
 
         BottomNavigationViewEx bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
@@ -41,16 +56,16 @@ public class Loggedin extends AppCompatActivity {
                                 selectedFragment = BuyerActivity.newInstance();
                                 break;
                             case R.id.actionCourier:
-                                //selectedFragment = CourierActivity.newInstance();
+                                selectedFragment = CourierActivity.newInstance();
                                 break;
                             case R.id.actionChats:
-                                //selectedFragment = ChatActivity.newInstance();
+                                selectedFragment = MessagingActivity.newInstance();
                                 break;
                             case R.id.actionMaps:
-                                //selectedFragment = BigMapsActivity.newInstance();
+                                selectedFragment = MenuMapActivity.newInstance();
                                 break;
                             case R.id.actionSettings:
-                                //selectedFragment = SettingsActivity.newInstance();
+                                selectedFragment = SettingsActivity.newInstance();
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
