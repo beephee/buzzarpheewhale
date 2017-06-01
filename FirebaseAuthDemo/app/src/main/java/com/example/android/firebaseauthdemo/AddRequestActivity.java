@@ -220,7 +220,7 @@ public class AddRequestActivity extends AppCompatActivity {
             //Submit value to database
             databaseProducts.child(id).setValue(product);
             Toast.makeText(this, "Request added!", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, BuyerActivity.class);
+            Intent intent = new Intent(this, Loggedin.class);
             //Pass the email string to next activity
             intent.putExtra("email", userEmail);
             startActivity(intent);
@@ -231,7 +231,7 @@ public class AddRequestActivity extends AppCompatActivity {
 
     public void cancel(View view)
     {
-        Intent intent = new Intent(this, BuyerActivity.class);
+        Intent intent = new Intent(this, Loggedin.class);
         //Pass the email string to next activity
         intent.putExtra("email", userEmail);
         startActivity(intent);

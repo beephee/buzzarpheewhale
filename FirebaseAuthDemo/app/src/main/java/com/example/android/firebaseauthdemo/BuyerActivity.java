@@ -7,12 +7,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -37,7 +39,12 @@ import java.util.List;
 
 import static android.media.CamcorderProfile.get;
 
-public class BuyerActivity extends AppCompatActivity {
+public class BuyerActivity extends Fragment {
+
+    public static BuyerActivity newInstance() {
+        BuyerActivity fragment = new BuyerActivity();
+        return fragment;
+    }
 
     DatabaseReference databaseProducts;
     ListView listViewProducts;
@@ -51,21 +58,39 @@ public class BuyerActivity extends AppCompatActivity {
     String getCoords;
     Spinner spinnerProductType;
     private BottomNavigationViewEx bottomNavigationViewBuyer;
+    TextView textViewMyRequests;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buyer);
-
-        BottomNavigationViewEx bottomNavigationViewBuyer = (BottomNavigationViewEx) findViewById(R.id.bottomNaviBarBuyer);
-        bottomNavigationViewBuyer.setSelectedItemId(R.id.actionBuyer);
-        bottomNavigationViewBuyer.enableAnimation(false);
-        bottomNavigationViewBuyer.enableShiftingMode(false);
-        bottomNavigationViewBuyer.enableItemShiftingMode(false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.activity_buyer, container, false);
 
         databaseProducts = FirebaseDatabase.getInstance().getReference("products");
+        productList = new ArrayList<>();
 
-        listViewProducts = (ListView) findViewById(R.id.listViewProducts);
+        //Grabs email string from previous activity
+        Bundle extras = getActivity().getIntent().getExtras();
+        if(extras != null){
+            userEmail = extras.getString("email");
+        }
+
+        Button btnNewRequest = (Button) rootView.findViewById(R.id.buttonNewListing);
+        btnNewRequest.setOnClickListener(mButtonClickListener);
+        return rootView;
+    }
+
+    //Defining a class to be called by onClick does not work in Fragments
+    private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), AddRequestActivity.class);
+            intent.putExtra("email", userEmail);
+            getActivity().startActivity(intent);
+        }
+    };
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        listViewProducts = (ListView) getView().findViewById(R.id.listViewProducts);
+        textViewMyRequests = (TextView) getView().findViewById(R.id.textViewMyRequests);
 
         listViewProducts.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -75,52 +100,12 @@ public class BuyerActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        productList = new ArrayList<>();
-
-        //Grabs email string from previous activity
-        Bundle extras = getIntent().getExtras();
-        if(extras != null){
-            userEmail = extras.getString("email");
-        }
-
-        bottomNavigationViewBuyer.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-
-                            case R.id.actionCourier:
-                                Intent intentBuyCourier = new Intent(BuyerActivity.this, CourierActivity.class);
-                                //Pass the email string to next activity
-                                intentBuyCourier.putExtra("email", userEmail);
-                                startActivity(intentBuyCourier);
-
-                            case R.id.actionSettings:
-                                Intent intentBuySettings = new Intent(BuyerActivity.this, SettingsActivity.class);
-                                //Pass the email string to next activity
-                                intentBuySettings.putExtra("email", userEmail);
-                                startActivity(intentBuySettings);
-
-                            case R.id.actionChats:
-                                //to change
-                                return true;
-
-                            case R.id.actionMaps:
-                                //to change
-                                return true;
-
-                        }
-                        return true;
-                    }
-                });
-
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
-
+        //textViewMyRequests.setText(userEmail2); //For debugging if email was passed
         databaseProducts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -136,7 +121,7 @@ public class BuyerActivity extends AppCompatActivity {
                     }
                 }
 
-                ProductListBuyer adapter = new ProductListBuyer(BuyerActivity.this, productList);
+                ProductListBuyer adapter = new ProductListBuyer(getActivity(), productList);
                 listViewProducts.setAdapter(adapter);
 
             }
@@ -152,14 +137,14 @@ public class BuyerActivity extends AppCompatActivity {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(productId);
         Product product = new Product(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url);
         dR.setValue(product);
-        Toast.makeText(getApplicationContext(), "Product Updated", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity().getApplicationContext(), "Product Updated", Toast.LENGTH_LONG).show();
         return true;
     }
 
     private void showUpdateDeleteDialog(final String productId, final String productBuyer, final String productCourier, final String productName, final String productType, final String productCoords, final String length, final String width, final String height, final String weight, final String price, final String date, final String url) {
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.update_dialog, null);
         dialogBuilder.setView(dialogView);
         final EditText editTextProductName = (EditText) dialogView.findViewById(R.id.editTextProductName);
@@ -211,7 +196,7 @@ public class BuyerActivity extends AppCompatActivity {
                     b.dismiss();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Please ensure all fields are completed.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Please ensure all fields are completed.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -228,29 +213,20 @@ public class BuyerActivity extends AppCompatActivity {
     private boolean deleteProduct(String productId) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(productId);
         dR.removeValue();
-        Toast.makeText(getApplicationContext(), "Product Deleted", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity().getApplicationContext(), "Product Deleted", Toast.LENGTH_LONG).show();
         return true;
-    }
-
-    //Goto Add Request
-    public void viewAddRequest(View view)
-    {
-        Intent intent = new Intent(this, AddRequestActivity.class);
-        //Pass the email string to next activity
-        intent.putExtra("email", userEmail);
-        startActivity(intent);
     }
 
     // Update date
     private void changeDate() {
-        final TextView showDatePicker = (TextView) findViewById(R.id.dateValue);
+        final TextView showDatePicker = (TextView) getView().findViewById(R.id.dateValue);
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog dialog = new DatePickerDialog(
-                BuyerActivity.this,
+                getActivity(),
                 android.R.style.Theme_DeviceDefault_Light_Dialog,
                 mDateSetListener,
                 year,month,day);

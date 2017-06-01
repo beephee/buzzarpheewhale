@@ -14,12 +14,6 @@
         android:title="COURIER"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/actionSettings"
-        android:enabled="true"
-        android:icon="@drawable/settingsicon"
-        android:title="SETTINGS"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/actionChats"
         android:enabled="true"
         android:icon="@drawable/chatsicon"
@@ -30,5 +24,11 @@
         android:enabled="true"
         android:icon="@drawable/mapsicon"
         android:title="MAPS"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/actionSettings"
+        android:enabled="true"
+        android:icon="@drawable/settingsicon"
+        android:title="SETTINGS"
         app:showAsAction="ifRoom" />
 </menu>

@@ -25,9 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView textViewSignin;
-
     private ProgressDialog progressDialog;
-
     private FirebaseAuth firebaseAuth;
 
     @Override

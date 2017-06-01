@@ -31,7 +31,6 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/white"
-        android:onClick="viewAddRequest"
         android:background="@drawable/buyerroundedbutton"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
@@ -49,15 +48,6 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/customborder"/>
 
-    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-        android:id="@+id/bottomNaviBarBuyer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:itemBackground="@color/black"
-        app:itemIconTint="@drawable/navicolour"
-        app:itemTextColor="@drawable/navicolour"
-        app:menu="@menu/bottomnavi" />
 
 
 </RelativeLayout>

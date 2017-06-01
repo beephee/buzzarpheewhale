@@ -27,7 +27,6 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".CourierActivity" />
-        <activity android:name=".BuyerActivity" />
         <activity android:name=".AddRequestActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -44,7 +43,11 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity
+            android:name=".Loggedin"
+            android:label="@string/title_activity_loggedin"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>
