@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgBlue"
-    tools:context="com.example.android.firebaseauthdemo.BuyerActivity">
+    tools:context="com.example.android.firebaseauthdemo.BuyerFragment">
 
     <TextView
         android:id="@+id/textViewMyRequests"

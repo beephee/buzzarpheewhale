@@ -69,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     //Goto Courier Dashboard
     public void viewCourierPage(View view)
     {
-        Intent intent = new Intent(this, Loggedin.class);
+        Intent intent = new Intent(this, LoggedinActivity.class);
         //Pass the email string and page choice to next activity
         Bundle extras = new Bundle();
         extras.putString("email", userEmail);
@@ -81,7 +81,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     //Goto Buyer Dashboard
     public void viewBuyerPage(View view)
     {
-        Intent intent = new Intent(this, Loggedin.class);
+        Intent intent = new Intent(this, LoggedinActivity.class);
         //Pass the email string and page choice to next activity
         Bundle extras = new Bundle();
         extras.putString("email", userEmail);

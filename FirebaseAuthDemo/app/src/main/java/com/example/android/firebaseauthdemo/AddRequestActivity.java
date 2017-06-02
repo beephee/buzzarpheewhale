@@ -21,7 +21,6 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.Calendar;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.model.LatLng;
@@ -32,8 +31,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import static android.R.attr.button;
-import static android.R.attr.id;
 import static com.example.android.firebaseauthdemo.R.id.dateValue;
 
 public class AddRequestActivity extends AppCompatActivity {
@@ -220,7 +217,7 @@ public class AddRequestActivity extends AppCompatActivity {
             //Submit value to database
             databaseProducts.child(id).setValue(product);
             Toast.makeText(this, "Request added!", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, Loggedin.class);
+            Intent intent = new Intent(this, LoggedinActivity.class);
             addExtras(intent);
             startActivity(intent);
         }else{
@@ -230,7 +227,7 @@ public class AddRequestActivity extends AppCompatActivity {
 
     public void cancel(View view)
     {
-        Intent intent = new Intent(this, Loggedin.class);
+        Intent intent = new Intent(this, LoggedinActivity.class);
         addExtras(intent);
         startActivity(intent);
     }
