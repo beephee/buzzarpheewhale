@@ -44,7 +44,7 @@ public class Product {
         return productId;
     }
 
-    public String getProductBuyer() {
+    public String getProductBuyerEmail() {
         return productBuyer;
     }
 

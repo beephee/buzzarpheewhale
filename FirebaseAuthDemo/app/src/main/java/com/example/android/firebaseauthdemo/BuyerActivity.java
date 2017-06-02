@@ -5,10 +5,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationItemView;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,8 +21,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.support.design.widget.BottomNavigationView;
-import android.view.MenuItem;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -96,7 +92,7 @@ public class BuyerActivity extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Product product = productList.get(i);
-                showUpdateDeleteDialog(product.getProductId(), product.getProductBuyer(), product.getProductCourier(), product.getProductName(), product.getProductType(), product.getProductCoords(), product.getLength(), product.getWidth(), product.getHeight(), product.getWeight(), product.getPrice(), product.getDate(), product.getImgurl());
+                showUpdateDeleteDialog(product.getProductId(), product.getProductBuyerEmail(), product.getProductCourier(), product.getProductName(), product.getProductType(), product.getProductCoords(), product.getLength(), product.getWidth(), product.getHeight(), product.getWeight(), product.getPrice(), product.getDate(), product.getImgurl());
                 return true;
             }
         });
@@ -115,7 +111,7 @@ public class BuyerActivity extends Fragment {
                 for(DataSnapshot productSnapshot : dataSnapshot.getChildren()){
                     Product product = productSnapshot.getValue(Product.class);
                     //Filter results to show only products by the user
-                    String email = product.getProductBuyer();
+                    String email = product.getProductBuyerEmail();
                     if(email.equals(userEmail)){
                         productList.add(product);
                     }

@@ -18,12 +18,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.google.android.gms.vision.text.Text;
 
 import java.util.List;
-
-import static com.example.android.firebaseauthdemo.R.id.image;
-import static com.example.android.firebaseauthdemo.R.id.textView;
 
 /**
  * Created by Admin on 27/5/2017.
@@ -64,7 +60,7 @@ public class ProductList extends ArrayAdapter<Product>{
         textViewProductName.setText(product.getProductName());
         textViewProductType.setText(product.getProductType());
         textViewCoords.setText(product.getProductCoords().substring(0,35)); //Trim to fit screen
-        textViewBuyerEmail.setText(product.getProductBuyer());
+        textViewBuyerEmail.setText(product.getProductBuyerEmail());
         textViewPrice.setText(product.getPrice());
         textViewWeight.setText(product.getWeight());
         textViewHeight.setText(product.getHeight());

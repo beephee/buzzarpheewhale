@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,8 +15,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
-
-import static android.R.id.list;
 
 /**
  * Created by Admin on 27/5/2017.
@@ -59,7 +56,7 @@ public class ProductListBuyer extends ArrayAdapter<Product>{
         textViewProductName.setText(product.getProductName());
         textViewProductType.setText(product.getProductType());
         textViewCoords.setText(product.getProductCoords().substring(0,35));
-        textViewBuyerEmail.setText(product.getProductBuyer());
+        textViewBuyerEmail.setText(product.getProductBuyerEmail());
         textViewPrice.setText(product.getPrice());
         textViewWeight.setText(product.getWeight());
         textViewHeight.setText(product.getHeight());

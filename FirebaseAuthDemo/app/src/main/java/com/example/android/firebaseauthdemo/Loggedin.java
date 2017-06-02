@@ -7,8 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.google.android.gms.vision.text.Text;
 import com.ittianyu.bottomnavigationviewex.*;
 
+import static com.example.android.firebaseauthdemo.R.id.textViewMyOrders;
 import static com.example.android.firebaseauthdemo.R.layout.activity_loggedin;
 
 public class Loggedin extends AppCompatActivity {
@@ -26,31 +30,32 @@ public class Loggedin extends AppCompatActivity {
         userEmail = extras.getString("email");
         directedPage = extras.getString("page");
 
+        //Initialize navbar first as a method of it needs to be called in fragment selection
+        BottomNavigationViewEx bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
+
+
         //Default fragment opened upon activity's creation
         if (savedInstanceState == null) {
             BuyerActivity defaultFrag = new BuyerActivity();
             CourierActivity defaultFrag2 = new CourierActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            if (directedPage=="buyer") {
+            if (directedPage.equals("buyer")) {
                 fragmentTransaction.add(R.id.frame_layout, defaultFrag);
+                bottomNavigationView.setSelectedItemId(R.id.actionBuyer);
             }
             else {
                 fragmentTransaction.add(R.id.frame_layout, defaultFrag2);
+                bottomNavigationView.setSelectedItemId(R.id.actionCourier);
             }
             fragmentTransaction.commit();
         }
-
-        BottomNavigationViewEx bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
-        bottomNavigationView.enableAnimation(false);
-        bottomNavigationView.enableShiftingMode(false);
-        bottomNavigationView.enableItemShiftingMode(false);
 
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        //selectedFragment will need to set back to null after other fragments are inserted
-                        Fragment selectedFragment = BuyerActivity.newInstance();
+
+                        Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.actionBuyer:
                                 selectedFragment = BuyerActivity.newInstance();
