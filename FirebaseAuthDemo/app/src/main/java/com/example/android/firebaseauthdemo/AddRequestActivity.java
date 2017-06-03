@@ -51,6 +51,8 @@ public class AddRequestActivity extends AppCompatActivity {
     ImageView productImage;
     TextView textViewImageName;
 
+    //Product details to be stored
+    String country;
     String userEmail;
     String productcoords;
     private static final String TAG = "AddRequestActivity";
@@ -152,8 +154,14 @@ public class AddRequestActivity extends AppCompatActivity {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 LatLng latLng = (LatLng) data.getParcelableExtra("picked_point");
-                Toast.makeText(this, "Point Chosen: " + latLng.latitude + " " + latLng.longitude, Toast.LENGTH_LONG).show();
-                buttonGetCoordinates.setText(latLng.latitude + "," + latLng.longitude);
+                //Convert LatLng to Double, then to String and trim string length to 10
+                Double dbLat = latLng.latitude;
+                Double dbLng = latLng.longitude;
+                String latString = dbLat.toString().substring(0,15);
+                String lngString = dbLng.toString().substring(0,15);
+                country = (String) data.getStringExtra("picked_country");
+                Toast.makeText(this, "Product is located in: " + country, Toast.LENGTH_LONG).show();
+                buttonGetCoordinates.setText(country + "\n(" + latString + "," + lngString + ")");
                 productcoords = (latLng.latitude + "," + latLng.longitude);
             }
         }
@@ -213,7 +221,7 @@ public class AddRequestActivity extends AppCompatActivity {
             //Get the unique id of the branch
             String id = databaseProducts.push().getKey();
             //Define the parameters for the database entry
-            Product product = new Product(id, buyer, courier, productname, producttype, productcoords, length, width, height, weight, price, date, url);
+            Product product = new Product(id, buyer, courier, productname, producttype, productcoords, length, width, height, weight, price, date, url, country);
             //Submit value to database
             databaseProducts.child(id).setValue(product);
             Toast.makeText(this, "Request added!", Toast.LENGTH_LONG).show();

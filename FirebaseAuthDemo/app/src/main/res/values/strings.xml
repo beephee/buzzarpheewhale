@@ -3,8 +3,11 @@
 
     <array name="product_types">
         <item>Apparel</item>
+        <item>Beauty</item>
+        <item>Collectibles</item>
         <item>Electronics</item>
         <item>Food</item>
+        <item>Jewellery</item>
     </array>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_settings">SettingsActivity</string>

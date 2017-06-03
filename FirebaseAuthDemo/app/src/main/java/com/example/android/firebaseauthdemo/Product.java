@@ -19,12 +19,13 @@ public class Product {
     String price;
     String date;
     String imgurl;
+    String country;
 
     public Product(){
 
     }
 
-    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String imgurl) {
+    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String imgurl, String country) {
         this.productId = productId;
         this.productBuyer = productBuyer;
         this.productCourier = productCourier;
@@ -38,6 +39,7 @@ public class Product {
         this.price = price;
         this.date = date;
         this.imgurl = imgurl;
+        this.country = country;
     }
 
     public String getProductId() {
@@ -89,4 +91,6 @@ public class Product {
     }
 
     public String getImgurl() { return imgurl; }
+
+    public String getCountry() { return country; }
 }
