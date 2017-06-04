@@ -1,8 +1,12 @@
 package com.example.android.firebaseauthdemo;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.transition.Fade;
+import android.transition.Transition;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -71,6 +75,8 @@ public class LoggedinActivity extends AppCompatActivity {
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.setCustomAnimations(R.anim.enter_from_left,R.anim.exit_to_right);
+                        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         transaction.replace(R.id.frame_layout, selectedFragment);
                         transaction.commit();
                         return true;

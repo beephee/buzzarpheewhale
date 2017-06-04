@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="All Available Orders"
+        android:text="Available Orders"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textAllCaps="true"

@@ -4,10 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgYellow"
-    android:paddingBottom="10dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="15dp">
+    android:paddingBottom="10dp" >
+
+    <TextView
+        android:id="@+id/textViewMessages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Current Requests"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:fontFamily="casual"
+        android:textSize="20sp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -32,8 +42,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/customborder"
+        android:layout_below="@+id/textViewMessages"
         android:layout_above="@+id/room_name_edittext" />
 </RelativeLayout>

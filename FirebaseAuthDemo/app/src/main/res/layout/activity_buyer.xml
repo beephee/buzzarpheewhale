@@ -14,7 +14,7 @@
         android:layout_below="@id/textViewBuyerDashboard"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="My Current Requests"
+        android:text="Current Requests"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textAllCaps="true"

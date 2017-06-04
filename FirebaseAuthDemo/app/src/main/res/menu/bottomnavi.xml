@@ -23,7 +23,7 @@
         android:id="@+id/actionMaps"
         android:enabled="true"
         android:icon="@drawable/mapsicon"
-        android:title="MAPS"
+        android:title="LOCATIONS"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/actionSettings"

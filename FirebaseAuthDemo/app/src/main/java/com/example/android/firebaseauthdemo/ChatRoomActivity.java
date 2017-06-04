@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.android.firebaseauthdemo.R;
+import com.google.android.gms.vision.text.Text;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +28,7 @@ public class ChatRoomActivity extends AppCompatActivity{
     private Button btn_send_msg;
     private EditText input_msg;
     private TextView chat_conversation;
+    private TextView chat_title;
 
     private String user_name,room_name;
     private DatabaseReference root ;
@@ -40,10 +42,12 @@ public class ChatRoomActivity extends AppCompatActivity{
         btn_send_msg = (Button) findViewById(R.id.btn_send);
         input_msg = (EditText) findViewById(R.id.msg_input);
         chat_conversation = (TextView) findViewById(R.id.textView);
+        chat_title = (TextView) findViewById(R.id.chatName);
 
         user_name = getIntent().getExtras().get("user_name").toString();
         room_name = getIntent().getExtras().get("room_name").toString();
         setTitle(" Room - "+room_name);
+        chat_title.setText("ROOM - "+room_name);
 
         root = FirebaseDatabase.getInstance().getReference().child("chat").child(room_name);
 
