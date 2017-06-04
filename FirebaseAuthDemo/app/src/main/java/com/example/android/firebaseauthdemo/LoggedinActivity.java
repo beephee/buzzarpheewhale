@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.*;
 
@@ -32,7 +33,7 @@ public class LoggedinActivity extends AppCompatActivity {
         directedPage = extras.getString("page");
 
         //Initialize navbar first as a method of it needs to be called in fragment selection
-        BottomNavigationViewEx bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
+        final BottomNavigationViewEx bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
 
 
         //Default fragment opened upon activity's creation
@@ -50,6 +51,8 @@ public class LoggedinActivity extends AppCompatActivity {
             }
             fragmentTransaction.commit();
         }
+
+        //Toast.makeText(this, String.valueOf(bottomNavigationView.getSelectedItemId()), Toast.LENGTH_LONG).show();
 
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -75,7 +78,11 @@ public class LoggedinActivity extends AppCompatActivity {
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.setCustomAnimations(R.anim.enter_from_left,R.anim.exit_to_right);
+                        if(bottomNavigationView.getSelectedItemId() > item.getItemId()){
+                            transaction.setCustomAnimations(R.anim.enter_from_left,R.anim.exit_to_right);
+                        } else {
+                            transaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left);
+                        }
                         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         transaction.replace(R.id.frame_layout, selectedFragment);
                         transaction.commit();
