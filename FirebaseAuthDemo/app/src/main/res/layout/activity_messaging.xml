@@ -1,25 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgYellow"
-    android:orientation="vertical"
-    tools:context="com.example.android.firebaseauthdemo.AddRequestActivity">
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="15dp">
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/messagingTop"
-        android:text="Messaging"
-        android:textAllCaps="true"
-        android:fontFamily="casual"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:layout_gravity="center_horizontal" />
+        android:id="@+id/room_name_edittext"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/btn_add_room"
+        android:layout_toStartOf="@+id/btn_add_room" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add room"
+        android:id="@+id/btn_add_room"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/room_name_edittext" />
 </RelativeLayout>
