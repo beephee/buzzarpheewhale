@@ -56,7 +56,7 @@ public class ProductListBuyer extends ArrayAdapter<Product>{
         textViewProductName.setText(product.getProductName());
         textViewProductType.setText(product.getProductType());
         textViewCoords.setText(product.getProductCoords().substring(0,35));
-        textViewBuyerEmail.setText(product.getProductBuyerEmail());
+        textViewBuyerEmail.setText(product.getProductBuyer());
         textViewPrice.setText(product.getPrice());
         textViewWeight.setText(product.getWeight());
         textViewHeight.setText(product.getHeight());

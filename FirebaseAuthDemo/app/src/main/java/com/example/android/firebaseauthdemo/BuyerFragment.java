@@ -91,7 +91,7 @@ public class BuyerFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Product product = productList.get(i);
-                showUpdateDeleteDialog(product.getProductId(), product.getProductBuyerEmail(), product.getProductCourier(), product.getProductName(), product.getProductType(), product.getProductCoords(), product.getLength(), product.getWidth(), product.getHeight(), product.getWeight(), product.getPrice(), product.getDate(), product.getImgurl(), product.getCountry());
+                showUpdateDeleteDialog(product.getProductId(), product.getProductBuyer(), product.getProductCourier(), product.getProductName(), product.getProductType(), product.getProductCoords(), product.getLength(), product.getWidth(), product.getHeight(), product.getWeight(), product.getPrice(), product.getDate(), product.getImgurl(), product.getCountry());
                 return true;
             }
         });
@@ -110,7 +110,7 @@ public class BuyerFragment extends Fragment {
                 for(DataSnapshot productSnapshot : dataSnapshot.getChildren()){
                     Product product = productSnapshot.getValue(Product.class);
                     //Filter results to show only products by the user
-                    String email = product.getProductBuyerEmail();
+                    String email = product.getProductBuyer();
                     if(email.equals(userEmail)){
                         productList.add(product);
                     }

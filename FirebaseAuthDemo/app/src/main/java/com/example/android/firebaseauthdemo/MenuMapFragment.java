@@ -14,6 +14,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class MenuMapFragment extends Fragment {
@@ -21,6 +26,7 @@ public class MenuMapFragment extends Fragment {
     MapView mMapView;
     private GoogleMap googleMap;
     String userEmail;
+    DatabaseReference databaseProducts;
 
     public static MenuMapFragment newInstance() {
         MenuMapFragment fragment = new MenuMapFragment();
@@ -30,6 +36,8 @@ public class MenuMapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_menu_map, container, false);
+
+        databaseProducts = FirebaseDatabase.getInstance().getReference("products");
 
         Bundle extras = getActivity().getIntent().getExtras();
         if(extras != null){
@@ -56,12 +64,40 @@ public class MenuMapFragment extends Fragment {
                 googleMap.setMyLocationEnabled(true);
 
                 LatLng nus = new LatLng(1.2966, 103.7764);
-                googleMap.addMarker(new MarkerOptions().position(nus).title("NUS").snippet("Orbital 2017"));
+                //googleMap.addMarker(new MarkerOptions().position(nus).title("NUS").snippet("Orbital 2017"));
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(nus).zoom(12).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
         return rootView;
+    }
+
+    public void onStart() {
+        super.onStart();
+        //textViewMyRequests.setText(userEmail2); //For debugging if email was passed
+        databaseProducts.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot productSnapshot : dataSnapshot.getChildren()){
+                    Product product = productSnapshot.getValue(Product.class);
+                    //Filter results to show only products by the user
+                    String email = product.getProductBuyer();
+                    if(email.equals(userEmail)){
+                        String[] latlong =  product.getProductCoords().split(",");
+                        double latitude = Double.parseDouble(latlong[0]);
+                        double longitude = Double.parseDouble(latlong[1]);
+                        LatLng productLocation = new LatLng(latitude,longitude);
+                        googleMap.addMarker(new MarkerOptions().position(productLocation).title(product.getProductName()).snippet(product.getDate()));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
