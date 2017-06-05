@@ -5,13 +5,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.transition.Fade;
-import android.transition.Transition;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.*;
 
@@ -39,7 +36,7 @@ public class LoggedinActivity extends AppCompatActivity {
         //Default fragment opened upon activity's creation
         if (savedInstanceState == null) {
             BuyerFragment defaultFrag = new BuyerFragment();
-            CourierFragment defaultFrag2 = new CourierFragment();
+            AcceptedCourierFragment defaultFrag2 = new AcceptedCourierFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             if (directedPage.equals("buyer")) {
                 fragmentTransaction.add(R.id.frame_layout, defaultFrag);
@@ -65,7 +62,7 @@ public class LoggedinActivity extends AppCompatActivity {
                                 selectedFragment = BuyerFragment.newInstance();
                                 break;
                             case R.id.actionCourier:
-                                selectedFragment = CourierFragment.newInstance();
+                                selectedFragment = AcceptedCourierFragment.newInstance();
                                 break;
                             case R.id.actionChats:
                                 selectedFragment = MessagingFragment.newInstance();
@@ -80,7 +77,10 @@ public class LoggedinActivity extends AppCompatActivity {
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         if(bottomNavigationView.getSelectedItemId() > item.getItemId()){
                             transaction.setCustomAnimations(R.anim.enter_from_left,R.anim.exit_to_right);
-                        } else {
+                        } else if(bottomNavigationView.getSelectedItemId() == item.getItemId()){
+                            return true;
+                        }
+                        else {
                             transaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left);
                         }
                         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
