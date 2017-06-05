@@ -189,8 +189,9 @@ public class MenuMapFragment extends Fragment {
                 for(DataSnapshot productSnapshot : dataSnapshot.getChildren()){
                     Product product = productSnapshot.getValue(Product.class);
                     //Filter results to show only products by the user
-                    String buyerEmail = product.getProductBuyer(); //To add courier email next
-                    if(buyerEmail.equals(userEmail)){
+                    String buyerEmail = product.getProductBuyer();
+                    String courierEmail = product.getProductCourier();
+                    if(buyerEmail.equals(userEmail) || courierEmail.equals(userEmail)){
                         //Add individual product details into array list (room for improvement)
                         String[] latlong =  product.getProductCoords().split(",");
                         double latitude = Double.parseDouble(latlong[0]);
