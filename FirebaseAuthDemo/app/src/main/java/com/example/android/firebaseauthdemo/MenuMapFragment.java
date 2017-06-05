@@ -26,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 
 public class MenuMapFragment extends Fragment {
 
@@ -36,10 +38,22 @@ public class MenuMapFragment extends Fragment {
     ArrayList<LatLng> LocList;
     ArrayList<String> ImgList;
     ArrayList<String> ProductNameList;
+    ArrayList<String> PriceList;
+    ArrayList<String> ServiceTypeList;
+    ArrayList<String> CountryList;
+    ArrayList<String> CategoryList;
+    ArrayList<String> DateList;
+    ArrayList<String> StatusList;
     int arrSize;
     int curItemIndex = 0;
     ImageView imageViewProduct;
     TextView textViewProductName;
+    TextView textViewPrice;
+    TextView textViewServiceType;
+    TextView textViewCountry;
+    TextView textViewCategory;
+    TextView textViewDeadline;
+    TextView textViewStatus;
 
     public static MenuMapFragment newInstance() {
         MenuMapFragment fragment = new MenuMapFragment();
@@ -54,6 +68,12 @@ public class MenuMapFragment extends Fragment {
         LocList = new ArrayList();
         ImgList = new ArrayList();
         ProductNameList = new ArrayList();
+        PriceList = new ArrayList();
+        ServiceTypeList = new ArrayList();
+        CountryList = new ArrayList();
+        CategoryList = new ArrayList();
+        DateList = new ArrayList();
+        StatusList = new ArrayList();
 
         Button btnPrev = (Button) rootView.findViewById(R.id.prevItem);
         btnPrev.setOnClickListener(ButtonPrevClickListener);
@@ -68,6 +88,12 @@ public class MenuMapFragment extends Fragment {
         //Bottom Product Info Panel
         imageViewProduct = (ImageView) rootView.findViewById(R.id.imageViewProduct);
         textViewProductName = (TextView) rootView.findViewById(R.id.textViewProductName);
+        textViewPrice = (TextView) rootView.findViewById(R.id.textViewPrice);
+        textViewServiceType = (TextView) rootView.findViewById(R.id.textViewServiceType);
+        textViewCountry = (TextView) rootView.findViewById(R.id.textViewCountry);
+        textViewCategory = (TextView) rootView.findViewById(R.id.textViewCategory);
+        textViewDeadline = (TextView) rootView.findViewById(R.id.textViewDeadline);
+        textViewStatus = (TextView) rootView.findViewById(R.id.textViewStatus);
 
         //Initializing the map view
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
@@ -115,8 +141,15 @@ public class MenuMapFragment extends Fragment {
                     .with(getContext())
                     .load(ImgList.get(curItemIndex))
                     .transform(new CircleTransform(getContext()))
+                    //.bitmapTransform(new RoundedCornersTransformation(getContext(),20,20))
                     .into(imageViewProduct);
             textViewProductName.setText(ProductNameList.get(curItemIndex));
+            textViewPrice.setText("$" + PriceList.get(curItemIndex));
+            textViewServiceType.setText(ServiceTypeList.get(curItemIndex));
+            textViewCountry.setText(CountryList.get(curItemIndex));
+            textViewCategory.setText(CategoryList.get(curItemIndex));
+            textViewDeadline.setText(DateList.get(curItemIndex));
+            textViewStatus.setText(StatusList.get(curItemIndex));
         }
     };
 
@@ -137,6 +170,12 @@ public class MenuMapFragment extends Fragment {
                     .transform(new CircleTransform(getContext()))
                     .into(imageViewProduct);
             textViewProductName.setText(ProductNameList.get(curItemIndex));
+            textViewPrice.setText("$" + PriceList.get(curItemIndex));
+            textViewServiceType.setText(ServiceTypeList.get(curItemIndex));
+            textViewCountry.setText(CountryList.get(curItemIndex));
+            textViewCategory.setText(CategoryList.get(curItemIndex));
+            textViewDeadline.setText(DateList.get(curItemIndex));
+            textViewStatus.setText(StatusList.get(curItemIndex));
         }
     };
 
@@ -150,16 +189,39 @@ public class MenuMapFragment extends Fragment {
                 for(DataSnapshot productSnapshot : dataSnapshot.getChildren()){
                     Product product = productSnapshot.getValue(Product.class);
                     //Filter results to show only products by the user
-                    String email = product.getProductBuyer();
-                    if(email.equals(userEmail)){
+                    String buyerEmail = product.getProductBuyer(); //To add courier email next
+                    if(buyerEmail.equals(userEmail)){
                         //Add individual product details into array list (room for improvement)
                         String[] latlong =  product.getProductCoords().split(",");
                         double latitude = Double.parseDouble(latlong[0]);
                         double longitude = Double.parseDouble(latlong[1]);
                         LatLng productLocation = new LatLng(latitude,longitude);
                         LocList.add(new LatLng(latitude,longitude));
+
                         ImgList.add(product.getImgurl());
+
                         ProductNameList.add(product.getProductName());
+
+                        PriceList.add(product.getPrice());
+
+                        if(buyerEmail.equals(userEmail)){
+                            ServiceTypeList.add("Buyer");
+                        } else {
+                            ServiceTypeList.add("Courier");
+                        }
+
+                        CountryList.add(product.getCountry());
+
+                        CategoryList.add(product.getProductType());
+
+                        DateList.add(product.getDate());
+
+                        if(product.getProductCourier().toString().equals("NONE")){
+                            StatusList.add("Pending");
+                        } else {
+                            StatusList.add("Matched");
+                        }
+
                         googleMap.addMarker(new MarkerOptions().position(productLocation).title(product.getProductName()).snippet(product.getDate()));
                     }
                 }
@@ -173,6 +235,12 @@ public class MenuMapFragment extends Fragment {
                         .transform(new CircleTransform(getContext()))
                         .into(imageViewProduct);
                 textViewProductName.setText(ProductNameList.get(curItemIndex));
+                textViewPrice.setText("$" + PriceList.get(curItemIndex));
+                textViewServiceType.setText(ServiceTypeList.get(curItemIndex));
+                textViewCountry.setText(CountryList.get(curItemIndex));
+                textViewCategory.setText(CategoryList.get(curItemIndex));
+                textViewDeadline.setText(DateList.get(curItemIndex));
+                textViewStatus.setText(StatusList.get(curItemIndex));
             }
 
             @Override

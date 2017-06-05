@@ -66,12 +66,11 @@
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/courier_description"
-            android:id="@+id/buttonCourierDashboard"
+            android:background="@drawable/buyer_description"
+            android:id="@+id/buttonBuyerDashboard"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center_horizontal"
-
-            android:onClick="viewCourierPage"/>
+            android:onClick="viewBuyerPage"/>
 
         <ImageButton
             android:layout_width="match_parent"
@@ -79,11 +78,12 @@
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/buyer_description"
-            android:id="@+id/buttonBuyerDashboard"
+            android:background="@drawable/courier_description"
+            android:id="@+id/buttonCourierDashboard"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center_horizontal"
-            android:onClick="viewBuyerPage"/>
+
+            android:onClick="viewCourierPage"/>
 
         <Button
             android:layout_width="wrap_content"
