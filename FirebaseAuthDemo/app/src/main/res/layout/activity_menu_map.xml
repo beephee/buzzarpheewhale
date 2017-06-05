@@ -8,4 +8,62 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <LinearLayout
+        android:id="@+id/bottomInfoBar"
+        android:background="#33000000"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/imageViewProduct"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomInfoBar"
+        android:layout_margin="5dp">
+        <Button
+            android:id="@+id/prevItem"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:background="@drawable/maproundedbutton"
+            android:text="Prev"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/textViewProductName"
+            android:background="@drawable/menumapproductname"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="Product Name"/>
+        <Button
+            android:id="@+id/nextItem"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:background="@drawable/maproundedbutton"
+            android:text="Next"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
 </RelativeLayout>
