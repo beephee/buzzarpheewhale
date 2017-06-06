@@ -12,36 +12,17 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Current Requests"
+        android:text="Ongoing Transactions"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textAllCaps="true"
         android:fontFamily="casual"
         android:textSize="20sp"/>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/room_name_edittext"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/btn_add_room"
-        android:layout_toStartOf="@+id/btn_add_room" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add room"
-        android:id="@+id/btn_add_room"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        android:layout_height="match_parent"
+        android:id="@+id/listViewProducts"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"

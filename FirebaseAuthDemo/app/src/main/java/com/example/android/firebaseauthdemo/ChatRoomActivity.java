@@ -30,7 +30,7 @@ public class ChatRoomActivity extends AppCompatActivity{
     private TextView chat_conversation;
     private TextView chat_title;
 
-    private String user_name,room_name;
+    private String user_name,room_name, product_name;
     private DatabaseReference root ;
     private String temp_key;
 
@@ -46,8 +46,9 @@ public class ChatRoomActivity extends AppCompatActivity{
 
         user_name = getIntent().getExtras().get("user_name").toString();
         room_name = getIntent().getExtras().get("room_name").toString();
-        setTitle(" Room - "+room_name);
-        chat_title.setText("ROOM - "+room_name);
+        product_name = getIntent().getExtras().get("product_name").toString();
+        setTitle(" Room - "+ product_name);
+        chat_title.setText("ROOM - "+ product_name);
 
         root = FirebaseDatabase.getInstance().getReference().child("chat").child(room_name);
 
