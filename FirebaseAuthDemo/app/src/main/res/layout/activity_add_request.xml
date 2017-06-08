@@ -4,30 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgBlue"
+    android:background="#E5E5FF"
     android:orientation="vertical"
     tools:context="com.example.android.firebaseauthdemo.AddRequestActivity">
 
+    <FrameLayout
+        android:id="@+id/frameTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/buyer_top_bar">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         android:id="@+id/textViewBuyerDashboard"
         android:text="Add new request"
         android:textAllCaps="true"
-        android:fontFamily="casual"
-        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:layout_gravity="center_horizontal" />
+        android:textSize="20sp" />
+    </FrameLayout>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ScrollView01"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:layout_below="@id/textViewBuyerDashboard"
+        android:layout_below="@id/frameTopBar"
         android:layout_weight="1"
         android:isScrollContainer="false"
         android:background="@drawable/customborder">

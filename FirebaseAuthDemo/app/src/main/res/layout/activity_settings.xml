@@ -4,22 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgGreen"
+    android:background="#e5ffe5"
     android:orientation="vertical"
     tools:context="com.example.android.firebaseauthdemo.AddRequestActivity">
 
+    <FrameLayout
+        android:id="@+id/frameTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/settings_top_bar">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         android:id="@+id/settingsTop"
         android:text="Settings"
         android:textAllCaps="true"
-        android:fontFamily="casual"
-        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:layout_gravity="center_horizontal" />
+        android:textSize="20sp" />
+    </FrameLayout>
 
     </RelativeLayout>

@@ -1,43 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgPink"
+    android:background="#ffe5e5"
     tools:context="com.example.android.firebaseauthdemo.AcceptedCourierFragment">
 
-    <Button
-        android:layout_width="40dp"
+    <FrameLayout
+        android:id="@+id/frameTopBar"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:id="@+id/acceptedButton"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/courierroundedbutton"
-        android:text="-"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:background="@drawable/courier_top_bar">
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/acceptedButton"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="left"
+            android:background="@drawable/courierroundedbutton"
+            android:text="-"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/textViewMyOrders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Available Orders"
+            android:textColor="@color/black"
+            android:textAllCaps="true"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="20sp"/>
+        </FrameLayout>
 
-    <TextView
-        android:id="@+id/textViewMyOrders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="Available Orders"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textAllCaps="true"
-        android:fontFamily="casual"
-        android:textSize="20sp"/>
 
     <ListView
         android:id="@+id/listViewProductsAvailable"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textViewMyOrders"
+        android:layout_below="@+id/frameTopBar"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"

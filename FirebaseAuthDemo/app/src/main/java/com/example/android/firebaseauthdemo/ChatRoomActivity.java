@@ -47,8 +47,8 @@ public class ChatRoomActivity extends AppCompatActivity{
         user_name = getIntent().getExtras().get("user_name").toString();
         room_name = getIntent().getExtras().get("room_name").toString();
         product_name = getIntent().getExtras().get("product_name").toString();
-        setTitle(" Room - "+ product_name);
-        chat_title.setText("ROOM - "+ product_name);
+        setTitle("[Product] "+ product_name);
+        chat_title.setText(product_name);
 
         root = FirebaseDatabase.getInstance().getReference().child("chat").child(room_name);
 
@@ -111,8 +111,13 @@ public class ChatRoomActivity extends AppCompatActivity{
         while (i.hasNext()){
 
             chat_msg = (String) ((DataSnapshot)i.next()).getValue();
-            chat_user_name = (String) ((DataSnapshot)i.next()).getValue();
-            chat_conversation.append("[" + chat_user_name + "] : "+ chat_msg +" \n");
+            String chat_user_name_temp = (String) ((DataSnapshot)i.next()).getValue();
+            if(chat_user_name_temp.equals(user_name)){
+                chat_user_name = "You";
+            } else {
+                chat_user_name = chat_user_name_temp;
+            }
+            chat_conversation.append("[" + chat_user_name + "] " + chat_msg +" \n\n");
         }
 
 

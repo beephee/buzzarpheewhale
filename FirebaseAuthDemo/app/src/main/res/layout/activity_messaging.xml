@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgYellow"
-    android:paddingBottom="10dp" >
+    android:background="#fffee5">
 
-    <TextView
-        android:id="@+id/textViewMessages"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="Ongoing Transactions"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textAllCaps="true"
-        android:fontFamily="casual"
-        android:textSize="20sp"/>
+    <FrameLayout
+        android:id="@+id/frameTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/messaging_top_bar">
+        <TextView
+            android:id="@+id/textViewMessages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Ongoing Transactions"
+            android:textColor="@color/black"
+            android:textAllCaps="true"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="20sp"/>
+        </FrameLayout>
 
     <ListView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listViewProducts"
         android:layout_alignParentLeft="true"
@@ -30,6 +32,5 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/customborder"
-        android:layout_below="@+id/textViewMessages"
-        android:layout_above="@+id/room_name_edittext" />
+        android:layout_below="@+id/frameTopBar"/>
 </RelativeLayout>
