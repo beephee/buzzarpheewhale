@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -217,11 +218,7 @@ public class MenuMapFragment extends Fragment {
 
                         DateList.add(product.getDate());
 
-                        if(product.getProductCourier().toString().equals("NONE")){
-                            StatusList.add("Pending");
-                        } else {
-                            StatusList.add("Matched");
-                        }
+                        StatusList.add(product.getStatus());
 
                         googleMap.addMarker(new MarkerOptions().position(productLocation).title(product.getProductName()).snippet(product.getDate()));
                     }

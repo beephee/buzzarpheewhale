@@ -49,6 +49,7 @@ public class ProductListChat extends ArrayAdapter<Product>{
         TextView textViewWeight = (TextView) listViewItem.findViewById(R.id.textViewWeight);
         TextView textViewDate = (TextView) listViewItem.findViewById(R.id.textViewDate);
         ImageView imageViewProduct = (ImageView) listViewItem.findViewById(R.id.imageViewProduct);
+        TextView textViewStatus = (TextView) listViewItem.findViewById(R.id.textViewStatus);
 
         Product product = productList.get(position);
 
@@ -60,6 +61,7 @@ public class ProductListChat extends ArrayAdapter<Product>{
         textViewPrice.setText(product.getPrice());
         textViewWeight.setText(product.getWeight());
         textViewDate.setText(product.getDate());
+        textViewStatus.setText(product.getStatus());
         Glide
                 .with(context)
                 .load(product.getImgurl().toString())

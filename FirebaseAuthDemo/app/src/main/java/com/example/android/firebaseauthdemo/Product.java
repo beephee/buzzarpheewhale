@@ -20,12 +20,14 @@ public class Product {
     String date;
     String imgurl;
     String country;
+    Boolean courierComplete;
+    Boolean buyerComplete;
 
     public Product(){
 
     }
 
-    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String imgurl, String country) {
+    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String imgurl, String country, Boolean courierAccept, Boolean buyerAccept) {
         this.productId = productId;
         this.productBuyer = productBuyer;
         this.productCourier = productCourier;
@@ -40,6 +42,8 @@ public class Product {
         this.date = date;
         this.imgurl = imgurl;
         this.country = country;
+        this.courierComplete = courierAccept;
+        this.buyerComplete = buyerAccept;
     }
 
     public String getProductId() {
@@ -93,4 +97,18 @@ public class Product {
     public String getImgurl() { return imgurl; }
 
     public String getCountry() { return country; }
+
+    public Boolean getCourierComplete() { return courierComplete; }
+
+    public Boolean getBuyerComplete() { return buyerComplete; }
+
+    public String getStatus() {
+        if (this.getBuyerComplete().equals(true) && this.getCourierComplete().equals(true)) {
+            return "Completed";
+        } else if (this.getProductCourier().equals("NONE")) {
+            return "Pending";
+        } else {
+            return "Matched";
+        }
+    }
 }

@@ -50,6 +50,7 @@ public class ProductListAccepted extends ArrayAdapter<Product>{
         TextView textViewLength = (TextView) listViewItem.findViewById(R.id.textViewLength);
         TextView textViewDate = (TextView) listViewItem.findViewById(R.id.textViewDate);
         ImageView imageViewProduct = (ImageView) listViewItem.findViewById(R.id.imageViewProduct);
+        TextView textViewStatus = (TextView) listViewItem.findViewById(R.id.textViewStatus);
 
         Product product = productList.get(position);
 
@@ -64,6 +65,7 @@ public class ProductListAccepted extends ArrayAdapter<Product>{
         textViewWidth.setText(product.getWidth());
         textViewLength.setText(product.getLength());
         textViewDate.setText(product.getDate());
+        textViewStatus.setText(product.getStatus());
         Glide
                 .with(context)
                 .load(product.getImgurl().toString())
