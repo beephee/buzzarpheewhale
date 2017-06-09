@@ -23,6 +23,21 @@
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/black"
         android:textSize="20sp" />
+        <Button
+            android:id="@+id/buttonAdmin"
+            android:visibility="invisible"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:layout_marginBottom="10dp"
+            android:text="A"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/adminbutton"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            />
     </FrameLayout>
 
     </RelativeLayout>
