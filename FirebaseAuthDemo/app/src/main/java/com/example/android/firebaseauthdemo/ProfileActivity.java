@@ -1,20 +1,40 @@
 package com.example.android.firebaseauthdemo;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import static com.example.android.firebaseauthdemo.R.id.spinnerProductType;
 
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseUsers;
+    private String UID;
+    private String uemail;
 
     //view objects
     private TextView textViewUserEmail;
@@ -45,12 +65,31 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
 
+        //adding listener to button
+        buttonLogout.setOnClickListener(this);
+
+        //Check if banned
+        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
+        UID = user.getUid();
+        databaseUsers.child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //User users = dataSnapshot.getValue(User.class);
+                String isBanned = dataSnapshot.child("blacklisted").getValue(String.class);
+                if(isBanned.equals("true")){
+                    showBannedDialog();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         //displaying logged in user name
         textViewUserEmail.setText("Welcome "+user.getEmail().split("@", 2)[0]);
         userEmail = user.getEmail();
-
-        //adding listener to button
-        buttonLogout.setOnClickListener(this);
     }
 
     @Override
@@ -88,5 +127,33 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         extras.putString("page", "buyer");
         intent.putExtras(extras);
         startActivity(intent);
+    }
+
+    //If user is banned
+    public void showBannedDialog() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.banned_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final Button buttonOk = (Button) dialogView.findViewById(R.id.buttonOk);
+
+        final AlertDialog b = dialogBuilder.create();
+        b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        b.show();
+        b.setCancelable(false);
+        b.setCanceledOnTouchOutside(false);
+
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.dismiss();
+                firebaseAuth.signOut();
+                finish();
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
