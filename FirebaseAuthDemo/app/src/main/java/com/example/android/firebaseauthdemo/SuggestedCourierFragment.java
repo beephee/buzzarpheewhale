@@ -65,7 +65,7 @@ public class SuggestedCourierFragment extends Fragment {
                 String productID = product.getProductId();
                 DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(productID);
                 dR.child("productCourier").setValue(userEmail);
-                Toast.makeText(getActivity().getApplicationContext(), "Order Accepted!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Order accepted!", Toast.LENGTH_LONG).show();
                 return true;
             }
         });

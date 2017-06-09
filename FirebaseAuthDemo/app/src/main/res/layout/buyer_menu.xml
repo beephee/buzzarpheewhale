@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_bg">
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buyerCompleteTransact"
+        android:layout_centerHorizontal="true"
+        android:text="Complete Transaction"
+        android:textSize="20sp"
+        />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/updateDelete"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/buyerCompleteTransact"
+        android:text="Update / Delete"
+        android:textSize="20sp" />
+
+
+</RelativeLayout>

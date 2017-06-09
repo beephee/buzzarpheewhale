@@ -22,12 +22,13 @@ public class Product {
     String country;
     Boolean courierComplete;
     Boolean buyerComplete;
+    Boolean transit;
 
     public Product(){
 
     }
 
-    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String imgurl, String country, Boolean courierAccept, Boolean buyerAccept) {
+    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String imgurl, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit) {
         this.productId = productId;
         this.productBuyer = productBuyer;
         this.productCourier = productCourier;
@@ -44,6 +45,7 @@ public class Product {
         this.country = country;
         this.courierComplete = courierAccept;
         this.buyerComplete = buyerAccept;
+        this.transit = transit;
     }
 
     public String getProductId() {
@@ -102,9 +104,13 @@ public class Product {
 
     public Boolean getBuyerComplete() { return buyerComplete; }
 
+    public Boolean getTransit() { return transit; }
+
     public String getStatus() {
         if (this.getBuyerComplete().equals(true) && this.getCourierComplete().equals(true)) {
             return "Completed";
+        } else if (this.getTransit().equals(true)) {
+            return "In Transit";
         } else if (this.getProductCourier().equals("NONE")) {
             return "Pending";
         } else {

@@ -203,6 +203,7 @@ public class AddRequestActivity extends AppCompatActivity {
         String courier = "NONE";
         Boolean courierAccept = Boolean.FALSE;
         Boolean buyerAccept = Boolean.FALSE;
+        Boolean transit = Boolean.FALSE;
         String producttype = spinnerProductType.getSelectedItem().toString();
         EditText editProductName = (EditText) findViewById(R.id.editTextProductName);
         String productname = editProductName.getText().toString();
@@ -223,7 +224,7 @@ public class AddRequestActivity extends AppCompatActivity {
             //Get the unique id of the branch
             String id = databaseProducts.push().getKey();
             //Define the parameters for the database entry
-            Product product = new Product(id, buyer, courier, productname, producttype, productcoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept);
+            Product product = new Product(id, buyer, courier, productname, producttype, productcoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit);
             //Submit value to database
             databaseProducts.child(id).setValue(product);
             Toast.makeText(this, "Request added!", Toast.LENGTH_LONG).show();
