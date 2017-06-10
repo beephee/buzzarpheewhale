@@ -4,17 +4,21 @@
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <RelativeLayout
         android:id="@+id/layoutWrap"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
     <TextView
         android:id="@+id/textViewUserEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="User Email"
-        android:textAlignment="center"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:textColor="@color/black"
         android:textStyle="bold"/>
 
@@ -35,7 +39,6 @@
                 android:id="@+id/textUserType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:text="Type: "
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
@@ -43,7 +46,6 @@
                 android:id="@+id/textUID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:text="UID: "
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
@@ -52,7 +54,6 @@
                 android:id="@+id/textBlacklist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:text="Blacklisted: "
                 android:layout_marginBottom="5sp"
                 android:textColor="@color/black"
@@ -85,4 +86,32 @@
         </LinearLayout>
     </LinearLayout>
     </RelativeLayout>
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/usericon"/>
+                <ImageView
+                    android:id="@+id/adminIcon"
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/adminstatus"/>
+                <ImageView
+                    android:id="@+id/bannedIcon"
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bannedstatus"/>
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

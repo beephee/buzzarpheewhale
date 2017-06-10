@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,13 +39,16 @@ public class UserList extends ArrayAdapter<User>{
         TextView textViewUserType = (TextView) listViewUsers.findViewById(R.id.textViewUserType);
         TextView textViewUID = (TextView) listViewUsers.findViewById(R.id.textViewUID);
         TextView textViewBlacklist = (TextView) listViewUsers.findViewById(R.id.textViewBlacklist);
+        ImageView adminIcon = (ImageView) listViewUsers.findViewById(R.id.adminIcon);
+        ImageView bannedIcon = (ImageView) listViewUsers.findViewById(R.id.bannedIcon);
 
         User user = userList.get(position);
 
         if(user.getBlacklisted().equals("true")){
-            layoutWrap.setBackgroundColor(Color.parseColor("#99FFE0E0"));
-        } else if (user.getuserType().equals("admin")) {
-            layoutWrap.setBackgroundColor(Color.parseColor("#99E0EDFF"));
+            bannedIcon.setVisibility(View.VISIBLE);
+        }
+        if (user.getuserType().equals("admin")) {
+            adminIcon.setVisibility(View.VISIBLE);
         }
         textViewUserEmail.setText(user.getuserEmail());
         textViewUserType.setText(user.getuserType());
