@@ -3,6 +3,7 @@ package com.example.android.firebaseauthdemo;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.android.firebaseauthdemo.R.id.buttonGetCoordinates;
 import static java.sql.Types.BOOLEAN;
 
 public class AdminActivity extends AppCompatActivity {
@@ -32,12 +34,16 @@ public class AdminActivity extends AppCompatActivity {
     ListView listViewUsers;
     List<User> userList;
     FirebaseAuth firebaseAuth;
+    String listFilter;
+    UserList adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
+        listFilter = "all";
         databaseUsers = FirebaseDatabase.getInstance().getReference("users");
         userList = new ArrayList<>();
         listViewUsers = (ListView) findViewById(R.id.listViewUsers);
@@ -68,6 +74,70 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
+        //Filter Buttons
+        final Button btnAll = (Button) findViewById(R.id.buttonAll);
+        btnAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listFilter = "all";
+                onStart();
+                adapter.notifyDataSetChanged();
+                clearButtonStyle();
+                btnAll.setTypeface(Typeface.DEFAULT_BOLD);
+                btnAll.setTextSize(20);
+            }
+        });
+        final Button btnUser = (Button) findViewById(R.id.buttonUser);
+        btnUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listFilter = "registered";
+                onStart();
+                adapter.notifyDataSetChanged();
+                clearButtonStyle();
+                btnUser.setTypeface(Typeface.DEFAULT_BOLD);
+                btnUser.setTextSize(20);
+            }
+        });
+        final Button btnAdmin = (Button) findViewById(R.id.buttonAdmin);
+        btnAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listFilter = "admin";
+                onStart();
+                adapter.notifyDataSetChanged();
+                clearButtonStyle();
+                btnAdmin.setTypeface(Typeface.DEFAULT_BOLD);
+                btnAdmin.setTextSize(20);
+            }
+        });
+        final Button btnBanned = (Button) findViewById(R.id.buttonBanned);
+        btnBanned.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listFilter = "banned";
+                onStart();
+                adapter.notifyDataSetChanged();
+                clearButtonStyle();
+                btnBanned.setTypeface(Typeface.DEFAULT_BOLD);
+                btnBanned.setTextSize(20);
+            }
+        });
+    }
+
+    private void clearButtonStyle(){
+        Button btnAll = (Button) findViewById(R.id.buttonAll);
+        btnAll.setTypeface(Typeface.SANS_SERIF);
+        btnAll.setTextSize(14);
+        Button btnUser = (Button) findViewById(R.id.buttonUser);
+        btnUser.setTypeface(Typeface.SANS_SERIF);
+        btnUser.setTextSize(14);
+        Button btnAdmin = (Button) findViewById(R.id.buttonAdmin);
+        btnAdmin.setTypeface(Typeface.SANS_SERIF);
+        btnAdmin.setTextSize(14);
+        Button btnBanned = (Button) findViewById(R.id.buttonBanned);
+        btnBanned.setTypeface(Typeface.SANS_SERIF);
+        btnBanned.setTextSize(14);
     }
 
     private void showMenuDialog(final String userUID, final String userEmail, final String userType, final String blacklisted) {
@@ -169,15 +239,47 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+
         databaseUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                userList.clear();
-                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
-                    User user = userSnapshot.getValue(User.class);
-                    userList.add(user);
+                switch (listFilter) {
+                    case "all":
+                        userList.clear();
+                        for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                            User user = userSnapshot.getValue(User.class);
+                            userList.add(user);
+                        }
+                        break;
+                    case "registered":
+                        userList.clear();
+                        for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                            User user = userSnapshot.getValue(User.class);
+                            if(user.getuserType().equals("registered")){
+                                userList.add(user);
+                            }
+                        }
+                        break;
+                    case "admin":
+                        userList.clear();
+                        for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                            User user = userSnapshot.getValue(User.class);
+                            if(user.getuserType().equals("admin")){
+                                userList.add(user);
+                            }
+                        }
+                        break;
+                    case "banned":
+                        userList.clear();
+                        for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                            User user = userSnapshot.getValue(User.class);
+                            if(user.getBlacklisted().equals("true")){
+                                userList.add(user);
+                            }
+                        }
+                        break;
                 }
-                UserList adapter = new UserList(AdminActivity.this, userList);
+                adapter = new UserList(AdminActivity.this, userList);
                 listViewUsers.setAdapter(adapter);
             }
             @Override

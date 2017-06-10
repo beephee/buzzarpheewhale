@@ -11,12 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
-
-import static com.example.android.firebaseauthdemo.R.id.textViewProductType;
 
 /**
  * Created by Admin on 27/5/2017.
@@ -26,11 +29,16 @@ public class ProductListChat extends ArrayAdapter<Product>{
 
     private Activity context;
     private List<Product> productList;
+    FirebaseAuth firebaseAuth;
+    DatabaseReference databaseUsers;
+    String userEmail;
+    String buyerEmail;
 
-    public ProductListChat(Activity context, List<Product> productList){
+    public ProductListChat(Activity context, List<Product> productList, String userEmail){
         super(context, R.layout.product_list_chat_layout, productList);
         this.context = context;
-        this.productList= productList;
+        this.productList = productList;
+        this.userEmail = userEmail;
     }
 
     @NonNull
@@ -45,21 +53,16 @@ public class ProductListChat extends ArrayAdapter<Product>{
         TextView textViewCoords = (TextView) listViewItem.findViewById(R.id.textViewCoords);
         TextView textViewBuyerEmail = (TextView) listViewItem.findViewById(R.id.textViewBuyerEmail);
         TextView textViewCourierEmail = (TextView) listViewItem.findViewById(R.id.textViewCourierEmail);
-        TextView textViewPrice = (TextView) listViewItem.findViewById(R.id.textViewPrice);
-        TextView textViewWeight = (TextView) listViewItem.findViewById(R.id.textViewWeight);
         TextView textViewDate = (TextView) listViewItem.findViewById(R.id.textViewDate);
         ImageView imageViewProduct = (ImageView) listViewItem.findViewById(R.id.imageViewProduct);
         TextView textViewStatus = (TextView) listViewItem.findViewById(R.id.textViewStatus);
+        final ImageView buyerIcon = (ImageView) listViewItem.findViewById(R.id.buyerIcon);
+        final ImageView courierIcon = (ImageView) listViewItem.findViewById(R.id.courierIcon);
 
         Product product = productList.get(position);
 
         textViewProductName.setText(product.getProductName());
-        //textViewCoords.setText(product.getProductCoords().substring(0,35));
         textViewCoords.setText(product.getCountry());
-        textViewBuyerEmail.setText(product.getProductBuyer().split("@", 2)[0]);
-        textViewCourierEmail.setText(product.getProductCourier().split("@", 2)[0]);
-        textViewPrice.setText(product.getPrice());
-        textViewWeight.setText(product.getWeight());
         textViewDate.setText(product.getDate());
         textViewStatus.setText(product.getStatus());
         Glide
@@ -68,8 +71,16 @@ public class ProductListChat extends ArrayAdapter<Product>{
                 .transform(new CircleTransform(context))
                 .into(imageViewProduct);
 
-        final DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(textViewProductName.getText().toString());
-
+        buyerEmail = product.getProductBuyer();
+        if(userEmail.equals(buyerEmail)){
+            buyerIcon.setVisibility(View.VISIBLE);
+            textViewBuyerEmail.setText("You");
+            textViewCourierEmail.setText(product.getProductCourier().split("@", 2)[0]);
+        } else {
+            courierIcon.setVisibility(View.VISIBLE);
+            textViewBuyerEmail.setText(product.getProductBuyer().split("@", 2)[0]);
+            textViewCourierEmail.setText("You");
+        }
         return listViewItem;
     }
 

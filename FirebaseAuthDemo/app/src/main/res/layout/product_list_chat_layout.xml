@@ -6,10 +6,10 @@
 
     <ImageView
         android:id="@+id/imageViewProduct"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="10dp"/>
 
     <LinearLayout
         android:id="@+id/linearProductList"
@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Product Name"
             android:textAlignment="center"
+            android:textSize="18dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:textStyle="bold"/>
         <LinearLayout
@@ -49,20 +50,6 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
             <TextView
-                android:id="@+id/textPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Price: "
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/textWeight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Weight: "
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
-                        <TextView
                 android:id="@+id/textDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,18 +90,6 @@
                 android:text="Courier"
                 android:textColor="@color/black"/>
             <TextView
-                android:id="@+id/textViewPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Price"
-                android:textColor="@color/black"/>
-            <TextView
-                android:id="@+id/textViewWeight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Weight"
-                android:textColor="@color/black"/>
-            <TextView
                 android:id="@+id/textViewDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,10 +111,30 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/chatbubble"
-        android:layout_gravity="center_vertical"/>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
+        <ImageView
+            android:id="@+id/chatIcon"
+            android:visibility="invisible"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/chatbubble"/>
+        <ImageView
+            android:id="@+id/buyerIcon"
+            android:visibility="invisible"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/buyermenuicon"/>
+        <ImageView
+            android:id="@+id/courierIcon"
+            android:visibility="invisible"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/couriermenuicon"/>
+    </FrameLayout>
 </LinearLayout>

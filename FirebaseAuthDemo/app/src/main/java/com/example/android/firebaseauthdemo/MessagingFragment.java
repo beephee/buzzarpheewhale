@@ -91,7 +91,7 @@ public class MessagingFragment extends Fragment {
                     }
                 }
 
-                ProductListChat adapter = new ProductListChat(getActivity(), productList);
+                ProductListChat adapter = new ProductListChat(getActivity(), productList, userEmail);
                 listViewProducts.setAdapter(adapter);
 
             }
