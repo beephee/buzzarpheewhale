@@ -1,6 +1,7 @@
 package com.example.android.firebaseauthdemo;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +31,7 @@ public class AdminActivity extends AppCompatActivity {
     DatabaseReference databaseUsers;
     ListView listViewUsers;
     List<User> userList;
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,23 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
+        //Primary verification of user's current status
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        databaseUsers.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String userType = dataSnapshot.child("userType").getValue(String.class);
+                if(!userType.equals("admin")){
+                    showUnauthorisedDialog();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
     }
 
     private void showMenuDialog(final String userUID, final String userEmail, final String userType, final String blacklisted) {
@@ -63,6 +84,22 @@ public class AdminActivity extends AppCompatActivity {
         final AlertDialog b = dialogBuilder.create();
         b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         b.show();
+
+        //Secondary verification of user's current status
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        databaseUsers.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String userType = dataSnapshot.child("userType").getValue(String.class);
+                if(!userType.equals("admin")){
+                    showUnauthorisedDialog();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         banUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,10 +180,41 @@ public class AdminActivity extends AppCompatActivity {
                 UserList adapter = new UserList(AdminActivity.this, userList);
                 listViewUsers.setAdapter(adapter);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
 
+    public void showUnauthorisedDialog() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.unauth_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final Button buttonOk = (Button) dialogView.findViewById(R.id.buttonOk);
+
+        final AlertDialog b = dialogBuilder.create();
+        b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        //Ban user for unauthorized action
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+        dR.child("blacklisted").setValue("true");
+
+        b.show();
+        b.setCancelable(false);
+        b.setCanceledOnTouchOutside(false);
+
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.dismiss();
+                firebaseAuth.signOut();
+                finish();
+                Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
     }
