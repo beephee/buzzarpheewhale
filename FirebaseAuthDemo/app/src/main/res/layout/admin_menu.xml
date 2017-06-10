@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_bg">
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/banButton"
+        android:layout_centerHorizontal="true"
+        android:text="Ban User"
+        android:textSize="20sp"
+        />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/unbanButton"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/banButton"
+        android:text="Un-ban User"
+        android:textSize="20sp" />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/setAdminButton"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/unbanButton"
+        android:text="Set User as Admin"
+        android:textSize="20sp" />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/unadminButton"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/setAdminButton"
+        android:text="Remove Admin Rights"
+        android:textSize="20sp" />
+
+
+</RelativeLayout>
