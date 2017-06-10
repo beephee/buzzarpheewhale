@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.*;
 
+import static com.example.android.firebaseauthdemo.R.id.buttonOk;
 import static com.example.android.firebaseauthdemo.R.layout.activity_loggedin;
 
 public class LoggedinActivity extends AppCompatActivity {
@@ -51,6 +53,16 @@ public class LoggedinActivity extends AppCompatActivity {
                 if(isBanned.equals("true")){
                     showBannedDialog();
                 }
+                /* TO-BE-ADDED
+                Check if 'tutorial' value in user profile equals 0
+                Show tutorial if 0, else skip
+
+                String tutCompleted = dataSnapshot.child("tutorial").getValue(String.class);
+                if(tutCompleted.equals("0")){
+                    showTutorial();
+                    tutorialCompleted();
+                }
+                */
             }
 
             @Override
@@ -153,4 +165,50 @@ public class LoggedinActivity extends AppCompatActivity {
         });
     }
 
+    //If user logs in for the first time
+    public void showTutorial() {
+
+        //Screen 0
+        final RelativeLayout tutScreen0 = (RelativeLayout) findViewById(R.id.tutScreen0);
+        Button btnMessage0 = (Button) findViewById(R.id.btnMessage0);
+        tutScreen0.setVisibility(View.VISIBLE);
+
+        //Screen 1
+        final RelativeLayout tutScreen1 = (RelativeLayout) findViewById(R.id.tutScreen1);
+        Button btnMessage1 = (Button) findViewById(R.id.btnMessage1);
+
+        //Screen 2
+        final RelativeLayout tutScreen2 = (RelativeLayout) findViewById(R.id.tutScreen2);
+        Button btnMessage2 = (Button) findViewById(R.id.btnMessage2);
+
+        //Button Sequence
+        btnMessage0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutScreen0.setVisibility(View.INVISIBLE);
+                tutScreen1.setVisibility(View.VISIBLE);
+            }
+        });
+        btnMessage1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutScreen1.setVisibility(View.INVISIBLE);
+                tutScreen2.setVisibility(View.VISIBLE);
+            }
+        });
+        btnMessage2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutScreen2.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    //Set tutorial as done
+    public void tutorialCompleted(){
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        databaseUsers.child(user.getUid()).child("tutorial").setValue("1");
+    }
 }
