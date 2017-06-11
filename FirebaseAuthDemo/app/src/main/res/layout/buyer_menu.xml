@@ -8,8 +8,18 @@
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:id="@+id/buyerPay"
+        android:layout_centerHorizontal="true"
+        android:text="Pay for Order"
+        android:textSize="20sp"
+        />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:id="@+id/buyerCompleteTransact"
         android:layout_centerHorizontal="true"
+        android:layout_below="@+id/buyerPay"
         android:text="Complete Transaction"
         android:textSize="20sp"
         />

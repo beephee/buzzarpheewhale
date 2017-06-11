@@ -23,12 +23,13 @@ public class Product {
     Boolean courierComplete;
     Boolean buyerComplete;
     Boolean transit;
+    Boolean buyerPaid;
 
     public Product(){
 
     }
 
-    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String imgurl, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit) {
+    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String imgurl, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid) {
         this.productId = productId;
         this.productBuyer = productBuyer;
         this.productCourier = productCourier;
@@ -46,6 +47,7 @@ public class Product {
         this.courierComplete = courierAccept;
         this.buyerComplete = buyerAccept;
         this.transit = transit;
+        this.buyerPaid = buyerPaid;
     }
 
     public String getProductId() {
@@ -107,14 +109,18 @@ public class Product {
     public Boolean getTransit() { return transit; }
 
     public String getStatus() {
-        if (this.getBuyerComplete().equals(true) && this.getCourierComplete().equals(true)) {
+        if (this.getProductCourier().equals("NONE")) {
+            return "Pending";
+        } else if (this.getBuyerComplete().equals(true) && this.getCourierComplete().equals(true)) {
             return "Completed";
+        } else if (this.getBuyerPaid().equals(true)) {
+            return "Payment Completed";
         } else if (this.getTransit().equals(true)) {
             return "In Transit";
-        } else if (this.getProductCourier().equals("NONE")) {
-            return "Pending";
         } else {
             return "Matched";
         }
     }
+
+    public Boolean getBuyerPaid() { return buyerPaid; }
 }

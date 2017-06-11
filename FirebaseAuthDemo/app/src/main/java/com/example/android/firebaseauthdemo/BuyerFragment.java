@@ -91,7 +91,7 @@ public class BuyerFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Product product = productList.get(i);
-                showMenuDialog(product.getProductId(), product.getProductBuyer(), product.getProductCourier(), product.getProductName(), product.getProductType(), product.getProductCoords(), product.getLength(), product.getWidth(), product.getHeight(), product.getWeight(), product.getPrice(), product.getDate(), product.getImgurl(), product.getCountry(), product.getCourierComplete(), product.getBuyerComplete(), product.getTransit());
+                showMenuDialog(product.getProductId(), product.getProductBuyer(), product.getProductCourier(), product.getProductName(), product.getProductType(), product.getProductCoords(), product.getLength(), product.getWidth(), product.getHeight(), product.getWeight(), product.getPrice(), product.getDate(), product.getImgurl(), product.getCountry(), product.getCourierComplete(), product.getBuyerComplete(), product.getTransit(), product.getBuyerPaid());
                 return true;
             }
         });
@@ -128,12 +128,13 @@ public class BuyerFragment extends Fragment {
         });
     }
 
-    private void showMenuDialog(final String productId, final String productBuyer, final String productCourier, final String productName, final String productType, final String productCoords, final String length, final String width, final String height, final String weight, final String price, final String date, final String url, final String country, final Boolean courierAccept, final Boolean buyerAccept, final Boolean transit) {
+    private void showMenuDialog(final String productId, final String productBuyer, final String productCourier, final String productName, final String productType, final String productCoords, final String length, final String width, final String height, final String weight, final String price, final String date, final String url, final String country, final Boolean courierAccept, final Boolean buyerAccept, final Boolean transit, final Boolean buyerPaid) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.buyer_menu, null);
         dialogBuilder.setView(dialogView);
+        final Button buttonBuyerPay = (Button) dialogView.findViewById(R.id.buyerPay);
         final Button buttonBuyerCompleteTransact = (Button) dialogView.findViewById(R.id.buyerCompleteTransact);
         final Button buttonUpdateDelete = (Button) dialogView.findViewById(R.id.updateDelete);
 
@@ -141,10 +142,26 @@ public class BuyerFragment extends Fragment {
         b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         b.show();
 
+        buttonBuyerPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (productCourier.equals("NONE")) {
+                    Toast.makeText(getActivity().getApplicationContext(), "No buyer yet!", Toast.LENGTH_LONG).show();
+                } else {
+                    confirmBuyerPay(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, true);
+                }
+                b.dismiss();
+            }
+        });
+
         buttonBuyerCompleteTransact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                confirmComplete(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, true, transit);
+                if (productCourier.equals("NONE")) {
+                    Toast.makeText(getActivity().getApplicationContext(), "No buyer yet!", Toast.LENGTH_LONG).show();
+                } else {
+                    confirmComplete(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, true, transit, buyerPaid);
+                }
                 b.dismiss();
             }
         });
@@ -152,29 +169,40 @@ public class BuyerFragment extends Fragment {
         buttonUpdateDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showUpdateDeleteDialog(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit);
+                showUpdateDeleteDialog(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid);
                 b.dismiss();
             }
         });
     }
 
-    private boolean updateProduct(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit) {
+    private boolean confirmBuyerPay(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid) {
+
+        // insert payment method here
+
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(productId);
-        Product product = new Product(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit);
+        Product product = new Product(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid);
+        dR.setValue(product);
+        Toast.makeText(getActivity().getApplicationContext(), "Product payment completed!", Toast.LENGTH_LONG).show();
+        return true;
+    }
+
+    private boolean updateProduct(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid) {
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(productId);
+        Product product = new Product(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid);
         dR.setValue(product);
         Toast.makeText(getActivity().getApplicationContext(), "Product updated!", Toast.LENGTH_LONG).show();
         return true;
     }
 
-    private boolean confirmComplete(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit) {
+    private boolean confirmComplete(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(productId);
-        Product product = new Product(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit);
+        Product product = new Product(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid);
         dR.setValue(product);
         Toast.makeText(getActivity().getApplicationContext(), "Transaction completed on buyer's side!", Toast.LENGTH_LONG).show();
         return true;
     }
 
-    private void showUpdateDeleteDialog(final String productId, final String productBuyer, final String productCourier, final String productName, final String productType, final String productCoords, final String length, final String width, final String height, final String weight, final String price, final String date, final String url, final String country, final Boolean courierAccept, final Boolean buyerAccept, final Boolean transit) {
+    private void showUpdateDeleteDialog(final String productId, final String productBuyer, final String productCourier, final String productName, final String productType, final String productCoords, final String length, final String width, final String height, final String weight, final String price, final String date, final String url, final String country, final Boolean courierAccept, final Boolean buyerAccept, final Boolean transit, final Boolean buyerPaid) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -226,7 +254,7 @@ public class BuyerFragment extends Fragment {
                 String newCountry = country;
                 String newUrl = url; //Until we implement image uploader on update dialogue
                 if (!TextUtils.isEmpty(newName) && !TextUtils.isEmpty(newType) && !TextUtils.isEmpty(newLength) && !TextUtils.isEmpty(newWidth) && !TextUtils.isEmpty(newHeight) && !TextUtils.isEmpty(newWeight) && !TextUtils.isEmpty(newPrice) && !TextUtils.isEmpty(newDate) && !TextUtils.isEmpty(newCoords)) {
-                    updateProduct(productId, productBuyer, productCourier, newName, newType, newCoords, newLength, newWidth, newHeight, newWeight, newPrice, newDate, newUrl, newCountry, courierAccept, buyerAccept, transit);
+                    updateProduct(productId, productBuyer, productCourier, newName, newType, newCoords, newLength, newWidth, newHeight, newWeight, newPrice, newDate, newUrl, newCountry, courierAccept, buyerAccept, transit, buyerPaid);
                     b.dismiss();
                 }
                 else{
