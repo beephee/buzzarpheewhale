@@ -90,7 +90,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String userUID = user.getUid();
                             String userType = "registered";
                             String blacklisted = "false";
-                            User newUser = new User(userUID, email, userType, blacklisted);
+                            String tutorial = "0";
+                            User newUser = new User(userUID, email, userType, blacklisted, tutorial);
                             dbRef.child(userUID).setValue(newUser);
                             //Successfully registered
                             //Start profile activity

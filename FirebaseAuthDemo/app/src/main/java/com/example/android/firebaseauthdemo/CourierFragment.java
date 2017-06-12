@@ -28,7 +28,6 @@ public class CourierFragment extends Fragment {
     ListView listViewProducts;
     List<Product> productList;
     String userEmail;
-    private BottomNavigationViewEx bottomNavigationViewCourier;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

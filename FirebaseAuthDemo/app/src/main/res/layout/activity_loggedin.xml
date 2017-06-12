@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:background="#AAFFFFFF">
+            android:background="#E6000000">
             <TextView
                 android:id="@+id/tutMessage0"
                 android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_margin="20dp"
                 android:gravity="center"
                 android:text="Welcome to Dabao4Me!\nThis tutorial will guide you through the basics of using this app."
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="20dp"/>
             <Button
@@ -43,9 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="60dp"
             android:gravity="center"
-            android:background="#AAFFFFFF">
+            android:background="#E6000000">
             <TextView
                 android:id="@+id/tutMessage1"
                 android:layout_width="match_parent"
@@ -53,7 +52,7 @@
                 android:layout_margin="20dp"
                 android:gravity="center"
                 android:text="This is where all your current requests are listed.\nYou may add multiple requests and manage them here."
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="20dp"/>
             <Button
@@ -70,17 +69,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="60dp"
             android:gravity="top"
-            android:background="#AAFFFFFF">
+            android:background="#E6000000">
+
             <TextView
                 android:id="@+id/tutMessage2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:gravity="right"
-                android:text="The plus button allows you to add a new request!"
-                android:textColor="@color/black"
+                android:text="The plus button allows you to add a new purchase request."
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="20dp"/>
             <Button
@@ -88,6 +87,60 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tutMessage2"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:text="Next"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:visibility="invisible"
+            android:id="@+id/tutScreen3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:background="#E6000000">
+            <TextView
+                android:id="@+id/tutMessage3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:gravity="center"
+                android:text="This screen shows the list of your accepted requests as a courier.\n"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+            <Button
+                android:id="@+id/btnMessage3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tutMessage3"
+                android:layout_centerHorizontal="true"
+                android:text="Next"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:visibility="invisible"
+            android:id="@+id/tutScreen4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
+            android:gravity="top"
+            android:background="#E6000000">
+
+            <TextView
+                android:id="@+id/tutMessage4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="right"
+                android:text="This button allows you to view and accept more orders."
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+            <Button
+                android:id="@+id/btnMessage4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tutMessage4"
                 android:layout_marginRight="10dp"
                 android:layout_alignParentRight="true"
                 android:text="Next"/>

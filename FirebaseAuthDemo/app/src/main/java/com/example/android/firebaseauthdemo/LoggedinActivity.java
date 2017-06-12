@@ -35,6 +35,7 @@ public class LoggedinActivity extends AppCompatActivity {
     String directedPage;
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseUsers;
+    BottomNavigationViewEx bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +54,13 @@ public class LoggedinActivity extends AppCompatActivity {
                 if(isBanned.equals("true")){
                     showBannedDialog();
                 }
-                /* TO-BE-ADDED
-                Check if 'tutorial' value in user profile equals 0
-                Show tutorial if 0, else skip
 
                 String tutCompleted = dataSnapshot.child("tutorial").getValue(String.class);
                 if(tutCompleted.equals("0")){
                     showTutorial();
                     tutorialCompleted();
                 }
-                */
+
             }
 
             @Override
@@ -77,7 +75,7 @@ public class LoggedinActivity extends AppCompatActivity {
         directedPage = extras.getString("page");
 
         //Initialize navbar first as a method of it needs to be called in fragment selection
-        final BottomNavigationViewEx bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
+        bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
 
         //Default fragment opened upon activity's creation
         if (savedInstanceState == null) {
@@ -181,6 +179,14 @@ public class LoggedinActivity extends AppCompatActivity {
         final RelativeLayout tutScreen2 = (RelativeLayout) findViewById(R.id.tutScreen2);
         Button btnMessage2 = (Button) findViewById(R.id.btnMessage2);
 
+        //Screen 3
+        final RelativeLayout tutScreen3 = (RelativeLayout) findViewById(R.id.tutScreen3);
+        Button btnMessage3 = (Button) findViewById(R.id.btnMessage3);
+
+        //Screen 4
+        final RelativeLayout tutScreen4 = (RelativeLayout) findViewById(R.id.tutScreen4);
+        Button btnMessage4 = (Button) findViewById(R.id.btnMessage4);
+
         //Button Sequence
         btnMessage0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,6 +206,32 @@ public class LoggedinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tutScreen2.setVisibility(View.INVISIBLE);
+                tutScreen3.setVisibility(View.VISIBLE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                transaction.replace(R.id.frame_layout, AcceptedCourierFragment.newInstance());
+                transaction.commit();
+                bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
+                bottomNavigationView.setSelectedItemId(R.id.actionCourier);
+            }
+        });
+        btnMessage3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutScreen3.setVisibility(View.INVISIBLE);
+                tutScreen4.setVisibility(View.VISIBLE);
+            }
+        });
+        btnMessage4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutScreen4.setVisibility(View.INVISIBLE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                transaction.replace(R.id.frame_layout, MessagingFragment.newInstance());
+                transaction.commit();
+                bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
+                bottomNavigationView.setSelectedItemId(R.id.actionChats);
             }
         });
     }
