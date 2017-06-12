@@ -42,29 +42,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/frameTopBar"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_centerHorizontal="true"
         android:gravity="center">
         <Button
             android:id="@+id/btnAccepted"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="110dp"
+            android:layout_height="30dp"
             android:layout_below="@id/frameTopBar"
-            android:text="Accepted"/>
+            android:text="Accepted"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/orderfilterbutton"/>
         <Button
             android:id="@+id/btnSuggested"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="110dp"
+            android:layout_height="30dp"
             android:layout_below="@id/frameTopBar"
-            android:text="Suggested"/>
+            android:text="Suggested"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/orderfilterbutton"/>
         <Button
             android:id="@+id/btnAll"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="110dp"
+            android:layout_height="30dp"
             android:layout_below="@id/frameTopBar"
-            android:text="Display All"/>
+            android:text="Display All"
+            android:textColor="@color/white"
+            android:background="@drawable/orderfilterbutton"/>
     </LinearLayout>
 
     <ListView

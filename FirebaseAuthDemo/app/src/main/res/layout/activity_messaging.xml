@@ -24,12 +24,16 @@
     <Button
         android:id="@+id/btnContactStaff"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/frameTopBar"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
+        android:layout_height="30dp"
         android:layout_marginRight="10dp"
-        android:text="Contact Customer Service" />
+        android:layout_marginTop="5dp"
+        android:text="Contact Customer Service"
+        android:background="@drawable/custsvcbutton"
+        android:layout_below="@+id/frameTopBar"
+        android:layout_alignLeft="@+id/listViewProducts"
+        android:layout_alignStart="@+id/listViewProducts"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
 
     <ListView
         android:layout_width="match_parent"

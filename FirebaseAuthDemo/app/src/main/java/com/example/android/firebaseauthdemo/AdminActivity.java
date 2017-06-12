@@ -93,7 +93,7 @@ public class AdminActivity extends AppCompatActivity {
         //Filter Buttons
         final Button btnAll = (Button) findViewById(R.id.buttonAll);
         btnAll.setTypeface(Typeface.DEFAULT_BOLD);
-        btnAll.setTextSize(18);
+        btnAll.setTextSize(16);
         btnAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,7 +102,7 @@ public class AdminActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 clearButtonStyle();
                 btnAll.setTypeface(Typeface.DEFAULT_BOLD);
-                btnAll.setTextSize(18);
+                btnAll.setTextSize(16);
             }
         });
         final Button btnCustsvc = (Button) findViewById(R.id.buttonCustsvc);
@@ -114,7 +114,7 @@ public class AdminActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 clearButtonStyle();
                 btnCustsvc.setTypeface(Typeface.DEFAULT_BOLD);
-                btnCustsvc.setTextSize(18);
+                btnCustsvc.setTextSize(16);
             }
         });
         final Button btnAdmin = (Button) findViewById(R.id.buttonAdmin);
@@ -126,7 +126,7 @@ public class AdminActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 clearButtonStyle();
                 btnAdmin.setTypeface(Typeface.DEFAULT_BOLD);
-                btnAdmin.setTextSize(18);
+                btnAdmin.setTextSize(16);
             }
         });
         final Button btnBanned = (Button) findViewById(R.id.buttonBanned);
@@ -138,7 +138,7 @@ public class AdminActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 clearButtonStyle();
                 btnBanned.setTypeface(Typeface.DEFAULT_BOLD);
-                btnBanned.setTextSize(18);
+                btnBanned.setTextSize(16);
             }
         });
     }
