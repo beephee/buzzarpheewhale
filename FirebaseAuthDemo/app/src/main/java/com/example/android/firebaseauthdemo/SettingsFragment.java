@@ -25,6 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.example.android.firebaseauthdemo.R.id.button;
 import static com.example.android.firebaseauthdemo.R.id.buttonAdmin;
 import static com.example.android.firebaseauthdemo.R.id.listViewProducts;
@@ -37,6 +40,9 @@ public class SettingsFragment extends Fragment {
         return fragment;
     }
 
+    DatabaseReference databaseProducts;
+    ListView listViewProducts;
+    List<Product> productList;
     String userEmail;
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseUsers;
@@ -45,6 +51,9 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_settings, container, false);
+
+        databaseProducts = FirebaseDatabase.getInstance().getReference("products");
+        productList = new ArrayList<>();
 
         Bundle extras = getActivity().getIntent().getExtras();
         if(extras != null){
@@ -91,6 +100,39 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         buttonView = (View) getView().findViewById(buttonAdmin);
+        listViewProducts = (ListView) getView().findViewById(R.id.listViewTransactHistory);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //textViewMyRequests.setText(userEmail2); //For debugging if email was passed
+        databaseProducts.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                productList.clear();
+
+                for(DataSnapshot productSnapshot : dataSnapshot.getChildren()){
+                    Product product = productSnapshot.getValue(Product.class);
+                    //Filter results to show only products by the user
+                    String buyerEmail = product.getProductBuyer();
+                    String courierEmail = product.getProductCourier();
+                    if(product.getStatus().equals("Completed") && (courierEmail.equals(userEmail) || buyerEmail.equals(userEmail))){
+                        productList.add(product);
+                    }
+                }
+
+                ProductListBuyer adapter = new ProductListBuyer(getActivity(), productList);
+                listViewProducts.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private View.OnClickListener AdminButtonClickListener = new View.OnClickListener() {

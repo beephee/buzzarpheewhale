@@ -21,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -147,6 +148,7 @@ public class AcceptedCourierFragment extends Fragment {
                 return true;
             }
         });
+
         listViewProductsAll.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -291,18 +293,17 @@ public class AcceptedCourierFragment extends Fragment {
 
                     String courierID = product.getProductCourier();
                     String buyerID = product.getProductBuyer();
-                    /* To add after user settings are implemented */
-                    //String productCountry = product.getCountry();
-                    //String userCountry = user.getCountry();
+                    //to change
+                    String userCountry = databaseUsers.child(user.getUid()).child("buyerCountry").toString();
 
                     // Only include items that are not assigned to any courier yet and not requested by user
                     if (courierID.equals("NONE") && !buyerID.equals(userEmail)) {
                         switch (listFilter) {
                             //Only add requests in same country as user
                             case "suggested":
-                                /*if(user.getCountry.equals(product.getCountry())){
+                                if(userCountry.equals(product.getCountry())){
                                     productListAll.add(product);
-                                }*/
+                                }
                                 break;
                             //List all requests
                             case "all":
@@ -320,6 +321,7 @@ public class AcceptedCourierFragment extends Fragment {
 
             }
         });
+
     }
 
 }

@@ -52,41 +52,59 @@
         android:textStyle="bold"
         android:textColor="@color/black" />
 
-    <LinearLayout
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:id="@+id/transactText"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/accountText"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:text="TRANSACTION HISTORY"
+        android:textStyle="bold"
+        android:textColor="@color/black" />
 
-        <Button
-            android:layout_width="300dp"
-            android:layout_height="100dp"
-            android:id="@+id/courierSettings"
-            android:layout_gravity="center"
-            android:text="COURIER SETTINGS"
-            android:background="@drawable/courierroundedbutton"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+    <ListView
+        android:id="@+id/listViewTransactHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/transactText"
+        android:layout_above="@+id/courierSettings"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/customborder"/>
 
-        <Button
-            android:layout_width="300dp"
-            android:layout_height="100dp"
-            android:id="@+id/buyerSettings"
-            android:layout_below="@+id/courierSettings"
-            android:layout_marginTop="50dp"
-            android:text="BUYER SETTINGS"
-            android:background="@drawable/buyerroundedbutton"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/courierSettings"
+        android:layout_above="@+id/buyerSettings"
+        android:layout_centerHorizontal="true"
+        android:text="COURIER SETTINGS"
+        android:background="@drawable/courierroundedbutton"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 
-    </LinearLayout>
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buyerSettings"
+        android:layout_above="@+id/logOut"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="BUYER SETTINGS"
+        android:background="@drawable/buyerroundedbutton"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/logOut"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_centerHorizontal="true"
         android:text="LOG OUT" />

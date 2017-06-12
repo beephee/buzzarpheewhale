@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonRegister;
     private EditText editTextEmail;
     private EditText editTextPassword;
+    private EditText editTextBuyerCountry;
     private TextView textViewSignin;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        editTextBuyerCountry = (EditText) findViewById(R.id.editTextBuyerCountry);
         textViewSignin = (TextView) findViewById(R.id.textViewSignin);
 
         buttonRegister.setOnClickListener(this);
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void registerUser(){
         final String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        final String buyerCountry = editTextBuyerCountry.getText().toString().trim();
 
         if(TextUtils.isEmpty(email)){
             //email is empty.
@@ -92,7 +95,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String blacklisted = "false";
                             String tutorial = "0";
                             String custsvc = "0";
-                            User newUser = new User(userUID, email, userType, blacklisted, tutorial, custsvc);
+                            Boolean courierActive = false;
+                            String courierCountry = "NONE";
+                            User newUser = new User(userUID, email, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry);
                             dbRef.child(userUID).setValue(newUser);
                             //Successfully registered
                             //Start profile activity
