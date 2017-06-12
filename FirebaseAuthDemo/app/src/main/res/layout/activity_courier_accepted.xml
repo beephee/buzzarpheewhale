@@ -13,6 +13,7 @@
         android:layout_height="40dp"
         android:background="@drawable/courier_top_bar">
         <Button
+            android:visibility="invisible"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:id="@+id/suggestedButton"
@@ -29,19 +30,60 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Accepted Orders"
+            android:text="Order Requests"
             android:textColor="@color/black"
             android:textAllCaps="true"
             android:fontFamily="sans-serif-medium"
             android:textSize="20sp"/>
         </FrameLayout>
 
+    <LinearLayout
+        android:id="@+id/filterButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frameTopBar"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btnAccepted"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@id/frameTopBar"
+            android:text="Accepted"/>
+        <Button
+            android:id="@+id/btnSuggested"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@id/frameTopBar"
+            android:text="Suggested"/>
+        <Button
+            android:id="@+id/btnAll"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@id/frameTopBar"
+            android:text="Display All"/>
+    </LinearLayout>
+
+    <ListView
+        android:visibility="invisible"
+        android:id="@+id/listViewProductsAll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/filterButtons"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/customborder"/>
     <ListView
         android:id="@+id/listViewProductsAccepted"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/frameTopBar"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/filterButtons"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
