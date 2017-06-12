@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,10 +34,12 @@ public class MessagingFragment extends Fragment {
         return fragment;
     }
 
+    FirebaseAuth firebaseAuth;
     DatabaseReference databaseProducts;
     ListView listViewProducts;
     List<Product> productList;
     String userEmail;
+    Button btnCustSvc;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,8 +53,28 @@ public class MessagingFragment extends Fragment {
         if(extras != null){
             userEmail = extras.getString("email");
         }
+
+        //Contact Customer Service
+        btnCustSvc = (Button) rootView.findViewById(R.id.btnContactStaff);
+        btnCustSvc.setOnClickListener(mButtonClickListener);
+
         return rootView;
     }
+
+    private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            firebaseAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            String productID = user.getUid();
+            String productName = userEmail.split("@", 2)[0];
+            Intent intent = new Intent(getActivity().getApplicationContext(), ChatRoomActivity.class);
+            intent.putExtra("room_name", productID);
+            intent.putExtra("product_name", productName);
+            intent.putExtra("user_name", userEmail.split("@", 2)[0]);
+            intent.putExtra("is_admin", "false");
+            startActivity(intent);
+        }
+    };
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){

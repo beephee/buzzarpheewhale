@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.android.firebaseauthdemo.R.id.buttonGetCoordinates;
+import static com.example.android.firebaseauthdemo.R.id.listViewProducts;
 import static java.sql.Types.BOOLEAN;
 
 public class AdminActivity extends AppCompatActivity {
@@ -52,8 +53,23 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 User user = userList.get(i);
-                showMenuDialog(user.getuserUID(),user.getuserEmail(),user.getuserType(),user.getBlacklisted(),user.getTutorial());
+                showMenuDialog(user.getuserUID(),user.getuserEmail(),user.getuserType(),user.getBlacklisted(),user.getTutorial(),user.getCustsvc());
                 return true;
+            }
+        });
+
+        listViewUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                User user = userList.get(i);
+                String productID = user.getuserUID();
+                String productName = user.getuserEmail().split("@", 2)[0];
+                Intent intent = new Intent(AdminActivity.this, ChatRoomActivity.class);
+                intent.putExtra("room_name", productID);
+                intent.putExtra("product_name", productName);
+                intent.putExtra("user_name", "Staff");
+                intent.putExtra("is_admin", "true");
+                startActivity(intent);
             }
         });
 
@@ -89,16 +105,16 @@ public class AdminActivity extends AppCompatActivity {
                 btnAll.setTextSize(18);
             }
         });
-        final Button btnUser = (Button) findViewById(R.id.buttonUser);
-        btnUser.setOnClickListener(new View.OnClickListener() {
+        final Button btnCustsvc = (Button) findViewById(R.id.buttonCustsvc);
+        btnCustsvc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listFilter = "registered";
+                listFilter = "custsvc";
                 onStart();
                 adapter.notifyDataSetChanged();
                 clearButtonStyle();
-                btnUser.setTypeface(Typeface.DEFAULT_BOLD);
-                btnUser.setTextSize(18);
+                btnCustsvc.setTypeface(Typeface.DEFAULT_BOLD);
+                btnCustsvc.setTextSize(18);
             }
         });
         final Button btnAdmin = (Button) findViewById(R.id.buttonAdmin);
@@ -131,9 +147,9 @@ public class AdminActivity extends AppCompatActivity {
         Button btnAll = (Button) findViewById(R.id.buttonAll);
         btnAll.setTypeface(Typeface.SANS_SERIF);
         btnAll.setTextSize(14);
-        Button btnUser = (Button) findViewById(R.id.buttonUser);
-        btnUser.setTypeface(Typeface.SANS_SERIF);
-        btnUser.setTextSize(14);
+        Button btnCustsvc = (Button) findViewById(R.id.buttonCustsvc);
+        btnCustsvc.setTypeface(Typeface.SANS_SERIF);
+        btnCustsvc.setTextSize(14);
         Button btnAdmin = (Button) findViewById(R.id.buttonAdmin);
         btnAdmin.setTypeface(Typeface.SANS_SERIF);
         btnAdmin.setTextSize(14);
@@ -142,7 +158,7 @@ public class AdminActivity extends AppCompatActivity {
         btnBanned.setTextSize(14);
     }
 
-    private void showMenuDialog(final String userUID, final String userEmail, final String userType, final String blacklisted, final String tutorial) {
+    private void showMenuDialog(final String userUID, final String userEmail, final String userType, final String blacklisted, final String tutorial, final String custsvc) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -176,7 +192,7 @@ public class AdminActivity extends AppCompatActivity {
         banUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                banUser(userUID, userEmail, userType, blacklisted, tutorial);
+                banUser(userUID, userEmail, userType, blacklisted, tutorial, custsvc);
                 b.dismiss();
             }
         });
@@ -184,7 +200,7 @@ public class AdminActivity extends AppCompatActivity {
         unbanUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                unbanUser(userUID, userEmail, userType, blacklisted, tutorial);
+                unbanUser(userUID, userEmail, userType, blacklisted, tutorial, custsvc);
                 b.dismiss();
             }
         });
@@ -192,7 +208,7 @@ public class AdminActivity extends AppCompatActivity {
         setAdminUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setAdminUser(userUID, userEmail, userType, blacklisted, tutorial);
+                setAdminUser(userUID, userEmail, userType, blacklisted, tutorial, custsvc);
                 b.dismiss();
             }
         });
@@ -200,39 +216,39 @@ public class AdminActivity extends AppCompatActivity {
         unadminUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                unadminUser(userUID, userEmail, userType, blacklisted, tutorial);
+                unadminUser(userUID, userEmail, userType, blacklisted, tutorial, custsvc);
                 b.dismiss();
             }
         });
     }
 
-    private boolean banUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial) {
+    private boolean banUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUID);
-        User user = new User(userUID, userEmail, userType, "true", tutorial);
+        User user = new User(userUID, userEmail, userType, "true", tutorial, custsvc);
         dR.setValue(user);
         Toast.makeText(getApplicationContext(), "User banned!", Toast.LENGTH_LONG).show();
         return true;
     }
 
-    private boolean unbanUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial) {
+    private boolean unbanUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUID);
-        User user = new User(userUID, userEmail, userType, "false", tutorial);
+        User user = new User(userUID, userEmail, userType, "false", tutorial, custsvc);
         dR.setValue(user);
         Toast.makeText(getApplicationContext(), "User unbanned!", Toast.LENGTH_LONG).show();
         return true;
     }
 
-    private boolean setAdminUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial) {
+    private boolean setAdminUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUID);
-        User user = new User(userUID, userEmail, "admin", blacklisted, tutorial);
+        User user = new User(userUID, userEmail, "admin", blacklisted, tutorial, custsvc);
         dR.setValue(user);
         Toast.makeText(getApplicationContext(), "User given admin status!", Toast.LENGTH_LONG).show();
         return true;
     }
 
-    private boolean unadminUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial) {
+    private boolean unadminUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUID);
-        User user = new User(userUID, userEmail, "registered", blacklisted, tutorial);
+        User user = new User(userUID, userEmail, "registered", blacklisted, tutorial, custsvc);
         dR.setValue(user);
         Toast.makeText(getApplicationContext(), "Admin status removed!", Toast.LENGTH_LONG).show();
         return true;
@@ -253,11 +269,11 @@ public class AdminActivity extends AppCompatActivity {
                             userList.add(user);
                         }
                         break;
-                    case "registered":
+                    case "custsvc":
                         userList.clear();
                         for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
                             User user = userSnapshot.getValue(User.class);
-                            if(user.getuserType().equals("registered")){
+                            if(user.getCustsvc().equals("1")){
                                 userList.add(user);
                             }
                         }

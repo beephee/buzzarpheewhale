@@ -41,6 +41,7 @@ public class UserList extends ArrayAdapter<User>{
         TextView textViewBlacklist = (TextView) listViewUsers.findViewById(R.id.textViewBlacklist);
         ImageView adminIcon = (ImageView) listViewUsers.findViewById(R.id.adminIcon);
         ImageView bannedIcon = (ImageView) listViewUsers.findViewById(R.id.bannedIcon);
+        ImageView custsvcIcon = (ImageView) listViewUsers.findViewById(R.id.custsvcIcon);
 
         User user = userList.get(position);
 
@@ -49,6 +50,9 @@ public class UserList extends ArrayAdapter<User>{
         }
         if (user.getuserType().equals("admin")) {
             adminIcon.setVisibility(View.VISIBLE);
+        }
+        if (user.getCustsvc().equals("1")){
+            custsvcIcon.setVisibility(View.VISIBLE);
         }
         textViewUserEmail.setText(user.getuserEmail());
         textViewUserType.setText(user.getuserType());

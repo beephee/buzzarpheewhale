@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.example.android.firebaseauthdemo.R;
 import com.google.android.gms.vision.text.Text;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,14 +32,21 @@ public class ChatRoomActivity extends AppCompatActivity{
     private TextView chat_conversation;
     private TextView chat_title;
 
-    private String user_name,room_name, product_name;
+    private String user_name,room_name, product_name, is_admin;
     private DatabaseReference root ;
+    private DatabaseReference userDB;
     private String temp_key;
+
+    FirebaseAuth firebaseAuth;
+    FirebaseUser curUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        curUser = firebaseAuth.getCurrentUser();
 
         btn_send_msg = (Button) findViewById(R.id.btn_send);
         input_msg = (EditText) findViewById(R.id.msg_input);
@@ -47,10 +56,12 @@ public class ChatRoomActivity extends AppCompatActivity{
         user_name = getIntent().getExtras().get("user_name").toString();
         room_name = getIntent().getExtras().get("room_name").toString();
         product_name = getIntent().getExtras().get("product_name").toString();
+        is_admin = getIntent().getExtras().get("is_admin").toString();
         setTitle("[Product] "+ product_name);
-        chat_title.setText(product_name);
+        chat_title.setText(product_name + " - Customer Service");
 
         root = FirebaseDatabase.getInstance().getReference().child("chat").child(room_name);
+        userDB = FirebaseDatabase.getInstance().getReference().child("users").child(curUser.getUid());
 
         btn_send_msg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +78,11 @@ public class ChatRoomActivity extends AppCompatActivity{
 
                 message_root.updateChildren(map2);
                 input_msg.setText("");
+                if(is_admin.equals("false")){
+                    userDB.child("custsvc").setValue("1");
+                } else {
+                    userDB.child("custsvc").setValue("0");
+                }
             }
         });
 

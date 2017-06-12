@@ -37,11 +37,11 @@
             android:typeface="sans"
             android:text="All"/>
         <Button
-            android:id="@+id/buttonUser"
+            android:id="@+id/buttonCustsvc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:typeface="sans"
-            android:text="User"/>
+            android:text="CUSTSVC"/>
         <Button
             android:id="@+id/buttonAdmin"
             android:layout_width="wrap_content"
