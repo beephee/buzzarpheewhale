@@ -63,7 +63,7 @@ public class AdminActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 User user = userList.get(i);
                 String productID = user.getuserUID();
-                String productName = user.getuserEmail().split("@", 2)[0];
+                String productName = user.getuserEmail().split("@", 2)[0] + " - CUSTOMER SERVICE";
                 Intent intent = new Intent(AdminActivity.this, ChatRoomActivity.class);
                 intent.putExtra("room_name", productID);
                 intent.putExtra("product_name", productName);

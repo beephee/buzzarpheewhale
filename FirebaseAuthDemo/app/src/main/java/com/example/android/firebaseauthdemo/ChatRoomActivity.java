@@ -58,7 +58,7 @@ public class ChatRoomActivity extends AppCompatActivity{
         product_name = getIntent().getExtras().get("product_name").toString();
         is_admin = getIntent().getExtras().get("is_admin").toString();
         setTitle("[Product] "+ product_name);
-        chat_title.setText(product_name + " - Customer Service");
+        chat_title.setText(product_name);
 
         root = FirebaseDatabase.getInstance().getReference().child("chat").child(room_name);
         userDB = FirebaseDatabase.getInstance().getReference().child("users").child(curUser.getUid());

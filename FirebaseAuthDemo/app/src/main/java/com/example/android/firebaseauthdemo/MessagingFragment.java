@@ -66,7 +66,7 @@ public class MessagingFragment extends Fragment {
             firebaseAuth = FirebaseAuth.getInstance();
             FirebaseUser user = firebaseAuth.getCurrentUser();
             String productID = user.getUid();
-            String productName = userEmail.split("@", 2)[0];
+            String productName = userEmail.split("@", 2)[0] + " - CUSTOMER SERVICE";
             Intent intent = new Intent(getActivity().getApplicationContext(), ChatRoomActivity.class);
             intent.putExtra("room_name", productID);
             intent.putExtra("product_name", productName);
@@ -90,6 +90,7 @@ public class MessagingFragment extends Fragment {
                 intent.putExtra("room_name", productID);
                 intent.putExtra("product_name", productName);
                 intent.putExtra("user_name", userEmail.split("@", 2)[0]);
+                intent.putExtra("is_admin", "false");
                 startActivity(intent);
             }
         });
