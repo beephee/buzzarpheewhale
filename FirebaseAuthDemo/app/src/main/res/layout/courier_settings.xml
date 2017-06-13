@@ -25,4 +25,105 @@
             android:textSize="20sp"/>
     </FrameLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView02"
+        android:layout_below="@+id/frameTopBar"
+        android:layout_above="@+id/updateButton"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:isScrollContainer="false"
+        android:background="@drawable/customborder">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/courierSettingsList">
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/activeSwitch"
+                android:textSize="15sp"
+                android:text="Courier Active "/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/courierCountry"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/activeSwitch"
+                android:text="Current Country: "
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextCourierCountry"
+                android:layout_below="@+id/courierCountry"
+                android:textAlignment="center"
+                android:hint="Courier Country"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/maxWeight"
+                android:layout_below="@+id/editTextCourierCountry"
+                android:layout_marginTop="20dp"
+                android:text="Maximum Weight (kg): "
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextMaxWeight"
+                android:layout_below="@+id/editTextCourierCountry"
+                android:layout_toRightOf="@+id/maxWeight"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:layout_marginLeft="10dp"
+                android:hint="Maximum Weight"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/maxDate"
+                android:layout_below="@+id/maxWeight"
+                android:layout_marginTop="20dp"
+                android:text="Date of Departure: "
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextMaxDate"
+                android:layout_below="@+id/editTextMaxWeight"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/maxDate"
+                android:textAlignment="center"
+                android:layout_marginLeft="10dp"
+                android:hint="Tap for Date Picker"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/updateButton"
+        android:text="UPDATE"
+        android:layout_marginBottom="10dp" />
+
 </RelativeLayout>
