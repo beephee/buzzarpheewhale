@@ -1,20 +1,25 @@
 package com.example.android.firebaseauthdemo;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static com.example.android.firebaseauthdemo.R.id.button;
@@ -47,13 +53,25 @@ public class SettingsFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseUsers;
     View buttonView;
+    String userBuyerCountry;
+    String userMaxBudget;
+    Boolean userCourierActive;
+    String userCourierCountry;
+    String userMaxWeight;
+    String userDateDeparture;
+    EditText editBuyerCountry;
+    EditText editMaxBudget;
+    Switch switchCourierActive;
+    EditText editCourierCountry;
+    EditText editMaxWeight;
+    TextView editMaxDate;
+    private static final String TAG = "SettingsFragment";
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    String newDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_settings, container, false);
-
-        databaseProducts = FirebaseDatabase.getInstance().getReference("products");
-        productList = new ArrayList<>();
+        final View rootView = inflater.inflate(R.layout.activity_settings, container, false);
 
         Bundle extras = getActivity().getIntent().getExtras();
         if(extras != null){
@@ -66,26 +84,57 @@ public class SettingsFragment extends Fragment {
         Button btnAdmin = (Button) rootView.findViewById(R.id.buttonAdmin);
         btnAdmin.setOnClickListener(AdminButtonClickListener);
 
-        Button btnCourier = (Button) rootView.findViewById(R.id.courierSettings);
-        btnCourier.setOnClickListener(CourierButtonClickListener);
+        Button btnUpdate = (Button) rootView.findViewById(R.id.updateSettingsButton);
+        btnUpdate.setOnClickListener(updateClickListener);
 
-        Button btnBuyer = (Button) rootView.findViewById(R.id.buyerSettings);
-        btnBuyer.setOnClickListener(BuyerButtonClickListener);
+        Button btnTransactHistory = (Button) rootView.findViewById(R.id.transactHistoryButton);
+        btnTransactHistory.setOnClickListener(transactHistoryClickListener);
 
         Button btnLogOut = (Button) rootView.findViewById(R.id.logOut);
         btnLogOut.setOnClickListener(logOutButtonClickListener);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseUsers = FirebaseDatabase.getInstance().getReference("users");
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
         databaseUsers.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //User users = dataSnapshot.getValue(User.class);
                 String userType = dataSnapshot.child("userType").getValue(String.class);
                 if(userType.equals("admin")){
                     buttonView.setVisibility(View.VISIBLE);
                 }
+
+                userBuyerCountry = dataSnapshot.child("buyerCountry").getValue(String.class);
+                userMaxBudget = dataSnapshot.child("buyerBudget").getValue(String.class);
+                userCourierActive = dataSnapshot.child("courierActive").getValue(Boolean.class);
+                userCourierCountry = dataSnapshot.child("courierCountry").getValue(String.class);
+                userMaxWeight = dataSnapshot.child("maxWeight").getValue(String.class);
+                userDateDeparture = dataSnapshot.child("dateDeparture").getValue(String.class);
+                editBuyerCountry = (EditText) rootView.findViewById(R.id.editTextBuyerCountry);
+                editMaxBudget = (EditText) rootView.findViewById(R.id.editTextMaxBudget);
+                switchCourierActive = (Switch) rootView.findViewById(R.id.activeSwitch);
+                editCourierCountry = (EditText) rootView.findViewById(R.id.editTextCourierCountry);
+                editMaxWeight = (EditText) rootView.findViewById(R.id.editTextMaxWeight);
+                editMaxDate = (TextView) rootView.findViewById(R.id.editTextMaxDate);
+                editBuyerCountry.setText(userBuyerCountry);
+                editMaxBudget.setText(userMaxBudget);
+                if (userCourierActive == false) {
+                    switchCourierActive.setChecked(false);
+                } else {
+                    switchCourierActive.setChecked(true);
+                }
+                editCourierCountry.setText(userCourierCountry);
+                editMaxWeight.setText(userMaxWeight);
+                editMaxDate.setText(userDateDeparture);
+
+                editMaxDate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        changeDate();
+                        editMaxDate.setText(newDate);
+                    }
+                });
+
             }
 
             @Override
@@ -100,39 +149,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         buttonView = (View) getView().findViewById(buttonAdmin);
-        listViewProducts = (ListView) getView().findViewById(R.id.listViewTransactHistory);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        //textViewMyRequests.setText(userEmail2); //For debugging if email was passed
-        databaseProducts.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                productList.clear();
-
-                for(DataSnapshot productSnapshot : dataSnapshot.getChildren()){
-                    Product product = productSnapshot.getValue(Product.class);
-                    //Filter results to show only products by the user
-                    String buyerEmail = product.getProductBuyer();
-                    String courierEmail = product.getProductCourier();
-                    if(product.getStatus().equals("Completed") && (courierEmail.equals(userEmail) || buyerEmail.equals(userEmail))){
-                        productList.add(product);
-                    }
-                }
-
-                ProductListBuyer adapter = new ProductListBuyer(getActivity(), productList);
-                listViewProducts.setAdapter(adapter);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private View.OnClickListener AdminButtonClickListener = new View.OnClickListener() {
@@ -142,21 +158,41 @@ public class SettingsFragment extends Fragment {
         }
     };
 
-    private View.OnClickListener CourierButtonClickListener = new View.OnClickListener() {
+    private View.OnClickListener updateClickListener = new View.OnClickListener() {
         public void onClick(View v) {
-            Fragment newFrag = new CourierSettingsFragment();
-            FragmentTransaction trans = getFragmentManager().beginTransaction();
-            trans.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left,R.anim.enter_from_left,R.anim.exit_to_right);
-            getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            trans.replace(R.id.frame_layout, newFrag);
-            trans.addToBackStack(null);
-            trans.commit();
+            //update settings if all filled
+            String newBuyerCountry = editBuyerCountry.getText().toString();
+            String newMaxBudget = editMaxBudget.getText().toString();
+            String newCourierCountry = editCourierCountry.getText().toString();
+            String newMaxWeight = editMaxWeight.getText().toString();
+            String newMaxDate = editMaxDate.getText().toString();
+            if (newBuyerCountry.equals("") || newMaxBudget.equals("") || newCourierCountry.equals("") || newMaxWeight.equals("") || newMaxDate.equals("")) {
+                Toast.makeText(getActivity().getApplicationContext(), "Please fill up all fields to update settings!", Toast.LENGTH_LONG).show();
+            } else {
+                DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("buyerCountry");
+                dR.setValue(newBuyerCountry);
+                DatabaseReference dR2 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("buyerBudget");
+                dR2.setValue(newMaxBudget);
+                DatabaseReference dR3 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("courierCountry");
+                dR3.setValue(newCourierCountry);
+                DatabaseReference dR4 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("maxWeight");
+                dR4.setValue(newMaxWeight);
+                DatabaseReference dR5 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("dateDeparture");
+                dR5.setValue(newMaxDate);
+                DatabaseReference dR6 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("courierActive");
+                if (switchCourierActive.isChecked() == true) {
+                    dR6.setValue(true);
+                } else {
+                    dR6.setValue(false);
+                }
+                Toast.makeText(getActivity().getApplicationContext(), "Settings updated!", Toast.LENGTH_LONG).show();
+            }
         }
     };
 
-    private View.OnClickListener BuyerButtonClickListener = new View.OnClickListener() {
+    private View.OnClickListener transactHistoryClickListener = new View.OnClickListener() {
         public void onClick(View v) {
-            Fragment newFrag = new BuyerSettingsFragment();
+            Fragment newFrag = new TransactionHistoryFragment();
             FragmentTransaction trans = getFragmentManager().beginTransaction();
             trans.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left,R.anim.enter_from_left,R.anim.exit_to_right);
             getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -171,5 +207,32 @@ public class SettingsFragment extends Fragment {
             firebaseAuth.signOut();
             startActivity(new Intent(getActivity(), LoginActivity.class));
         }
+    };
+
+    // Update date
+    private void changeDate() {
+        final TextView showDatePicker = (TextView) getView().findViewById(R.id.editTextMaxDate);
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dialog = new DatePickerDialog(
+                getActivity(),
+                android.R.style.Theme_DeviceDefault_Light_Dialog,
+                mDateSetListener,
+                year,month,day);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        dialog.show();
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                Log.d(TAG, "onDateSet: dd/mm/yyyy: " + day + "/" + month + "/" + year);
+
+                newDate = day + "/" + month + "/" + year;
+            }
+        };
     };
 }

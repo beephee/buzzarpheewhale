@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e5ffe5"
+    android:orientation="vertical"
+    tools:context="com.example.android.firebaseauthdemo.AddRequestActivity">
+
+    <FrameLayout
+        android:id="@+id/frameTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/settings_top_bar">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/settingsTop"
+            android:text="Transaction History"
+            android:textAllCaps="true"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+        <Button
+            android:id="@+id/buttonAdmin"
+            android:visibility="invisible"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:layout_marginBottom="10dp"
+            android:text="A"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/adminbutton"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/previousPurchases"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/frameTopBar"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:text="Previous Purchases"
+        android:textStyle="bold"
+        android:textColor="@color/black" />
+
+    <ListView
+        android:id="@+id/listViewTransactBuyer"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_below="@+id/previousPurchases"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/customborder"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/previousAcceptedOrders"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/listViewTransactCourier"
+        android:textSize="20sp"
+        android:text="Previous Accepted Orders"
+        android:textStyle="bold"
+        android:textColor="@color/black" />
+
+    <ListView
+        android:id="@+id/listViewTransactCourier"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/customborder"/>
+
+</RelativeLayout>

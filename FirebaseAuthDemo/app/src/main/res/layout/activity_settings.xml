@@ -55,49 +55,190 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/transactText"
+        android:id="@+id/buyerSettingsHeader"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/accountText"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
-        android:text="TRANSACTION HISTORY"
+        android:text="Buyer Settings"
         android:textStyle="bold"
         android:textColor="@color/black" />
 
-    <ListView
-        android:id="@+id/listViewTransactHistory"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/transactText"
-        android:layout_above="@+id/courierSettings"
-        android:layout_marginTop="5dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView02"
+        android:layout_below="@+id/buyerSettingsHeader"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:isScrollContainer="false"
+        android:background="@drawable/customborder">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/buyerSettingsList">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buyerCountry"
+                android:text="Home Country: "
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextBuyerCountry"
+                android:layout_below="@+id/buyerCountry"
+                android:textAlignment="center"
+                android:hint="Buyer Country"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/maxBudget"
+                android:layout_below="@+id/editTextBuyerCountry"
+                android:layout_marginTop="10dp"
+                android:text="Maximum Budget ($): "
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextMaxBudget"
+                android:layout_below="@+id/editTextBuyerCountry"
+                android:layout_toRightOf="@+id/maxBudget"
+                android:textAlignment="center"
+                android:layout_marginLeft="10dp"
+                android:hint="Maximum Budget"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/courierSettingsHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/scrollView02"
+        android:textSize="20sp"
+        android:text="Courier Settings"
+        android:textStyle="bold"
+        android:textColor="@color/black" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView03"
+        android:layout_below="@+id/courierSettingsHeader"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:isScrollContainer="false"
+        android:background="@drawable/customborder">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/courierSettingsList">
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/activeSwitch"
+                android:textSize="15sp"
+                android:text="Courier Active "/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/courierCountry"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/activeSwitch"
+                android:text="Current Country: "
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextCourierCountry"
+                android:layout_below="@+id/courierCountry"
+                android:textAlignment="center"
+                android:hint="Courier Country"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/maxWeight"
+                android:layout_below="@+id/editTextCourierCountry"
+                android:layout_marginTop="10dp"
+                android:text="Maximum Weight (kg): "
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextMaxWeight"
+                android:layout_below="@+id/editTextCourierCountry"
+                android:layout_toRightOf="@+id/maxWeight"
+                android:textAlignment="center"
+                android:layout_marginLeft="10dp"
+                android:hint="Maximum Weight"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/maxDate"
+                android:layout_below="@+id/maxWeight"
+                android:layout_marginTop="10dp"
+                android:text="Date of Departure: "
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextMaxDate"
+                android:layout_below="@+id/editTextMaxWeight"
+                android:layout_toRightOf="@+id/maxDate"
+                android:textAlignment="center"
+                android:layout_marginLeft="10dp"
+                android:hint="Tap for Date Picker"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/updateSettingsButton"
+        android:layout_below="@+id/scrollView03"
         android:layout_marginLeft="10dp"
+        android:text="UPDATE SETTINGS"/>
+
+    <Button
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/transactHistoryButton"
+        android:layout_below="@+id/scrollView03"
+        android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/customborder"/>
-
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/courierSettings"
-        android:layout_above="@+id/buyerSettings"
-        android:layout_centerHorizontal="true"
-        android:text="COURIER SETTINGS"
-        android:background="@drawable/courierroundedbutton"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/buyerSettings"
-        android:layout_above="@+id/logOut"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="BUYER SETTINGS"
-        android:background="@drawable/buyerroundedbutton"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:text="TRANSACTION HISTORY"/>
 
     <Button
         android:layout_width="wrap_content"
