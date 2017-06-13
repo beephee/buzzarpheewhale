@@ -53,7 +53,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editTextCourierCountry"
+                android:id="@+id/editTextBuyerCountry"
                 android:layout_below="@+id/buyerCountry"
                 android:textAlignment="center"
                 android:hint="Buyer Country"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/maxBudget"
-                android:layout_below="@+id/editTextCourierCountry"
+                android:layout_below="@+id/editTextBuyerCountry"
                 android:layout_marginTop="20dp"
                 android:text="Maximum Budget ($): "
                 android:textSize="15sp"
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/editTextMaxBudget"
-                android:layout_below="@+id/editTextCourierCountry"
+                android:layout_below="@+id/editTextBuyerCountry"
                 android:layout_toRightOf="@+id/maxBudget"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/updateButton"
+        android:id="@+id/updateBuyer"
         android:text="UPDATE"
         android:layout_marginBottom="10dp" />
 

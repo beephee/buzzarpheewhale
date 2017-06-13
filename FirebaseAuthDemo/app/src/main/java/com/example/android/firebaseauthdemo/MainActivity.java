@@ -97,7 +97,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String custsvc = "0";
                             Boolean courierActive = false;
                             String courierCountry = "NONE";
-                            User newUser = new User(userUID, email, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry);
+                            String maxWeight = "0";
+                            String dateDeparture = "31/12/2017"; //default, can be changed
+                            String buyerBudget = "NONE";
+                            User newUser = new User(userUID, email, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget);
                             dbRef.child(userUID).setValue(newUser);
                             //Successfully registered
                             //Start profile activity

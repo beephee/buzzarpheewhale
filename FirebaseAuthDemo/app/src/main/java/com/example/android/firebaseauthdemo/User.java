@@ -11,12 +11,15 @@ public class User {
     Boolean courierActive;
     String buyerCountry;
     String courierCountry;
+    String maxWeight;
+    String dateDeparture;
+    String buyerBudget; //KIV if want to implement in the future
 
     public User(){
 
     }
 
-    public User(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry) {
+    public User(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry, String maxWeight, String dateDeparture, String buyerBudget) {
         this.userUID = userUID;
         this.userEmail = userEmail;
         this.userType = userType;
@@ -26,6 +29,9 @@ public class User {
         this.courierActive = courierActive;
         this.buyerCountry = buyerCountry;
         this.courierCountry = courierCountry;
+        this.maxWeight = maxWeight;
+        this.dateDeparture = dateDeparture;
+        this.buyerBudget = buyerBudget;
     }
 
     public String getuserUID() {
@@ -49,5 +55,11 @@ public class User {
     public String getBuyerCountry() { return buyerCountry; }
 
     public String getCourierCountry() { return courierCountry; }
+
+    public String getMaxWeight() { return maxWeight; }
+
+    public String getDateDeparture() { return dateDeparture; }
+
+    public String getBuyerBudget() { return buyerBudget; }
 
 }

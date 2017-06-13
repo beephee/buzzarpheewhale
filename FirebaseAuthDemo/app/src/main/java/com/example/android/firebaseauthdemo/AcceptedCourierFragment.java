@@ -47,6 +47,10 @@ public class AcceptedCourierFragment extends Fragment {
     String userEmail;
     String listFilter;
     String userCountry;
+    Boolean userCourierActive;
+    String userCourierCountry;
+    String userDate;
+    String userWeight;
     Button btnAccepted;
     Button btnSuggested;
     Button btnAll;
@@ -83,6 +87,10 @@ public class AcceptedCourierFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userCountry = dataSnapshot.child("buyerCountry").getValue(String.class);
+                userCourierActive = dataSnapshot.child("courierActive").getValue(Boolean.class);
+                userCourierCountry = dataSnapshot.child("courierCountry").getValue(String.class);
+                userDate = dataSnapshot.child("dateDeparture").getValue(String.class);
+                userWeight = dataSnapshot.child("maxWeight").getValue(String.class);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -108,10 +116,17 @@ public class AcceptedCourierFragment extends Fragment {
         }
     };
 
-    //Suggested Filter Button (Under Construction)
+    //Suggested Filter Button
     private View.OnClickListener btnSuggestedListener = new View.OnClickListener() {
         public void onClick(View v) {
-            listFilter = "suggested";
+
+            // hide if courier not active or courier country not set
+            if (userCourierActive == false || userCourierCountry.equals("NONE")) {
+                listFilter = "none";
+                Toast.makeText(getActivity().getApplicationContext(), "Set courier status to active and set courier country to see suggested orders!", Toast.LENGTH_LONG).show();
+            } else {
+                listFilter = "suggested";
+            }
             listViewProductsAccepted.setVisibility(View.INVISIBLE);
             listViewProductsAll.setVisibility(View.VISIBLE);
             onStart();
@@ -280,9 +295,10 @@ public class AcceptedCourierFragment extends Fragment {
 
                 for(DataSnapshot productSnapshot : dataSnapshot.getChildren()){
                     Product product = productSnapshot.getValue(Product.class);
-                    // Only include items that are accepted by courier
+                    // Only include items that are accepted by courier and not yet completed
                     String courierID = product.getProductCourier();
-                    if (courierID.equals(userEmail)) {
+                    String status = product.getStatus();
+                    if (courierID.equals(userEmail) && !status.equals("Completed")) {
                         productListAccepted.add(product);
                     }
                 }
@@ -310,14 +326,16 @@ public class AcceptedCourierFragment extends Fragment {
 
                     String courierID = product.getProductCourier();
                     String buyerID = product.getProductBuyer();
+                    String requiredDate = product.getDate();
+                    String productWeight = product.getWeight();
 
                     // Only include items that are not assigned to any courier yet and not requested by user
                     if (courierID.equals("NONE") && !buyerID.equals(userEmail)) {
                         switch (listFilter) {
-                            //Only add requests in same country as user
+                            //Only add requests in same country as user, user departure date must be before required date, user max weight must be than more product weight
                             case "suggested":
                                 if(userCountry != null) {
-                                    if (userCountry.equals(product.getCountry())) {
+                                    if (userCountry.equals(product.getCountry()) && userDate.compareTo(requiredDate)<=0 && userWeight.compareTo(productWeight)>=0) {
                                         productListAll.add(product);
                                     }
                                 }
@@ -325,6 +343,9 @@ public class AcceptedCourierFragment extends Fragment {
                             //List all requests
                             case "all":
                                 productListAll.add(product);
+                                break;
+                            //List none
+                            case "none":
                                 break;
                         }
                     }

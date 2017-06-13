@@ -109,9 +109,10 @@ public class BuyerFragment extends Fragment {
 
                 for(DataSnapshot productSnapshot : dataSnapshot.getChildren()){
                     Product product = productSnapshot.getValue(Product.class);
-                    //Filter results to show only products by the user
+                    //Filter results to show only products by the user and not yet completed
                     String email = product.getProductBuyer();
-                    if(email.equals(userEmail)){
+                    String status = product.getStatus();
+                    if(email.equals(userEmail) && !status.equals("Completed")){
                         productList.add(product);
                     }
                 }
