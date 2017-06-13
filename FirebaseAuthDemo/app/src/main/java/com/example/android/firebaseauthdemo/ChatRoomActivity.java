@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.android.firebaseauthdemo.R;
@@ -17,10 +18,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+
+import static com.example.android.firebaseauthdemo.R.id.listViewChat;
 
 /**
  * Created by filipp on 6/28/2016.
@@ -39,6 +47,9 @@ public class ChatRoomActivity extends AppCompatActivity{
 
     FirebaseAuth firebaseAuth;
     FirebaseUser curUser;
+    ListView listViewChat;
+    ChatList adapter;
+    List<Chat> chatList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +58,8 @@ public class ChatRoomActivity extends AppCompatActivity{
 
         firebaseAuth = FirebaseAuth.getInstance();
         curUser = firebaseAuth.getCurrentUser();
+        chatList = new ArrayList<>();
+        listViewChat = (ListView) findViewById(R.id.listViewChat);
 
         btn_send_msg = (Button) findViewById(R.id.btn_send);
         input_msg = (EditText) findViewById(R.id.msg_input);
@@ -67,6 +80,10 @@ public class ChatRoomActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
 
+                Date curDate = new Date();
+                String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(curDate);
+                String formattedTime = new SimpleDateFormat("hh:mm:ss").format(curDate);
+
                 Map<String,Object> map = new HashMap<String, Object>();
                 temp_key = root.push().getKey();
                 root.updateChildren(map);
@@ -75,6 +92,8 @@ public class ChatRoomActivity extends AppCompatActivity{
                 Map<String,Object> map2 = new HashMap<String, Object>();
                 map2.put("name",user_name);
                 map2.put("msg",input_msg.getText().toString());
+                map2.put("date",formattedDate);
+                map2.put("time",formattedTime);
 
                 message_root.updateChildren(map2);
                 input_msg.setText("");
@@ -86,56 +105,27 @@ public class ChatRoomActivity extends AppCompatActivity{
             }
         });
 
-        root.addChildEventListener(new ChildEventListener() {
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        root.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                append_chat_conversation(dataSnapshot);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                chatList.clear();
+                for(DataSnapshot chatSnapshot : dataSnapshot.getChildren()){
+                    Chat chat = chatSnapshot.getValue(Chat.class);
+                    chatList.add(chat);
+                }
+                adapter = new ChatList(ChatRoomActivity.this, chatList);
+                listViewChat.setAdapter(adapter);
             }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                append_chat_conversation(dataSnapshot);
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
-
     }
 
-    private String chat_msg,chat_user_name;
-
-    private void append_chat_conversation(DataSnapshot dataSnapshot) {
-
-        Iterator i = dataSnapshot.getChildren().iterator();
-
-        while (i.hasNext()){
-
-            chat_msg = (String) ((DataSnapshot)i.next()).getValue();
-            String chat_user_name_temp = (String) ((DataSnapshot)i.next()).getValue();
-            if(chat_user_name_temp.equals(user_name)){
-                chat_user_name = "You";
-            } else {
-                chat_user_name = chat_user_name_temp;
-            }
-            chat_conversation.append("[" + chat_user_name + "] " + chat_msg +" \n\n");
-        }
-
-
-    }
 }
