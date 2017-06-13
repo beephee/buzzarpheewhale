@@ -91,7 +91,7 @@ public class BuyerFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Product product = productList.get(i);
-                showMenuDialog(product.getProductId(), product.getProductBuyer(), product.getProductCourier(), product.getProductName(), product.getProductType(), product.getProductCoords(), product.getLength(), product.getWidth(), product.getHeight(), product.getWeight(), product.getPrice(), product.getDate(), product.getImgurl(), product.getCountry(), product.getCourierComplete(), product.getBuyerComplete(), product.getTransit(), product.getBuyerPaid());
+                showMenuDialog(product.getProductId(), product.getProductBuyer(), product.getProductCourier(), product.getProductName(), product.getProductType(), product.getProductCoords(), product.getLength(), product.getWidth(), product.getHeight(), product.getWeight(), product.getPrice(), product.getDate(), product.getImgurl(), product.getCountry(), product.getCourierComplete(), product.getBuyerComplete(), product.getTransit(), product.getBuyerPaid(), product.getStatus());
                 return true;
             }
         });
@@ -128,7 +128,7 @@ public class BuyerFragment extends Fragment {
         });
     }
 
-    private void showMenuDialog(final String productId, final String productBuyer, final String productCourier, final String productName, final String productType, final String productCoords, final String length, final String width, final String height, final String weight, final String price, final String date, final String url, final String country, final Boolean courierAccept, final Boolean buyerAccept, final Boolean transit, final Boolean buyerPaid) {
+    private void showMenuDialog(final String productId, final String productBuyer, final String productCourier, final String productName, final String productType, final String productCoords, final String length, final String width, final String height, final String weight, final String price, final String date, final String url, final String country, final Boolean courierAccept, final Boolean buyerAccept, final Boolean transit, final Boolean buyerPaid, final String productStatus) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -141,6 +141,15 @@ public class BuyerFragment extends Fragment {
         final AlertDialog b = dialogBuilder.create();
         b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         b.show();
+
+        if(productStatus.equals("Completed")){
+            buttonBuyerPay.setEnabled(false);
+            buttonBuyerCompleteTransact.setEnabled(false);
+            buttonUpdateDelete.setEnabled(false);
+        } else if (productStatus.equals("Payment Completed")){
+            buttonBuyerPay.setEnabled(false);
+            buttonUpdateDelete.setEnabled(false);
+        }
 
         buttonBuyerPay.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -70,7 +70,7 @@
             android:layout_width="110dp"
             android:layout_height="30dp"
             android:layout_below="@id/frameTopBar"
-            android:text="Display All"
+            android:text="All"
             android:textColor="@color/white"
             android:background="@drawable/orderfilterbutton"/>
     </LinearLayout>

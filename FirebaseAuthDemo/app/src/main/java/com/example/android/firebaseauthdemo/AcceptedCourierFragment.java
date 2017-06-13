@@ -46,6 +46,7 @@ public class AcceptedCourierFragment extends Fragment {
     ProductList adapterAll;
     String userEmail;
     String listFilter;
+    String userCountry;
     Button btnAccepted;
     Button btnSuggested;
     Button btnAll;
@@ -74,6 +75,20 @@ public class AcceptedCourierFragment extends Fragment {
         btnAccepted.setTypeface(Typeface.DEFAULT_BOLD);
         btnAccepted.setTextSize(16);
 
+        //User Info
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        databaseUsers.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userCountry = dataSnapshot.child("buyerCountry").getValue(String.class);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
         //Grabs email string from previous activity
         Bundle extras = getActivity().getIntent().getExtras();
         if(extras != null){
@@ -96,7 +111,6 @@ public class AcceptedCourierFragment extends Fragment {
     //Suggested Filter Button (Under Construction)
     private View.OnClickListener btnSuggestedListener = new View.OnClickListener() {
         public void onClick(View v) {
-            Toast.makeText(getActivity().getApplicationContext(), "Under construction", Toast.LENGTH_LONG).show();
             listFilter = "suggested";
             listViewProductsAccepted.setVisibility(View.INVISIBLE);
             listViewProductsAll.setVisibility(View.VISIBLE);
@@ -144,7 +158,7 @@ public class AcceptedCourierFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Product product = productListAccepted.get(i);
-                showMenuDialog(product.getProductId(), product.getProductBuyer(), product.getProductCourier(), product.getProductName(), product.getProductType(), product.getProductCoords(), product.getLength(), product.getWidth(), product.getHeight(), product.getWeight(), product.getPrice(), product.getDate(), product.getImgurl(), product.getCountry(), product.getCourierComplete(), product.getBuyerComplete(), product.getTransit(), product.getBuyerPaid());
+                showMenuDialog(product.getProductId(), product.getProductBuyer(), product.getProductCourier(), product.getProductName(), product.getProductType(), product.getProductCoords(), product.getLength(), product.getWidth(), product.getHeight(), product.getWeight(), product.getPrice(), product.getDate(), product.getImgurl(), product.getCountry(), product.getCourierComplete(), product.getBuyerComplete(), product.getTransit(), product.getBuyerPaid(), product.getStatus());
                 return true;
             }
         });
@@ -163,7 +177,7 @@ public class AcceptedCourierFragment extends Fragment {
     }
 
     //Menu Dialog for Accepted Tab
-    private void showMenuDialog(final String productId, final String productBuyer, final String productCourier, final String productName, final String productType, final String productCoords, final String length, final String width, final String height, final String weight, final String price, final String date, final String url, final String country, final Boolean courierAccept, final Boolean buyerAccept, final Boolean transit, final Boolean buyerPaid) {
+    private void showMenuDialog(final String productId, final String productBuyer, final String productCourier, final String productName, final String productType, final String productCoords, final String length, final String width, final String height, final String weight, final String price, final String date, final String url, final String country, final Boolean courierAccept, final Boolean buyerAccept, final Boolean transit, final Boolean buyerPaid, final String productStatus) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -176,6 +190,14 @@ public class AcceptedCourierFragment extends Fragment {
         final AlertDialog b = dialogBuilder.create();
         b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         b.show();
+
+        if(!productStatus.equals("Matched")){
+            cancelOrder.setEnabled(false);
+        }
+
+        if(transit == true){
+            inTransit.setEnabled(false);
+        }
 
         cancelOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,11 +271,6 @@ public class AcceptedCourierFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        //Instantiate user to retrieve country information
-        firebaseAuth = FirebaseAuth.getInstance();
-        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
-        final FirebaseUser user = firebaseAuth.getCurrentUser();
-
         //Accepted Tab
         databaseProductsAccepted.addValueEventListener(new ValueEventListener() {
             @Override
@@ -293,16 +310,16 @@ public class AcceptedCourierFragment extends Fragment {
 
                     String courierID = product.getProductCourier();
                     String buyerID = product.getProductBuyer();
-                    //to change
-                    String userCountry = databaseUsers.child(user.getUid()).child("buyerCountry").toString();
 
                     // Only include items that are not assigned to any courier yet and not requested by user
                     if (courierID.equals("NONE") && !buyerID.equals(userEmail)) {
                         switch (listFilter) {
                             //Only add requests in same country as user
                             case "suggested":
-                                if(userCountry.equals(product.getCountry())){
-                                    productListAll.add(product);
+                                if(userCountry != null) {
+                                    if (userCountry.equals(product.getCountry())) {
+                                        productListAll.add(product);
+                                    }
                                 }
                                 break;
                             //List all requests
