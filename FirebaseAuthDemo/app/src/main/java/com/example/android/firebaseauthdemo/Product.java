@@ -24,12 +24,14 @@ public class Product {
     Boolean buyerComplete;
     Boolean transit;
     Boolean buyerPaid;
+    Boolean paymentConfirmed;
+    String payeeDetails;
 
     public Product(){
 
     }
 
-    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String imgurl, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid) {
+    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String imgurl, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid, Boolean paymentConfirmed, String payeeDetails) {
         this.productId = productId;
         this.productBuyer = productBuyer;
         this.productCourier = productCourier;
@@ -48,6 +50,8 @@ public class Product {
         this.buyerComplete = buyerAccept;
         this.transit = transit;
         this.buyerPaid = buyerPaid;
+        this.paymentConfirmed = paymentConfirmed;
+        this.payeeDetails = payeeDetails;
     }
 
     public String getProductId() {
@@ -113,14 +117,20 @@ public class Product {
             return "Pending";
         } else if (this.getBuyerComplete().equals(true) && this.getCourierComplete().equals(true)) {
             return "Completed";
-        } else if (this.getBuyerPaid().equals(true)) {
-            return "Payment Completed";
         } else if (this.getTransit().equals(true)) {
             return "In Transit";
+        } else if (this.getPaymentConfirmed().equals(true)) {
+            return "Payment Confirmed";
+        } else if (this.getBuyerPaid().equals(true)) {
+            return "Payment Submitted";
         } else {
             return "Matched";
         }
     }
 
     public Boolean getBuyerPaid() { return buyerPaid; }
+
+    public Boolean getPaymentConfirmed() { return paymentConfirmed; }
+
+    public String getPayeeDetails() { return payeeDetails; }
 }

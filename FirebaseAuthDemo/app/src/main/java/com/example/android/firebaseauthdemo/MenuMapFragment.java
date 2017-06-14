@@ -192,7 +192,8 @@ public class MenuMapFragment extends Fragment {
                     //Filter results to show only products by the user
                     String buyerEmail = product.getProductBuyer();
                     String courierEmail = product.getProductCourier();
-                    if(buyerEmail.equals(userEmail) || courierEmail.equals(userEmail)){
+                    String productStatus = product.getStatus();
+                    if((buyerEmail.equals(userEmail) || courierEmail.equals(userEmail)) && !productStatus.equals("Completed")){
                         //Add individual product details into array list (room for improvement)
                         String[] latlong =  product.getProductCoords().split(",");
                         double latitude = Double.parseDouble(latlong[0]);

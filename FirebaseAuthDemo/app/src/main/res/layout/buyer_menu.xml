@@ -5,12 +5,36 @@
     android:orientation="vertical"
     android:background="@drawable/dialog_bg">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Courier's Bank Account Details:"
+        android:id="@+id/bankAccountDetails"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editBankAccountDetails"
+        android:layout_below="@id/bankAccountDetails"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/black"
+        android:hint="Bank Account Details" />
+
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/buyerPay"
+        android:layout_below="@+id/editBankAccountDetails"
         android:layout_centerHorizontal="true"
-        android:text="Pay for Order"
+        android:text="Confirm Payment Submission"
         android:textSize="20sp"
         />
 

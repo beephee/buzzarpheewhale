@@ -60,14 +60,14 @@
                 android:id="@+id/textCoords"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Location:"
+                android:text="Location: "
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/textStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Status:"
+                android:text="Status: "
                 android:textColor="@color/black"
                 android:layout_marginBottom="5dp"
                 android:textStyle="bold"/>

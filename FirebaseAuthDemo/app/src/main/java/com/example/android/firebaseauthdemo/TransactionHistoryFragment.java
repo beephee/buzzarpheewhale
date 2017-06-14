@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
@@ -89,7 +90,7 @@ public class TransactionHistoryFragment extends Fragment {
                     }
                 }
 
-                ProductListBuyer adapter = new ProductListBuyer(getActivity(), productList);
+                ProductListTransactHistory adapter = new ProductListTransactHistory(getActivity(), productList);
                 listViewBuyer.setAdapter(adapter);
 
                 productList2.clear();
@@ -98,11 +99,11 @@ public class TransactionHistoryFragment extends Fragment {
                     Product product = productSnapshot.getValue(Product.class);
                     String courierEmail = product.getProductCourier();
                     if(product.getStatus().equals("Completed") && courierEmail.equals(userEmail)){
-                        productList.add(product);
+                        productList2.add(product);
                     }
                 }
 
-                ProductListBuyer adapter2 = new ProductListBuyer(getActivity(), productList2);
+                ProductListTransactHistory adapter2 = new ProductListTransactHistory(getActivity(), productList2);
                 listViewCourier.setAdapter(adapter2);
 
             }

@@ -100,13 +100,15 @@
                 android:id="@+id/buyerCountry"
                 android:text="Home Country: "
                 android:textSize="15sp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/black" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/editTextBuyerCountry"
-                android:layout_below="@+id/buyerCountry"
+                android:layout_toRightOf="@+id/buyerCountry"
+                android:layout_marginLeft="10dp"
                 android:textAlignment="center"
                 android:hint="Buyer Country"
                 android:textSize="15sp" />
@@ -115,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/maxBudget"
-                android:layout_below="@+id/editTextBuyerCountry"
+                android:layout_below="@+id/buyerCountry"
                 android:layout_marginTop="10dp"
                 android:text="Maximum Budget ($): "
                 android:textSize="15sp"
@@ -125,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/editTextMaxBudget"
-                android:layout_below="@+id/editTextBuyerCountry"
+                android:layout_below="@+id/buyerCountry"
                 android:layout_toRightOf="@+id/maxBudget"
                 android:textAlignment="center"
                 android:layout_marginLeft="10dp"
@@ -185,7 +187,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/editTextCourierCountry"
-                android:layout_below="@id/courierCountry"
+                android:layout_toRightOf="@id/courierCountry"
+                android:layout_marginTop="25dp"
                 android:textAlignment="center"
                 android:hint="Courier Country"
                 android:textSize="15sp" />
@@ -194,7 +197,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/maxWeight"
-                android:layout_below="@id/editTextCourierCountry"
+                android:layout_below="@id/courierCountry"
                 android:layout_marginTop="10dp"
                 android:text="Maximum Weight (kg): "
                 android:textSize="15sp"
@@ -204,7 +207,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/editTextMaxWeight"
-                android:layout_below="@+id/editTextCourierCountry"
+                android:layout_below="@+id/courierCountry"
                 android:layout_toRightOf="@id/maxWeight"
                 android:textAlignment="center"
                 android:layout_marginLeft="10dp"
@@ -230,6 +233,26 @@
                 android:textAlignment="center"
                 android:layout_marginLeft="10dp"
                 android:hint="Tap for Date Picker"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bankAccount"
+                android:text="Bank Account Details: "
+                android:layout_below="@id/maxDate"
+                android:layout_marginTop="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextBankAccount"
+                android:layout_below="@+id/bankAccount"
+                android:textAlignment="center"
+                android:layout_marginLeft="10dp"
+                android:hint="Bank Account Details"
                 android:textSize="15sp" />
 
         </RelativeLayout>

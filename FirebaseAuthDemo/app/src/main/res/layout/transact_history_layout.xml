@@ -41,13 +41,6 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
             <TextView
-                android:id="@+id/textBuyerEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Buyer: "
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
-            <TextView
                 android:id="@+id/textPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,24 +62,10 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
             <TextView
-                android:id="@+id/textDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Deadline: "
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
-            <TextView
                 android:id="@+id/textCoords"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Location: "
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/textStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Status: "
                 android:textColor="@color/black"
                 android:layout_marginBottom="5dp"
                 android:textStyle="bold"/>
@@ -101,12 +80,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Product Type"
-                android:textColor="@color/black"/>
-            <TextView
-                android:id="@+id/textViewBuyerEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Buyer Email"
                 android:textColor="@color/black"/>
             <TextView
                 android:id="@+id/textViewPrice"
@@ -154,22 +127,10 @@
                     android:textColor="@color/black"/>
             </LinearLayout>
             <TextView
-                android:id="@+id/textViewDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Date"
-                android:textColor="@color/black"/>
-            <TextView
                 android:id="@+id/textViewCoords"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Geocoordinates"
-                android:textColor="@color/black"/>
-            <TextView
-                android:id="@+id/textViewStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Status"
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/black"/>
         </LinearLayout>

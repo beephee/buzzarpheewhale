@@ -53,7 +53,7 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 User user = userList.get(i);
-                showMenuDialog(user.getuserUID(),user.getuserEmail(),user.getuserType(),user.getBlacklisted(),user.getTutorial(),user.getCustsvc(), user.getCourierActive(), user.getBuyerCountry(), user.getCourierCountry(), user.getMaxWeight(), user.getDateDeparture(), user.getBuyerBudget());
+                showMenuDialog(user.getuserUID(),user.getuserEmail(),user.getuserType(),user.getBlacklisted(),user.getTutorial(),user.getCustsvc(), user.getCourierActive(), user.getBuyerCountry(), user.getCourierCountry(), user.getMaxWeight(), user.getDateDeparture(), user.getBuyerBudget(), user.getBankAccount());
                 return true;
             }
         });
@@ -158,7 +158,7 @@ public class AdminActivity extends AppCompatActivity {
         btnBanned.setTextSize(14);
     }
 
-    private void showMenuDialog(final String userUID, final String userEmail, final String userType, final String blacklisted, final String tutorial, final String custsvc, final Boolean courierActive, final String buyerCountry, final String courierCountry, final String maxWeight, final String dateDeparture, final String buyerBudget) {
+    private void showMenuDialog(final String userUID, final String userEmail, final String userType, final String blacklisted, final String tutorial, final String custsvc, final Boolean courierActive, final String buyerCountry, final String courierCountry, final String maxWeight, final String dateDeparture, final String buyerBudget, final String bankAccount) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -192,7 +192,7 @@ public class AdminActivity extends AppCompatActivity {
         banUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                banUser(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget);
+                banUser(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
                 b.dismiss();
             }
         });
@@ -200,7 +200,7 @@ public class AdminActivity extends AppCompatActivity {
         unbanUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                unbanUser(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget);
+                unbanUser(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
                 b.dismiss();
             }
         });
@@ -208,7 +208,7 @@ public class AdminActivity extends AppCompatActivity {
         setAdminUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setAdminUser(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget);
+                setAdminUser(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
                 b.dismiss();
             }
         });
@@ -216,39 +216,39 @@ public class AdminActivity extends AppCompatActivity {
         unadminUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                unadminUser(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget);
+                unadminUser(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
                 b.dismiss();
             }
         });
     }
 
-    private boolean banUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry, String maxWeight, String dateDeparture, String buyerBudget) {
+    private boolean banUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry, String maxWeight, String dateDeparture, String buyerBudget, String bankAccount) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUID);
-        User user = new User(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget);
+        User user = new User(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
         dR.setValue(user);
         Toast.makeText(getApplicationContext(), "User banned!", Toast.LENGTH_LONG).show();
         return true;
     }
 
-    private boolean unbanUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry, String maxWeight, String dateDeparture, String buyerBudget) {
+    private boolean unbanUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry, String maxWeight, String dateDeparture, String buyerBudget, String bankAccount) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUID);
-        User user = new User(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget);
+        User user = new User(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
         dR.setValue(user);
         Toast.makeText(getApplicationContext(), "User unbanned!", Toast.LENGTH_LONG).show();
         return true;
     }
 
-    private boolean setAdminUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry, String maxWeight, String dateDeparture, String buyerBudget) {
+    private boolean setAdminUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry, String maxWeight, String dateDeparture, String buyerBudget, String bankAccount) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUID);
-        User user = new User(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget);
+        User user = new User(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
         dR.setValue(user);
         Toast.makeText(getApplicationContext(), "User given admin status!", Toast.LENGTH_LONG).show();
         return true;
     }
 
-    private boolean unadminUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry, String maxWeight, String dateDeparture, String buyerBudget) {
+    private boolean unadminUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry, String maxWeight, String dateDeparture, String buyerBudget, String bankAccount) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUID);
-        User user = new User(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget);
+        User user = new User(userUID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
         dR.setValue(user);
         Toast.makeText(getApplicationContext(), "Admin status removed!", Toast.LENGTH_LONG).show();
         return true;

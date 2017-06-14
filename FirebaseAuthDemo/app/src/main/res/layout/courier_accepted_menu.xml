@@ -17,9 +17,18 @@
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:id="@+id/transitButton"
+        android:id="@+id/confirmPaymentButton"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/cancelOrderButton"
+        android:text="Confirm Payment Receipt"
+        android:textSize="20sp" />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/transitButton"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/confirmPaymentButton"
         android:text="Product In Transit"
         android:textSize="20sp" />
 

@@ -77,12 +77,14 @@ public class SettingsFragment extends Fragment {
     String userCourierCountry;
     String userMaxWeight;
     String userDateDeparture;
+    String userBankAccount;
     EditText editBuyerCountry;
     EditText editMaxBudget;
     Switch switchCourierActive;
     EditText editCourierCountry;
     EditText editMaxWeight;
     TextView editMaxDate;
+    EditText editBankAccount;
     private static final String TAG = "SettingsFragment";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     String newDate;
@@ -144,12 +146,14 @@ public class SettingsFragment extends Fragment {
                 userCourierCountry = dataSnapshot.child("courierCountry").getValue(String.class);
                 userMaxWeight = dataSnapshot.child("maxWeight").getValue(String.class);
                 userDateDeparture = dataSnapshot.child("dateDeparture").getValue(String.class);
+                userBankAccount = dataSnapshot.child("bankAccount").getValue(String.class);
                 editBuyerCountry = (EditText) rootView.findViewById(R.id.editTextBuyerCountry);
                 editMaxBudget = (EditText) rootView.findViewById(R.id.editTextMaxBudget);
                 switchCourierActive = (Switch) rootView.findViewById(R.id.activeSwitch);
                 editCourierCountry = (EditText) rootView.findViewById(R.id.editTextCourierCountry);
                 editMaxWeight = (EditText) rootView.findViewById(R.id.editTextMaxWeight);
                 editMaxDate = (TextView) rootView.findViewById(R.id.editTextMaxDate);
+                editBankAccount = (EditText) rootView.findViewById(R.id.editTextBankAccount);
                 editBuyerCountry.setText(userBuyerCountry);
                 editMaxBudget.setText(userMaxBudget);
                 if (userCourierActive == false) {
@@ -160,6 +164,7 @@ public class SettingsFragment extends Fragment {
                 editCourierCountry.setText(userCourierCountry);
                 editMaxWeight.setText(userMaxWeight);
                 editMaxDate.setText(userDateDeparture);
+                editBankAccount.setText(userBankAccount);
 
                 editMaxDate.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -241,6 +246,7 @@ public class SettingsFragment extends Fragment {
             String newCourierCountry = editCourierCountry.getText().toString();
             String newMaxWeight = editMaxWeight.getText().toString();
             String newMaxDate = editMaxDate.getText().toString();
+            String newBankAccount = editBankAccount.getText().toString();
             if (newBuyerCountry.equals("") || newMaxBudget.equals("") || newCourierCountry.equals("") || newMaxWeight.equals("") || newMaxDate.equals("")) {
                 Toast.makeText(getActivity().getApplicationContext(), "Please fill up all fields to update settings!", Toast.LENGTH_LONG).show();
             } else {
@@ -260,6 +266,8 @@ public class SettingsFragment extends Fragment {
                 } else {
                     dR6.setValue(false);
                 }
+                DatabaseReference dR7 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("bankAccount");
+                dR7.setValue(newBankAccount);
                 Toast.makeText(getActivity().getApplicationContext(), "Settings updated!", Toast.LENGTH_LONG).show();
             }
         }
