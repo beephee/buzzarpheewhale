@@ -50,6 +50,7 @@ public class ChatRoomActivity extends AppCompatActivity{
     ListView listViewChat;
     ChatList adapter;
     List<Chat> chatList;
+    String imgurl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,6 +77,18 @@ public class ChatRoomActivity extends AppCompatActivity{
         root = FirebaseDatabase.getInstance().getReference().child("chat").child(room_name);
         userDB = FirebaseDatabase.getInstance().getReference().child("users").child(curUser.getUid());
 
+        //User Info
+        firebaseAuth = FirebaseAuth.getInstance();
+        userDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                imgurl = dataSnapshot.child("profilepic").getValue(String.class);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
         btn_send_msg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,6 +107,7 @@ public class ChatRoomActivity extends AppCompatActivity{
                 map2.put("msg",input_msg.getText().toString());
                 map2.put("date",formattedDate);
                 map2.put("time",formattedTime);
+                map2.put("uid",curUser.getUid());
 
                 message_root.updateChildren(map2);
                 input_msg.setText("");
