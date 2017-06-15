@@ -21,11 +21,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.ParseException;
 
 public class AcceptedCourierFragment extends Fragment {
 
@@ -316,6 +317,46 @@ public class AcceptedCourierFragment extends Fragment {
         }
     };
 
+    public static boolean checkDates(String startDate, String endDate) {
+
+        SimpleDateFormat dfDate = new SimpleDateFormat("dd/mm/yyyy");
+
+        boolean b = false;
+
+        try {
+            if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
+                b = true;  // If start date is before end date.
+            } else if (dfDate.parse(startDate).equals(dfDate.parse(endDate))) {
+                b = true;  // If two dates are equal.
+            } else {
+                b = false; // If start date is after the end date.
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return b;
+    }
+
+    public static boolean checkWeight(String firstWeight, String secondWeight) {
+
+        boolean b = false;
+        int weightOne = Integer.parseInt(firstWeight);
+        int weightTwo = Integer.parseInt(secondWeight);
+
+        try {
+            if (weightOne < weightTwo) {
+                b = true;  // If first weight is less than second weight
+            } else {
+                b = false; // If first weight is more than second weight
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        return b;
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -368,8 +409,8 @@ public class AcceptedCourierFragment extends Fragment {
                         switch (listFilter) {
                             //Only add requests in same country as user, user departure date must be before required date, user max weight must be than more product weight
                             case "suggested":
-                                if(userCountry != null) {
-                                    if (userCountry.equals(product.getCountry()) && userDate.compareTo(requiredDate)<=0 && userWeight.compareTo(productWeight)>=0) {
+                                if(userCourierCountry != null) {
+                                    if (userCourierCountry.equals(product.getCountry()) && checkDates(userDate,requiredDate) && checkWeight(productWeight,userWeight)) {
                                         productListAll.add(product);
                                     }
                                 }
