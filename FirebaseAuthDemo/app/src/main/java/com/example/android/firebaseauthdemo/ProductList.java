@@ -62,7 +62,7 @@ public class ProductList extends ArrayAdapter<Product>{
         textViewProductType.setText(product.getProductType());
         //textViewCoords.setText(product.getProductCoords().substring(0,35));
         textViewCoords.setText(product.getCountry());
-        textViewBuyerEmail.setText(product.getProductBuyer());
+        textViewBuyerEmail.setText(product.getProductBuyer().split("@", 2)[0]);
         textViewPrice.setText(product.getPrice());
         textViewWeight.setText(product.getWeight());
         textViewHeight.setText(product.getHeight());

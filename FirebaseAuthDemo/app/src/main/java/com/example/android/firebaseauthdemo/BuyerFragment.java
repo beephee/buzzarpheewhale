@@ -94,12 +94,12 @@ public class BuyerFragment extends Fragment {
         listViewProducts = (ListView) getView().findViewById(R.id.listViewProducts);
         textViewMyRequests = (TextView) getView().findViewById(R.id.textViewMyRequests);
 
-        listViewProducts.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listViewProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Product product = productList.get(i);
                 showMenuDialog(product.getProductId(), product.getProductBuyer(), product.getProductCourier(), product.getProductName(), product.getProductType(), product.getProductCoords(), product.getLength(), product.getWidth(), product.getHeight(), product.getWeight(), product.getPrice(), product.getDate(), product.getImgurl(), product.getCountry(), product.getCourierComplete(), product.getBuyerComplete(), product.getTransit(), product.getBuyerPaid(), product.getStatus(), product.getPaymentConfirmed(), product.getPayeeDetails());
-                return true;
+                return;
             }
         });
     }

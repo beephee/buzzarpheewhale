@@ -45,16 +45,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/frameTopBar"
-        android:layout_marginTop="5dp"
-        android:layout_centerHorizontal="true">
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
         <ImageView
             android:id="@+id/profilePicture"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/profilepic"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/accountText"
             android:layout_marginTop="10dp"
@@ -62,6 +64,14 @@
             android:hint="User Email"
             android:textStyle="bold"
             android:textColor="@color/black" />
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/logOut"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/logout"/>
     </LinearLayout>
 
     <TextView
@@ -82,59 +92,77 @@
         android:id="@+id/scrollView02"
         android:layout_below="@+id/buyerSettingsHeader"
         android:layout_margin="10dp"
-        android:layout_weight="1"
         android:isScrollContainer="false"
         android:background="@drawable/customborder">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:id="@+id/buyerSettingsList">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/buyerCountry"
-                android:text="Home Country: "
-                android:textSize="15sp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editTextBuyerCountry"
-                android:layout_toRightOf="@+id/buyerCountry"
-                android:layout_marginLeft="10dp"
-                android:textAlignment="center"
-                android:hint="Buyer Country"
-                android:textSize="15sp" />
-
-            <TextView
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buyerCountry"
+                    android:text="Home Country"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/maxBudget"
+                    android:layout_marginTop="20dp"
+                    android:text="Maximum Budget ($)"
+                    android:textSize="15sp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/maxBudget"
-                android:layout_below="@+id/buyerCountry"
-                android:layout_marginTop="10dp"
-                android:text="Maximum Budget ($): "
-                android:textSize="15sp"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:layout_width="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text=" : "
+                    android:textSize="15sp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/editTextMaxBudget"
-                android:layout_below="@+id/buyerCountry"
-                android:layout_toRightOf="@+id/maxBudget"
-                android:textAlignment="center"
-                android:layout_marginLeft="10dp"
-                android:hint="Maximum Budget"
-                android:textSize="15sp" />
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextBuyerCountry"
+                    android:textAlignment="center"
+                    android:hint="Buyer Country"
+                    android:textSize="15sp" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextMaxBudget"
+                    android:textAlignment="center"
+                    android:hint="Maximum Budget"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 
     <TextView
@@ -157,105 +185,138 @@
         android:layout_weight="1"
         android:isScrollContainer="false"
         android:background="@drawable/customborder">
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:id="@+id/courierSettingsList">
 
-            <Switch
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/activeSwitch"
-                android:textSize="15sp"
-                android:text="Courier Active "/>
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/courierCountry"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/activeSwitch"
-                android:text="Current Country: "
-                android:textSize="15sp"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editTextCourierCountry"
-                android:layout_toRightOf="@id/courierCountry"
-                android:layout_marginTop="25dp"
-                android:textAlignment="center"
-                android:hint="Courier Country"
-                android:textSize="15sp" />
-
-            <TextView
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewCourierActive"
+                    android:layout_marginTop="10dp"
+                    android:text="Courier Active"
+                    android:textSize="15sp"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/courierCountry"
+                    android:layout_marginTop="13dp"
+                    android:text="Current Country"
+                    android:textSize="15sp"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/maxWeight"
+                    android:layout_marginTop="15dp"
+                    android:text="Maximum Weight (kg)"
+                    android:textSize="15sp"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/maxDate"
+                    android:layout_marginTop="15dp"
+                    android:text="Date of Departure"
+                    android:textSize="15sp"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bankAccount"
+                    android:text="Bank Account Details"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/maxWeight"
-                android:layout_below="@id/courierCountry"
-                android:layout_marginTop="10dp"
-                android:text="Maximum Weight (kg): "
-                android:textSize="15sp"
-                android:textColor="@color/black" />
-
-            <EditText
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text=" : "
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:text=" : "
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text=" : "
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text=" : "
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text=" : "
+                    android:textSize="15sp"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editTextMaxWeight"
-                android:layout_below="@+id/courierCountry"
-                android:layout_toRightOf="@id/maxWeight"
-                android:textAlignment="center"
-                android:layout_marginLeft="10dp"
-                android:hint="Maximum Weight"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/maxDate"
-                android:layout_below="@id/maxWeight"
-                android:layout_marginTop="10dp"
-                android:text="Date of Departure: "
-                android:textSize="15sp"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editTextMaxDate"
-                android:layout_below="@id/editTextMaxWeight"
-                android:layout_toRightOf="@+id/maxDate"
-                android:textAlignment="center"
-                android:layout_marginLeft="10dp"
-                android:hint="Tap for Date Picker"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bankAccount"
-                android:text="Bank Account Details: "
-                android:layout_below="@id/maxDate"
-                android:layout_marginTop="10dp"
-                android:textSize="15sp"
-                android:textColor="@color/black"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editTextBankAccount"
-                android:layout_below="@+id/bankAccount"
-                android:textAlignment="center"
-                android:layout_marginLeft="10dp"
-                android:hint="Bank Account Details"
-                android:textSize="15sp" />
-
-        </RelativeLayout>
+                android:orientation="vertical">
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/activeSwitch"
+                    android:textSize="15sp" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextCourierCountry"
+                    android:textAlignment="center"
+                    android:hint="Courier Country"
+                    android:textSize="15sp" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextMaxWeight"
+                    android:textAlignment="center"
+                    android:hint="Maximum Weight"
+                    android:textSize="15sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextMaxDate"
+                    android:textAlignment="center"
+                    android:layout_marginTop="5dp"
+                    android:hint="Tap for Date Picker"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextBankAccount"
+            android:textAlignment="center"
+            android:hint="Bank Account Details"
+            android:textSize="15sp" />
+        </LinearLayout>
     </ScrollView>
 
     <Button
@@ -263,26 +324,22 @@
         android:layout_height="wrap_content"
         android:id="@+id/updateSettingsButton"
         android:layout_below="@id/scrollView03"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
-        android:text="UPDATE SETTINGS"/>
+        android:text="UPDATE SETTINGS"
+        android:textColor="@color/white"
+        android:background="@drawable/settingsbutton"/>
 
     <Button
         android:layout_width="182dp"
         android:layout_height="wrap_content"
         android:id="@+id/transactHistoryButton"
         android:layout_below="@id/scrollView03"
+        android:layout_marginTop="5dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:text="TRANSACTION HISTORY"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/logOut"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        android:layout_centerHorizontal="true"
-        android:text="LOG OUT" />
+        android:text="TRANSACTION HISTORY"
+        android:textColor="@color/white"
+        android:background="@drawable/settingsbutton"/>
 
     </RelativeLayout>
