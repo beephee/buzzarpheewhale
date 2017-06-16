@@ -72,6 +72,7 @@ public class MessagingFragment extends Fragment {
             intent.putExtra("product_name", productName);
             intent.putExtra("user_name", userEmail.split("@", 2)[0]);
             intent.putExtra("is_admin", "false");
+            intent.putExtra("is_custsvc", "true");
             startActivity(intent);
         }
     };
@@ -91,6 +92,7 @@ public class MessagingFragment extends Fragment {
                 intent.putExtra("product_name", productName);
                 intent.putExtra("user_name", userEmail.split("@", 2)[0]);
                 intent.putExtra("is_admin", "false");
+                intent.putExtra("is_custsvc", "false");
                 startActivity(intent);
             }
         });
@@ -115,10 +117,10 @@ public class MessagingFragment extends Fragment {
                         productList.add(product);
                     }
                 }
-
-                ProductListChat adapter = new ProductListChat(getActivity(), productList, userEmail);
-                listViewProducts.setAdapter(adapter);
-
+                if(getActivity() != null){
+                    ProductListChat adapter = new ProductListChat(getActivity(), productList, userEmail);
+                    listViewProducts.setAdapter(adapter);
+                }
             }
 
             @Override

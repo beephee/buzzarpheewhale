@@ -124,8 +124,10 @@ public class BuyerFragment extends Fragment {
                     }
                 }
 
-                ProductListBuyer adapter = new ProductListBuyer(getActivity(), productList);
-                listViewProducts.setAdapter(adapter);
+                if(getActivity() != null) {
+                    ProductListBuyer adapter = new ProductListBuyer(getActivity(), productList);
+                    listViewProducts.setAdapter(adapter);
+                }
 
             }
 

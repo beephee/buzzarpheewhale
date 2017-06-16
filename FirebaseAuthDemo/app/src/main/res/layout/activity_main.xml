@@ -61,8 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:hint="HOME COUNTRY"
-            android:fontFamily="sans-serif-condensed"
-            android:inputType="textPassword" />
+            android:fontFamily="sans-serif-condensed"/>
 
         <Button
             android:id="@+id/buttonSignup"

@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.example.android.firebaseauthdemo.R.id.listViewChat;
+import static junit.runner.Version.id;
 
 /**
  * Created by filipp on 6/28/2016.
@@ -40,7 +41,7 @@ public class ChatRoomActivity extends AppCompatActivity{
     private TextView chat_conversation;
     private TextView chat_title;
 
-    private String user_name,room_name, product_name, is_admin;
+    private String user_name,room_name, product_name, is_admin,is_custsvc;
     private DatabaseReference root ;
     private DatabaseReference userDB;
     private String temp_key;
@@ -71,11 +72,12 @@ public class ChatRoomActivity extends AppCompatActivity{
         room_name = getIntent().getExtras().get("room_name").toString();
         product_name = getIntent().getExtras().get("product_name").toString();
         is_admin = getIntent().getExtras().get("is_admin").toString();
+        is_custsvc = getIntent().getExtras().get("is_custsvc").toString();
         setTitle("[Product] "+ product_name);
         chat_title.setText(product_name);
 
         root = FirebaseDatabase.getInstance().getReference().child("chat").child(room_name);
-        userDB = FirebaseDatabase.getInstance().getReference().child("users").child(curUser.getUid());
+        userDB = FirebaseDatabase.getInstance().getReference().child("users").child(room_name);
 
         //User Info
         firebaseAuth = FirebaseAuth.getInstance();
@@ -111,7 +113,7 @@ public class ChatRoomActivity extends AppCompatActivity{
 
                 message_root.updateChildren(map2);
                 input_msg.setText("");
-                if(is_admin.equals("false")){
+                if(is_admin.equals("false") && is_custsvc.equals("true")){
                     userDB.child("custsvc").setValue("1");
                 } else {
                     userDB.child("custsvc").setValue("0");

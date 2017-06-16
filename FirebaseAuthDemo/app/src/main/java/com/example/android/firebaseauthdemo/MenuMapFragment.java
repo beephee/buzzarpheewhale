@@ -226,20 +226,22 @@ public class MenuMapFragment extends Fragment {
                 }
                 //Initialize first item to be display
                 arrSize = LocList.size();
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(LocList.get(curItemIndex)).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                Glide
-                        .with(getContext())
-                        .load(ImgList.get(curItemIndex))
-                        .transform(new CircleTransform(getContext()))
-                        .into(imageViewProduct);
-                textViewProductName.setText(ProductNameList.get(curItemIndex));
-                textViewPrice.setText("$" + PriceList.get(curItemIndex));
-                textViewServiceType.setText(ServiceTypeList.get(curItemIndex));
-                textViewCountry.setText(CountryList.get(curItemIndex));
-                textViewCategory.setText(CategoryList.get(curItemIndex));
-                textViewDeadline.setText(DateList.get(curItemIndex));
-                textViewStatus.setText(StatusList.get(curItemIndex));
+                if(arrSize != 0){
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(LocList.get(curItemIndex)).zoom(12).build();
+                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    Glide
+                            .with(getContext())
+                            .load(ImgList.get(curItemIndex))
+                            .transform(new CircleTransform(getContext()))
+                            .into(imageViewProduct);
+                    textViewProductName.setText(ProductNameList.get(curItemIndex));
+                    textViewPrice.setText("$" + PriceList.get(curItemIndex));
+                    textViewServiceType.setText(ServiceTypeList.get(curItemIndex));
+                    textViewCountry.setText(CountryList.get(curItemIndex));
+                    textViewCategory.setText(CategoryList.get(curItemIndex));
+                    textViewDeadline.setText(DateList.get(curItemIndex));
+                    textViewStatus.setText(StatusList.get(curItemIndex));
+                }
             }
 
             @Override

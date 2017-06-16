@@ -341,8 +341,8 @@ public class AcceptedCourierFragment extends Fragment {
     public static boolean checkWeight(String firstWeight, String secondWeight) {
 
         boolean b = false;
-        int weightOne = Integer.parseInt(firstWeight);
-        int weightTwo = Integer.parseInt(secondWeight);
+        double weightOne = Double.parseDouble(firstWeight);
+        double weightTwo = Double.parseDouble(secondWeight);
 
         try {
             if (weightOne < weightTwo) {
@@ -378,9 +378,10 @@ public class AcceptedCourierFragment extends Fragment {
                     }
                 }
 
-                ProductListAccepted adapter = new ProductListAccepted(getActivity(), productListAccepted);
-                listViewProductsAccepted.setAdapter(adapter);
-
+                if(getActivity() != null){
+                    ProductListAccepted adapter = new ProductListAccepted(getActivity(), productListAccepted);
+                    listViewProductsAccepted.setAdapter(adapter);
+                }
             }
 
             @Override
@@ -425,8 +426,10 @@ public class AcceptedCourierFragment extends Fragment {
                         }
                     }
                 }
-                adapterAll = new ProductList(getActivity(), productListAll);
-                listViewProductsAll.setAdapter(adapterAll);
+                if(getActivity() != null){
+                    adapterAll = new ProductList(getActivity(), productListAll);
+                    listViewProductsAll.setAdapter(adapterAll);
+                }
             }
 
             @Override

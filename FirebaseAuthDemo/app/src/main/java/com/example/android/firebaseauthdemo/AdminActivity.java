@@ -69,6 +69,7 @@ public class AdminActivity extends AppCompatActivity {
                 intent.putExtra("product_name", productName);
                 intent.putExtra("user_name", "Staff");
                 intent.putExtra("is_admin", "true");
+                intent.putExtra("is_custsvc", "true");
                 startActivity(intent);
             }
         });
