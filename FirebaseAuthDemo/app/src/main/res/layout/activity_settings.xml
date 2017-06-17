@@ -41,13 +41,18 @@
     </FrameLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/frameTopBar">
+    <LinearLayout
         android:id="@+id/frameUserInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/frameTopBar"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_centerHorizontal="true"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center"
         android:orientation="horizontal">
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/profilePicture"
@@ -65,7 +70,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/accountText"
             android:layout_marginTop="10dp"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:hint="User Email"
             android:textStyle="bold"
             android:textColor="@color/black" />
@@ -83,8 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buyerSettingsHeader"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/frameUserInfo"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
         android:text="Buyer Settings"
@@ -174,8 +178,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/courierSettingsHeader"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/scrollView02"
+        android:layout_gravity="center"
         android:textSize="20sp"
         android:text="Courier Settings"
         android:textStyle="bold"
@@ -324,27 +327,32 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:layout_width="182dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/updateSettingsButton"
-        android:layout_below="@id/scrollView03"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:text="UPDATE SETTINGS"
-        android:textColor="@color/white"
-        android:background="@drawable/settingsbutton"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="5dp">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/updateSettingsButton"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:text="UPDATE SETTINGS"
+                android:textColor="@color/white"
+                android:background="@drawable/settingsbutton"/>
 
-    <Button
-        android:layout_width="182dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/transactHistoryButton"
-        android:layout_below="@id/scrollView03"
-        android:layout_marginTop="5dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:text="TRANSACTION HISTORY"
-        android:textColor="@color/white"
-        android:background="@drawable/settingsbutton"/>
-
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/transactHistoryButton"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:text="TRANSACTION HISTORY"
+                android:textColor="@color/white"
+                android:background="@drawable/settingsbutton"/>
+        </LinearLayout>
+    </LinearLayout>
     </RelativeLayout>

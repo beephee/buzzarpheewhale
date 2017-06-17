@@ -29,11 +29,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/frameTopBar"
         android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_centerHorizontal="true"
         android:gravity="center">
         <Button
             android:id="@+id/buttonAll"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginRight="3dp"
             android:typeface="sans"
@@ -42,7 +45,8 @@
             android:background="@drawable/adminfilterbutton"/>
         <Button
             android:id="@+id/buttonCustsvc"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginRight="3dp"
             android:typeface="sans"
@@ -51,7 +55,8 @@
             android:background="@drawable/adminfilterbutton"/>
         <Button
             android:id="@+id/buttonAdmin"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginRight="3dp"
             android:typeface="sans"
@@ -60,7 +65,8 @@
             android:background="@drawable/adminfilterbutton"/>
         <Button
             android:id="@+id/buttonBanned"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:typeface="sans"
             android:text="Banned"
