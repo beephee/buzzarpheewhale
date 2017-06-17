@@ -226,7 +226,7 @@ public class MenuMapFragment extends Fragment {
                 }
                 //Initialize first item to be display
                 arrSize = LocList.size();
-                if(arrSize != 0){
+                if(arrSize != 0 && getContext() != null){
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(LocList.get(curItemIndex)).zoom(12).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                     Glide

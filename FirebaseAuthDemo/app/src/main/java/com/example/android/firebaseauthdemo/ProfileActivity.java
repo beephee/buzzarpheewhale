@@ -40,6 +40,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private TextView textViewUserEmail;
     private Button buttonLogout;
     String userEmail;
+    String doneTutorial;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //User users = dataSnapshot.getValue(User.class);
                 String isBanned = dataSnapshot.child("blacklisted").getValue(String.class);
+                doneTutorial = dataSnapshot.child("tutorial").getValue(String.class);
                 if(isBanned.equals("true")){
                     showBannedDialog();
                 }
@@ -112,7 +114,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         //Pass the email string and page choice to next activity
         Bundle extras = new Bundle();
         extras.putString("email", userEmail);
-        extras.putString("page", "courier");
+        if(doneTutorial.equals("1")) {
+            extras.putString("page", "courier");
+        } else {
+            extras.putString("page", "buyer");
+        }
         intent.putExtras(extras);
         startActivity(intent);
     }
