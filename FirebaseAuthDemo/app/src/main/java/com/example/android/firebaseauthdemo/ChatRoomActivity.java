@@ -113,10 +113,12 @@ public class ChatRoomActivity extends AppCompatActivity{
 
                 message_root.updateChildren(map2);
                 input_msg.setText("");
-                if(is_admin.equals("false") && is_custsvc.equals("true")){
-                    userDB.child("custsvc").setValue("1");
-                } else {
-                    userDB.child("custsvc").setValue("0");
+                if(is_custsvc.equals("true")){
+                    if(is_admin.equals("false")){
+                        userDB.child("custsvc").setValue("1");
+                    } else {
+                        userDB.child("custsvc").setValue("0");
+                    }
                 }
             }
         });

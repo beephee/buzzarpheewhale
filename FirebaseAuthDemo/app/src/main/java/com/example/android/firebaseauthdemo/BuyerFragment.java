@@ -282,6 +282,7 @@ public class BuyerFragment extends Fragment {
                 String newPrice = editTextProductPrice.getText().toString();
                 String newWeight = editTextProductWeight.getText().toString();
                 String newCoords = editTextProductCoords.getText().toString();
+                newDate = showDatePicker.getText().toString();
                 String newCountry = country;
                 String newUrl = url; //Until we implement image uploader on update dialogue
                 if (!TextUtils.isEmpty(newName) && !TextUtils.isEmpty(newType) && !TextUtils.isEmpty(newLength) && !TextUtils.isEmpty(newWidth) && !TextUtils.isEmpty(newHeight) && !TextUtils.isEmpty(newWeight) && !TextUtils.isEmpty(newPrice) && !TextUtils.isEmpty(newDate) && !TextUtils.isEmpty(newCoords)) {

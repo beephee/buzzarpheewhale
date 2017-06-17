@@ -45,14 +45,16 @@ public class UserList extends ArrayAdapter<User>{
 
         User user = userList.get(position);
 
-        if(user.getBlacklisted().equals("true")){
-            bannedIcon.setVisibility(View.VISIBLE);
-        }
-        if (user.getuserType().equals("admin")) {
-            adminIcon.setVisibility(View.VISIBLE);
-        }
-        if (user.getCustsvc().equals("1")){
-            custsvcIcon.setVisibility(View.VISIBLE);
+        if(user != null) {
+            if (user.getBlacklisted().equals("true")) {
+                bannedIcon.setVisibility(View.VISIBLE);
+            }
+            if (user.getuserType().equals("admin")) {
+                adminIcon.setVisibility(View.VISIBLE);
+            }
+            if (user.getCustsvc().equals("1")) {
+                custsvcIcon.setVisibility(View.VISIBLE);
+            }
         }
         textViewUserEmail.setText(user.getuserEmail());
         textViewUserType.setText(user.getuserType());

@@ -58,7 +58,7 @@ public class ChatList extends ArrayAdapter<Chat>{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 imgUrl = dataSnapshot.child("profilepic").getValue(String.class);
-                if(imgUrl != null){
+                if(imgUrl != null && getContext()!= null){
                     imageViewPlaceholder.setVisibility(View.INVISIBLE);
                     Glide
                             .with(context)
