@@ -39,6 +39,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -90,7 +91,7 @@ public class SettingsFragment extends Fragment {
     String newDate;
 
     //Profile Pic Variable
-    ImageView profilePic;
+    CircularImageView profilePic;
     StorageReference mStorage;
     ProgressDialog mProgressDialog;
     Uri downloadUrl;
@@ -184,7 +185,7 @@ public class SettingsFragment extends Fragment {
 
         //Profile Picture
         mStorage = FirebaseStorage.getInstance().getReference();
-        profilePic = (ImageView) rootView.findViewById(R.id.profilePicture);
+        profilePic = (CircularImageView) rootView.findViewById(R.id.profilePicture);
         profilePic.setOnClickListener(updateProfilePicListener);
         mProgressDialog = new ProgressDialog(getActivity());
 

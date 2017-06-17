@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants">
 
@@ -8,25 +10,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="110dp"
+            android:layout_height="55dp"
             android:orientation="vertical"
             android:layout_gravity="center"
             android:layout_weight="1">
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <ImageView
+                <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/profilePicture"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    app:civ_border_color="#EEEEEE"
+                    app:civ_border_width="2dp"
+                    app:civ_shadow="true"
+                    app:civ_shadow_radius="10"
+                    app:civ_shadow_color="#3D3D3D"/>
                 <ImageView
                     android:id="@+id/placeHolder"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:background="@drawable/usericon"/>
             </FrameLayout>
         </LinearLayout>
@@ -36,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_weight="2">
+            android:layout_weight="2.5">
             <TextView
                 android:id="@+id/textViewUserName"
                 android:layout_width="match_parent"
@@ -70,7 +78,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginRight="0dp">
             <TextView
                 android:id="@+id/textViewDate"
                 android:layout_width="match_parent"

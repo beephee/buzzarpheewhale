@@ -39,8 +39,10 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.8.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'jp.wasabeef:glide-transformations:2.0.2'
+    compile 'com.mikhaellopez:circularimageview:3.0.2'
     testCompile 'junit:junit:4.12'
 }
+
 
 
 

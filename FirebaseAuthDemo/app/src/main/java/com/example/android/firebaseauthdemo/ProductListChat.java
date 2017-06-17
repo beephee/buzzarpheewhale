@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class ProductListChat extends ArrayAdapter<Product>{
         TextView textViewBuyerEmail = (TextView) listViewItem.findViewById(R.id.textViewBuyerEmail);
         TextView textViewCourierEmail = (TextView) listViewItem.findViewById(R.id.textViewCourierEmail);
         TextView textViewDate = (TextView) listViewItem.findViewById(R.id.textViewDate);
-        ImageView imageViewProduct = (ImageView) listViewItem.findViewById(R.id.imageViewProduct);
+        CircularImageView imageViewProduct = (CircularImageView) listViewItem.findViewById(R.id.imageViewProduct);
         TextView textViewStatus = (TextView) listViewItem.findViewById(R.id.textViewStatus);
         final ImageView buyerIcon = (ImageView) listViewItem.findViewById(R.id.buyerIcon);
         final ImageView courierIcon = (ImageView) listViewItem.findViewById(R.id.courierIcon);

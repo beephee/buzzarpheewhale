@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class ChatList extends ArrayAdapter<Chat>{
         View listViewChat = inflater.inflate(R.layout.chat_list_layout, null, true);
 
         Chat chat = chatList.get(position);
-        final ImageView imageViewProfilePic = (ImageView) listViewChat.findViewById(R.id.profilePicture);
+        final CircularImageView imageViewProfilePic = (CircularImageView) listViewChat.findViewById(R.id.profilePicture);
         final ImageView imageViewPlaceholder = (ImageView) listViewChat.findViewById(R.id.placeHolder);
 
         //User Info

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class ProductListAccepted extends ArrayAdapter<Product>{
         TextView textViewWidth = (TextView) listViewItem.findViewById(R.id.textViewWidth);
         TextView textViewLength = (TextView) listViewItem.findViewById(R.id.textViewLength);
         TextView textViewDate = (TextView) listViewItem.findViewById(R.id.textViewDate);
-        ImageView imageViewProduct = (ImageView) listViewItem.findViewById(R.id.imageViewProduct);
+        //ImageView imageViewProduct = (ImageView) listViewItem.findViewById(R.id.imageViewProduct);
         TextView textViewStatus = (TextView) listViewItem.findViewById(R.id.textViewStatus);
 
         Product product = productList.get(position);
@@ -66,6 +67,8 @@ public class ProductListAccepted extends ArrayAdapter<Product>{
         textViewLength.setText(product.getLength());
         textViewDate.setText(product.getDate());
         textViewStatus.setText(product.getStatus());
+        CircularImageView imageViewProduct = (CircularImageView) listViewItem.findViewById(R.id.imageViewProduct);
+
         Glide
                 .with(context)
                 .load(product.getImgurl().toString())
