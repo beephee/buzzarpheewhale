@@ -284,32 +284,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
             android:text="cancel"
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="@color/white"
-            android:background="@drawable/buyerroundedbutton"
+            android:background="@drawable/newreqbutton"
             android:onClick="cancel"/>
+
         <Button
             android:id="@+id/buttonNewListing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="5dp"
+            android:background="@drawable/newreqbutton"
             android:text="Submit"
-            android:textStyle="bold"
-            android:textSize="20dp"
             android:textColor="@color/white"
-            android:background="@drawable/buyerroundedbutton"/>
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 

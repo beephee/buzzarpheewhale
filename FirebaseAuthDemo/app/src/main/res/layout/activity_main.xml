@@ -7,6 +7,14 @@
     android:background="@color/bgGray"
     tools:context="com.example.android.firebaseauthdemo.MainActivity">
 
+    <ImageView
+        android:layout_width="600dp"
+        android:layout_height="600dp"
+        android:background="@mipmap/ic_launcher"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:alpha="0.1"/>
+
     <LinearLayout
         android:layout_centerVertical="true"
         android:layout_width="match_parent"
@@ -37,31 +45,64 @@
             android:id="@+id/textViewDesc"
             android:layout_gravity="center_horizontal" />
 
-        <EditText
-            android:id="@+id/editTextEmail"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="EMAIL ADDRESS"
-            android:fontFamily="sans-serif-condensed"
-            android:inputType="textEmailAddress" />
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/emailicon"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="center"/>
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="EMAIL ADDRESS"
+                android:fontFamily="sans-serif-condensed"
+                android:inputType="textEmailAddress" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/editTextPassword"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="PASSWORD"
-            android:fontFamily="sans-serif-condensed"
-            android:inputType="textPassword" />
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/pwicon"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="center"/>
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="PASSWORD"
+                android:fontFamily="sans-serif-condensed"
+                android:inputType="textPassword" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/editTextBuyerCountry"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="HOME COUNTRY"
-            android:fontFamily="sans-serif-condensed"/>
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/countryicon"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="center"/>
+            <EditText
+                android:id="@+id/editTextBuyerCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="HOME COUNTRY"
+                android:fontFamily="sans-serif-condensed"/>
+        </LinearLayout>
 
         <Button
             android:id="@+id/buttonSignup"

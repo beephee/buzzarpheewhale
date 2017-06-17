@@ -183,7 +183,7 @@
             android:layout_width="60dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/maproundedbutton"
+            android:background="@drawable/menumapbutton"
             android:text="Prev"
             android:textColor="@color/white"
             android:textStyle="bold"/>
@@ -206,7 +206,7 @@
             android:layout_width="60dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/maproundedbutton"
+            android:background="@drawable/menumapbutton"
             android:text="Next"
             android:textColor="@color/white"
             android:textStyle="bold"/>
