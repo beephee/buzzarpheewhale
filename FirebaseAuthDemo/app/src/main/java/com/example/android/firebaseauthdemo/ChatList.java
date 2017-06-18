@@ -61,7 +61,7 @@ public class ChatList extends ArrayAdapter<Chat>{
                 if(imgUrl != null && getContext()!= null){
                     imageViewPlaceholder.setVisibility(View.INVISIBLE);
                     Glide
-                            .with(context)
+                            .with(context.getApplicationContext())
                             .load(imgUrl)
                             .transform(new CircleTransform(context))
                             .into(imageViewProfilePic);

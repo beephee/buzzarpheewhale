@@ -225,32 +225,28 @@ public class AdminActivity extends AppCompatActivity {
 
     private boolean banUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry, String maxWeight, String dateDeparture, String buyerBudget, String bankAccount) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUID);
-        User user = new User(userUID, userEmail, userType, "true", tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
-        dR.setValue(user);
+        dR.child("blacklisted").setValue("true");
         Toast.makeText(getApplicationContext(), "User banned!", Toast.LENGTH_LONG).show();
         return true;
     }
 
     private boolean unbanUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry, String maxWeight, String dateDeparture, String buyerBudget, String bankAccount) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUID);
-        User user = new User(userUID, userEmail, userType, "false", tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
-        dR.setValue(user);
+        dR.child("blacklisted").setValue("false");
         Toast.makeText(getApplicationContext(), "User unbanned!", Toast.LENGTH_LONG).show();
         return true;
     }
 
     private boolean setAdminUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry, String maxWeight, String dateDeparture, String buyerBudget, String bankAccount) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUID);
-        User user = new User(userUID, userEmail, "admin", blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
-        dR.setValue(user);
+        dR.child("userType").setValue("admin");
         Toast.makeText(getApplicationContext(), "User given admin status!", Toast.LENGTH_LONG).show();
         return true;
     }
 
     private boolean unadminUser(String userUID, String userEmail, String userType, String blacklisted, String tutorial, String custsvc, Boolean courierActive, String buyerCountry, String courierCountry, String maxWeight, String dateDeparture, String buyerBudget, String bankAccount) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userUID);
-        User user = new User(userUID, userEmail, "registered", blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
-        dR.setValue(user);
+        dR.child("userType").setValue("registered");
         Toast.makeText(getApplicationContext(), "Admin status removed!", Toast.LENGTH_LONG).show();
         return true;
     }

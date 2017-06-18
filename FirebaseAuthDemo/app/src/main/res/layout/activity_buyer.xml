@@ -46,6 +46,8 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:layout_below="@id/frameTopBar"
+        android:divider="#9A9A9A"
+        android:dividerHeight="1dp"
         android:background="@drawable/customborder"/>
 
 </RelativeLayout>
