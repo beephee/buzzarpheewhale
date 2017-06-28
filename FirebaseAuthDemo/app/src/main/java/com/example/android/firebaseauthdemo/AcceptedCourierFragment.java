@@ -218,6 +218,7 @@ public class AcceptedCourierFragment extends Fragment {
         //hide buttons accordingly to ensure flow
         if (productStatus.equals("Matched")) {
             inTransit.setEnabled(false);
+            confirmPayment.setEnabled(false);
             completeTransact.setEnabled(false);
         } else if (productStatus.equals("Payment Submitted")) {
             cancelOrder.setEnabled(false);
