@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView textViewSignup;
+    private TextView textViewPassword;
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
@@ -55,12 +56,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         buttonSignIn = (Button) findViewById(R.id.buttonSignin);
         textViewSignup  = (TextView) findViewById(R.id.textViewSignUp);
+        textViewPassword  = (TextView) findViewById(R.id.textViewForgotPassword);
 
         progressDialog = new ProgressDialog(this);
 
         //attaching click listener
         buttonSignIn.setOnClickListener(this);
         textViewSignup.setOnClickListener(this);
+        textViewPassword.setOnClickListener(this);
     }
 
     private boolean isEmailValid (String email) {
@@ -118,6 +121,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(view == textViewSignup){
             finish();
             startActivity(new Intent(this, MainActivity.class));
+        }
+
+        if(view == textViewPassword){
+            finish();
+            startActivity(new Intent(this, PasswordActivity.class));
         }
     }
 }

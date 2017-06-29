@@ -27,6 +27,7 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".AdminActivity" />
+        <activity android:name=".PasswordActivity" />
         <activity android:name=".ChatRoomActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".AddRequestActivity" />
