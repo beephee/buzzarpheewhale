@@ -1,6 +1,7 @@
 package com.example.android.firebaseauthdemo;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,12 +27,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import static android.R.attr.width;
 import static com.example.android.firebaseauthdemo.R.id.dateValue;
 
 public class AddRequestActivity extends AppCompatActivity {
@@ -40,6 +44,7 @@ public class AddRequestActivity extends AppCompatActivity {
     Button buttonGetCoordinates;
     Spinner spinnerProductType;
     ScrollView productScrollView;
+    FirebaseAuth firebaseAuth;
 
     //Image Storage Variables
     Button buttonGetImage;
@@ -70,6 +75,7 @@ public class AddRequestActivity extends AppCompatActivity {
             userEmail = extras.getString("email");
         }
 
+        firebaseAuth = FirebaseAuth.getInstance();
         buttonGetCoordinates = (Button) findViewById(R.id.buttonGetCoordinates);
         buttonGetCoordinates.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +91,11 @@ public class AddRequestActivity extends AppCompatActivity {
         buttonNewListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                addProduct();
+                if(userEmail.equals("guest@dabao4me.com")) {
+                    showGuestDialog();
+                } else {
+                    addProduct();
+                }
             }
         });
 
@@ -134,9 +144,45 @@ public class AddRequestActivity extends AppCompatActivity {
         buttonGetImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent, GALLERY_INTENT);
+                if(userEmail.equals("guest@dabao4me.com")){
+                    showGuestDialog();
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType("image/*");
+                    startActivityForResult(intent, GALLERY_INTENT);
+                }
+            }
+        });
+
+    }
+
+    public void showGuestDialog() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.guest_menu, null);
+        dialogBuilder.setView(dialogView);
+
+        final Button btnBack = (Button) dialogView.findViewById(R.id.btnBack);
+        final Button btnLogin = (Button) dialogView.findViewById(R.id.btnLogin);
+
+        final AlertDialog b = dialogBuilder.create();
+        b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        b.show();
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.dismiss();
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firebaseAuth.signOut();
+                startActivity(new Intent(AddRequestActivity.this, LoginActivity.class));
+                b.dismiss();
             }
         });
 

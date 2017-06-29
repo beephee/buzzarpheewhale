@@ -135,22 +135,27 @@ public class MenuMapFragment extends Fragment {
             } else {
                 curItemIndex = arrSize - 1;
             }
-            //Set prev item's information
-            CameraPosition cameraPosition = new CameraPosition.Builder().target(LocList.get(curItemIndex)).zoom(12).build();
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            Glide
-                    .with(getContext())
-                    .load(ImgList.get(curItemIndex))
-                    .transform(new CircleTransform(getContext()))
-                    //.bitmapTransform(new RoundedCornersTransformation(getContext(),20,20))
-                    .into(imageViewProduct);
-            textViewProductName.setText(ProductNameList.get(curItemIndex));
-            textViewPrice.setText("$" + PriceList.get(curItemIndex));
-            textViewServiceType.setText(ServiceTypeList.get(curItemIndex));
-            textViewCountry.setText(CountryList.get(curItemIndex));
-            textViewCategory.setText(CategoryList.get(curItemIndex));
-            textViewDeadline.setText(DateList.get(curItemIndex));
-            textViewStatus.setText(StatusList.get(curItemIndex));
+
+            if(arrSize == 0){
+                return;
+            } else {
+                //Set prev item's information
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(LocList.get(curItemIndex)).zoom(12).build();
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                Glide
+                        .with(getContext())
+                        .load(ImgList.get(curItemIndex))
+                        .transform(new CircleTransform(getContext()))
+                        //.bitmapTransform(new RoundedCornersTransformation(getContext(),20,20))
+                        .into(imageViewProduct);
+                textViewProductName.setText(ProductNameList.get(curItemIndex));
+                textViewPrice.setText("$" + PriceList.get(curItemIndex));
+                textViewServiceType.setText(ServiceTypeList.get(curItemIndex));
+                textViewCountry.setText(CountryList.get(curItemIndex));
+                textViewCategory.setText(CategoryList.get(curItemIndex));
+                textViewDeadline.setText(DateList.get(curItemIndex));
+                textViewStatus.setText(StatusList.get(curItemIndex));
+            }
         }
     };
 
@@ -162,21 +167,26 @@ public class MenuMapFragment extends Fragment {
             } else {
                 curItemIndex = 0;
             }
-            //Set next item's information
-            CameraPosition cameraPosition = new CameraPosition.Builder().target(LocList.get(curItemIndex)).zoom(12).build();
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            Glide
-                    .with(getContext())
-                    .load(ImgList.get(curItemIndex))
-                    .transform(new CircleTransform(getContext()))
-                    .into(imageViewProduct);
-            textViewProductName.setText(ProductNameList.get(curItemIndex));
-            textViewPrice.setText("$" + PriceList.get(curItemIndex));
-            textViewServiceType.setText(ServiceTypeList.get(curItemIndex));
-            textViewCountry.setText(CountryList.get(curItemIndex));
-            textViewCategory.setText(CategoryList.get(curItemIndex));
-            textViewDeadline.setText(DateList.get(curItemIndex));
-            textViewStatus.setText(StatusList.get(curItemIndex));
+
+            if(arrSize == 0){
+                return;
+            } else {
+                //Set next item's information
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(LocList.get(curItemIndex)).zoom(12).build();
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                Glide
+                        .with(getContext())
+                        .load(ImgList.get(curItemIndex))
+                        .transform(new CircleTransform(getContext()))
+                        .into(imageViewProduct);
+                textViewProductName.setText(ProductNameList.get(curItemIndex));
+                textViewPrice.setText("$" + PriceList.get(curItemIndex));
+                textViewServiceType.setText(ServiceTypeList.get(curItemIndex));
+                textViewCountry.setText(CountryList.get(curItemIndex));
+                textViewCategory.setText(CategoryList.get(curItemIndex));
+                textViewDeadline.setText(DateList.get(curItemIndex));
+                textViewStatus.setText(StatusList.get(curItemIndex));
+            }
         }
     };
 

@@ -199,9 +199,13 @@ public class SettingsFragment extends Fragment {
 
     private View.OnClickListener updateProfilePicListener = new View.OnClickListener() {
         public void onClick(View v) {
-            Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setType("image/*");
-            startActivityForResult(intent, GALLERY_INTENT);
+            if(userEmail.equals("guest@dabao4me.com")){
+                showGuestDialogFragment();
+            } else {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, GALLERY_INTENT);
+            }
         }
     };
 
@@ -241,38 +245,74 @@ public class SettingsFragment extends Fragment {
 
     private View.OnClickListener updateClickListener = new View.OnClickListener() {
         public void onClick(View v) {
-            //update settings if all filled
-            String newBuyerCountry = editBuyerCountry.getText().toString();
-            String newMaxBudget = editMaxBudget.getText().toString();
-            String newCourierCountry = editCourierCountry.getText().toString();
-            String newMaxWeight = editMaxWeight.getText().toString();
-            String newMaxDate = editMaxDate.getText().toString();
-            String newBankAccount = editBankAccount.getText().toString();
-            if (newBuyerCountry.equals("") || newMaxBudget.equals("") || newCourierCountry.equals("") || newMaxWeight.equals("") || newMaxDate.equals("")) {
-                Toast.makeText(getActivity().getApplicationContext(), "Please fill up all fields to update settings!", Toast.LENGTH_LONG).show();
+            if (userEmail.equals("guest@dabao4me.com")) {
+                showGuestDialogFragment();
             } else {
-                DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("buyerCountry");
-                dR.setValue(newBuyerCountry);
-                DatabaseReference dR2 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("buyerBudget");
-                dR2.setValue(newMaxBudget);
-                DatabaseReference dR3 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("courierCountry");
-                dR3.setValue(newCourierCountry);
-                DatabaseReference dR4 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("maxWeight");
-                dR4.setValue(newMaxWeight);
-                DatabaseReference dR5 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("dateDeparture");
-                dR5.setValue(newMaxDate);
-                DatabaseReference dR6 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("courierActive");
-                if (switchCourierActive.isChecked() == true) {
-                    dR6.setValue(true);
+                //update settings if all filled
+                String newBuyerCountry = editBuyerCountry.getText().toString();
+                String newMaxBudget = editMaxBudget.getText().toString();
+                String newCourierCountry = editCourierCountry.getText().toString();
+                String newMaxWeight = editMaxWeight.getText().toString();
+                String newMaxDate = editMaxDate.getText().toString();
+                String newBankAccount = editBankAccount.getText().toString();
+                if (newBuyerCountry.equals("") || newMaxBudget.equals("") || newCourierCountry.equals("") || newMaxWeight.equals("") || newMaxDate.equals("")) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Please fill up all fields to update settings!", Toast.LENGTH_LONG).show();
                 } else {
-                    dR6.setValue(false);
+                    DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("buyerCountry");
+                    dR.setValue(newBuyerCountry);
+                    DatabaseReference dR2 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("buyerBudget");
+                    dR2.setValue(newMaxBudget);
+                    DatabaseReference dR3 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("courierCountry");
+                    dR3.setValue(newCourierCountry);
+                    DatabaseReference dR4 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("maxWeight");
+                    dR4.setValue(newMaxWeight);
+                    DatabaseReference dR5 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("dateDeparture");
+                    dR5.setValue(newMaxDate);
+                    DatabaseReference dR6 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("courierActive");
+                    if (switchCourierActive.isChecked() == true) {
+                        dR6.setValue(true);
+                    } else {
+                        dR6.setValue(false);
+                    }
+                    DatabaseReference dR7 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("bankAccount");
+                    dR7.setValue(newBankAccount);
+                    Toast.makeText(getActivity().getApplicationContext(), "Settings updated!", Toast.LENGTH_LONG).show();
                 }
-                DatabaseReference dR7 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("bankAccount");
-                dR7.setValue(newBankAccount);
-                Toast.makeText(getActivity().getApplicationContext(), "Settings updated!", Toast.LENGTH_LONG).show();
             }
         }
     };
+
+    public void showGuestDialogFragment() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.guest_menu, null);
+        dialogBuilder.setView(dialogView);
+
+        final Button btnBack = (Button) dialogView.findViewById(R.id.btnBack);
+        final Button btnLogin = (Button) dialogView.findViewById(R.id.btnLogin);
+
+        final AlertDialog b = dialogBuilder.create();
+        b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        b.show();
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.dismiss();
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firebaseAuth.signOut();
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                b.dismiss();
+            }
+        });
+
+    }
 
     private View.OnClickListener transactHistoryClickListener = new View.OnClickListener() {
         public void onClick(View v) {

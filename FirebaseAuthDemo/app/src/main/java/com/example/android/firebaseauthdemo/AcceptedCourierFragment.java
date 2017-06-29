@@ -1,6 +1,7 @@
 package com.example.android.firebaseauthdemo;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -167,6 +168,38 @@ public class AcceptedCourierFragment extends Fragment {
         btnAll.setTextSize(14);
     }
 
+    public void showGuestDialogFragment() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.guest_menu, null);
+        dialogBuilder.setView(dialogView);
+
+        final Button btnBack = (Button) dialogView.findViewById(R.id.btnBack);
+        final Button btnLogin = (Button) dialogView.findViewById(R.id.btnLogin);
+
+        final AlertDialog b = dialogBuilder.create();
+        b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        b.show();
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.dismiss();
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firebaseAuth.signOut();
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                b.dismiss();
+            }
+        });
+
+    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         listViewProductsAccepted = (ListView) getView().findViewById(R.id.listViewProductsAccepted);
@@ -184,7 +217,10 @@ public class AcceptedCourierFragment extends Fragment {
         listViewProductsAll.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (userBankAccount.equals("Not Applicable")) {
+                if (userEmail.equals("guest@dabao4me.com")) {
+                    showGuestDialogFragment();
+                }
+                else if (userBankAccount.equals("Not Applicable")) {
                     Toast.makeText(getActivity().getApplicationContext(), "Please set bank account details first!", Toast.LENGTH_LONG).show();
                 } else {
                     Product product = productListAll.get(i);

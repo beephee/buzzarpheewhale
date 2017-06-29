@@ -48,6 +48,6 @@
         android:layout_below="@id/frameTopBar"
         android:divider="#9A9A9A"
         android:dividerHeight="1dp"
-        android:background="@drawable/customborder"/>
+        />
 
 </RelativeLayout>

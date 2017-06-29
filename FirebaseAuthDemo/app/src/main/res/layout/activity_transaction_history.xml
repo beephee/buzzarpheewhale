@@ -48,7 +48,7 @@
         android:layout_below="@+id/frameTopBar"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
-        android:text="Previous Purchases"
+        android:text="Successful Purchases"
         android:textStyle="bold"
         android:textColor="@color/black" />
 
@@ -70,7 +70,7 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/listViewTransactCourier"
         android:textSize="20sp"
-        android:text="Previous Accepted Orders"
+        android:text="Orders Delivered"
         android:textStyle="bold"
         android:textColor="@color/black" />
 

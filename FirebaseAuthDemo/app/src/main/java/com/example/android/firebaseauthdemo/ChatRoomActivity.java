@@ -1,8 +1,13 @@
 package com.example.android.firebaseauthdemo;
 
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -95,31 +100,71 @@ public class ChatRoomActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
 
-                Date curDate = new Date();
-                String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(curDate);
-                String formattedTime = new SimpleDateFormat("hh:mm:ss").format(curDate);
+                if (curUser.getEmail().equals("guest@dabao4me.com")) {
+                    /* Not viable as the method would be referencing an incorrect context
+                    AddRequestActivity ara = new AddRequestActivity();
+                    ara.showGuestDialog();
+                    */
+                    showGuestDialog();
+                } else {
+                    Date curDate = new Date();
+                    String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(curDate);
+                    String formattedTime = new SimpleDateFormat("hh:mm:ss").format(curDate);
 
-                Map<String,Object> map = new HashMap<String, Object>();
-                temp_key = root.push().getKey();
-                root.updateChildren(map);
+                    Map<String, Object> map = new HashMap<String, Object>();
+                    temp_key = root.push().getKey();
+                    root.updateChildren(map);
 
-                DatabaseReference message_root = root.child(temp_key);
-                Map<String,Object> map2 = new HashMap<String, Object>();
-                map2.put("name",user_name);
-                map2.put("msg",input_msg.getText().toString());
-                map2.put("date",formattedDate);
-                map2.put("time",formattedTime);
-                map2.put("uid",curUser.getUid());
+                    DatabaseReference message_root = root.child(temp_key);
+                    Map<String, Object> map2 = new HashMap<String, Object>();
+                    map2.put("name", user_name);
+                    map2.put("msg", input_msg.getText().toString());
+                    map2.put("date", formattedDate);
+                    map2.put("time", formattedTime);
+                    map2.put("uid", curUser.getUid());
 
-                message_root.updateChildren(map2);
-                input_msg.setText("");
-                if(is_custsvc.equals("true")){
-                    if(is_admin.equals("false")){
-                        userDB.child("custsvc").setValue("1");
-                    } else {
-                        userDB.child("custsvc").setValue("0");
+                    message_root.updateChildren(map2);
+                    input_msg.setText("");
+                    if (is_custsvc.equals("true")) {
+                        if (is_admin.equals("false")) {
+                            userDB.child("custsvc").setValue("1");
+                        } else {
+                            userDB.child("custsvc").setValue("0");
+                        }
                     }
                 }
+            }
+        });
+
+    }
+
+    public void showGuestDialog() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.guest_menu, null);
+        dialogBuilder.setView(dialogView);
+
+        final Button btnBack = (Button) dialogView.findViewById(R.id.btnBack);
+        final Button btnLogin = (Button) dialogView.findViewById(R.id.btnLogin);
+
+        final AlertDialog b = dialogBuilder.create();
+        b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        b.show();
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.dismiss();
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firebaseAuth.signOut();
+                startActivity(new Intent(ChatRoomActivity.this, LoginActivity.class));
+                b.dismiss();
             }
         });
 

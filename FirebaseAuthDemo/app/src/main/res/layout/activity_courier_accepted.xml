@@ -89,13 +89,11 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:divider="#9A9A9A"
-        android:dividerHeight="1dp"
-        android:background="@drawable/customborder"/>
+        android:dividerHeight="1dp" />
     <ListView
         android:id="@+id/listViewProductsAccepted"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/customborder"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:divider="#9A9A9A"

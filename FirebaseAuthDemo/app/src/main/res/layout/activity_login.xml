@@ -95,7 +95,7 @@
             android:text="LOG IN" />
 
         <TextView
-            android:text="No Account Yet? Sign Up Here!"
+            android:text="Registration / Guest Login"
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/textViewSignUp"
             android:textAlignment="center"
