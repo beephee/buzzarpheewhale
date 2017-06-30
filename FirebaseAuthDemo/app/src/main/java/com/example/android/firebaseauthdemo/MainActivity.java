@@ -1,13 +1,17 @@
 package com.example.android.firebaseauthdemo;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,12 +27,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.nio.charset.StandardCharsets;
 
 import okio.Utf8;
 
 import static android.R.attr.id;
+import static com.example.android.firebaseauthdemo.R.id.btnBack;
+import static com.example.android.firebaseauthdemo.R.id.btnLogin;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,16 +49,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference dbRef;
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    private Boolean signupEnabled;
+    private Boolean guestEnabled;
+    private Boolean serverMaintenance;
+
+    private static final String SIGNUP_ENABLED_KEY = "signup_enabled";
+    private static final String GUEST_LOGIN_ENABLED_KEY = "guest_login_enabled";
+    private static final String SERVER_MAINTENANCE_KEY = "server_maintenance";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //RemoteConfig Initialization
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettings(configSettings);
+        fetchStatus();
+
         firebaseAuth = FirebaseAuth.getInstance();
         dbRef = FirebaseDatabase.getInstance().getReference().child("users");
 
-        if(firebaseAuth.getCurrentUser() != null){
+        //Check for server maintenance
+        if(serverMaintenance){
+            showMaintenanceDialog();
+        } else if(firebaseAuth.getCurrentUser() != null){
             finish();
             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
         }
@@ -68,6 +95,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonRegister.setOnClickListener(this);
         textViewSignin.setOnClickListener(this);
         textViewGuestLogin.setOnClickListener(this);
+    }
+
+    public void showMaintenanceDialog() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.maintenance_prompt, null);
+        dialogBuilder.setView(dialogView);
+
+        final Button btnOk = (Button) dialogView.findViewById(R.id.btnOk);
+
+        final AlertDialog b = dialogBuilder.create();
+        b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        b.show();
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                System.exit(0);
+            }
+        });
+    }
+
+    private void fetchStatus() {
+        signupEnabled = mFirebaseRemoteConfig.getBoolean(SIGNUP_ENABLED_KEY);
+        guestEnabled = mFirebaseRemoteConfig.getBoolean(GUEST_LOGIN_ENABLED_KEY);
+        serverMaintenance = mFirebaseRemoteConfig.getBoolean(SERVER_MAINTENANCE_KEY);
+        long cacheExpiration = 600;
+        if (mFirebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
+            cacheExpiration = 0;
+        }
+        mFirebaseRemoteConfig.fetch(cacheExpiration)
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            //Toast.makeText(MainActivity.this, "Fetch Succeeded", Toast.LENGTH_SHORT).show();
+                            mFirebaseRemoteConfig.activateFetched();
+                        } else {
+                            //Toast.makeText(MainActivity.this, "Fetch Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void registerUser(){
@@ -130,7 +201,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @TargetApi(19)
     public void onClick(View view){
         if(view == buttonRegister){
-            registerUser();
+            if(signupEnabled) {
+                registerUser();
+            } else {
+                Toast.makeText(getApplicationContext(), "Registration is currently closed.", Toast.LENGTH_SHORT).show();
+            }
         }
 
         if(view == textViewSignin){
@@ -139,27 +214,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if(view == textViewGuestLogin){
-            progressDialog.setMessage("Logging in as guest...");
-            progressDialog.show();
-            String epw64 = "ZGFiYW80bWU=";
-            byte[] epw = Base64.decode(epw64, Base64.DEFAULT);
-            String epwStr = new String(epw, StandardCharsets.UTF_8);
+            if(guestEnabled) {
+                progressDialog.setMessage("Logging in as guest...");
+                progressDialog.show();
+                String epw64 = "ZGFiYW80bWU=";
+                byte[] epw = Base64.decode(epw64, Base64.DEFAULT);
+                String epwStr = new String(epw, StandardCharsets.UTF_8);
 
-            firebaseAuth.signInWithEmailAndPassword("guest@dabao4me.com", epwStr)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            progressDialog.dismiss();
-                            //if the task is successful
-                            if(task.isSuccessful()){
-                                //start the profile activity
-                                finish();
-                                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Guest login is disabled currently", Toast.LENGTH_SHORT).show();
+                firebaseAuth.signInWithEmailAndPassword("guest@dabao4me.com", epwStr)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                progressDialog.dismiss();
+                                //if the task is successful
+                                if (task.isSuccessful()) {
+                                    //start the profile activity
+                                    finish();
+                                    startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Something went wrong. Please restart the application.", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
+                        });
+            } else {
+                Toast.makeText(getApplicationContext(), "Guest login is currently disabled.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
