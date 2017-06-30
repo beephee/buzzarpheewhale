@@ -57,15 +57,36 @@
         android:text="Update / Delete"
         android:textSize="20sp" />
 
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/postTweet"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/updateDelete"
-        android:text="Share to Twitter"
-        android:background="@drawable/twitter_logo"
-        android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/updateDelete"
+        android:layout_centerHorizontal="true">
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/postTweet"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/updateDelete"
+            android:text="Share to Twitter"
+            android:background="@drawable/twitter_logo"
+            android:textSize="20sp" />
 
-
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp">
+            <com.facebook.share.widget.ShareButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/postFacebook"
+                android:textSize="20sp" />
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/facebook_logo"/>
+        </FrameLayout>
+    </LinearLayout>
 </RelativeLayout>

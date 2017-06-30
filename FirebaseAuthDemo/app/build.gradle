@@ -41,6 +41,7 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.2'
     compile 'com.mikhaellopez:circularimageview:3.0.2'
     compile 'com.twitter.sdk.android:twitter:3.0.0'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     testCompile 'junit:junit:4.12'
 }
 

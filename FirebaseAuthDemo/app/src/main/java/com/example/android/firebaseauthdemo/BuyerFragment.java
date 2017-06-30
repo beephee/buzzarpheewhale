@@ -24,6 +24,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.share.model.ShareHashtag;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareButton;
 import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -161,6 +164,8 @@ public class BuyerFragment extends Fragment {
         final Button buttonBuyerCompleteTransact = (Button) dialogView.findViewById(R.id.buyerCompleteTransact);
         final Button buttonUpdateDelete = (Button) dialogView.findViewById(R.id.updateDelete);
         final ImageButton buttonPostTweet = (ImageButton) dialogView.findViewById(R.id.postTweet);
+        final ShareButton buttonFbShare = (ShareButton) dialogView.findViewById(R.id.postFacebook);
+
 
         final AlertDialog b = dialogBuilder.create();
         b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -217,6 +222,7 @@ public class BuyerFragment extends Fragment {
             }
         });
 
+        //Twitter Sharing
         buttonPostTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -226,6 +232,13 @@ public class BuyerFragment extends Fragment {
                 b.dismiss();
             }
         });
+
+        //Facebook Sharing
+        ShareLinkContent content = new ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse(url))
+                .setQuote("Hi friends, I'm looking for someone to buy [" + productName + "] for me from " + country + "! #dabao4me")
+                .build();
+        buttonFbShare.setShareContent(content);
     }
 
     private boolean confirmBuyerPay(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid, Boolean paymentConfirmed, String payeeDetails) {
