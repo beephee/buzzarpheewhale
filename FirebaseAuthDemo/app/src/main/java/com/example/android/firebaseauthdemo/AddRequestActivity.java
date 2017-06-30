@@ -21,30 +21,40 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import static android.R.attr.dial;
 import static android.R.attr.width;
+import static com.example.android.firebaseauthdemo.R.id.btnLogin;
 import static com.example.android.firebaseauthdemo.R.id.dateValue;
+import static java.security.AccessController.getContext;
 
 public class AddRequestActivity extends AppCompatActivity {
-
 
     Button buttonNewListing;
     Button buttonGetCoordinates;
     Spinner spinnerProductType;
     ScrollView productScrollView;
     FirebaseAuth firebaseAuth;
+    String buyerCountry;
+    String customsURL;
 
     //Image Storage Variables
     Button buttonGetImage;
@@ -84,6 +94,47 @@ public class AddRequestActivity extends AppCompatActivity {
             }
         });
 
+        //User Info
+        DatabaseReference databaseUsers = FirebaseDatabase.getInstance().getReference("users");
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+        databaseUsers.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                buyerCountry = dataSnapshot.child("buyerCountry").getValue(String.class);
+                switch (buyerCountry){
+                    case "Australia" :
+                        customsURL = "https://www.border.gov.au/Trav/Impo/Proh";
+                        break;
+                    case "China" :
+                        customsURL = "http://english.customs.gov.cn/service/guide?c=e6fb7440-5df2-4e87-bf92-c4eb697324d8&k=45";
+                        break;
+                    case "Japan" :
+                        customsURL = "http://www.customs.go.jp/english/summary/prohibit.htm";
+                        break;
+                    case "Malaysia" :
+                        customsURL = "http://www.customs.gov.my/en/tp/pages/tp_ie.aspx";
+                        break;
+                    case "Singapore" :
+                        customsURL = "https://www.customs.gov.sg/businesses/importing-goods/controlled-and-prohibited-goods-for-import";
+                        break;
+                    case "United Kingdom" :
+                        customsURL = "https://www.gov.uk/duty-free-goods/banned-and-restricted-goods";
+                        break;
+                    case "United States" :
+                        customsURL = "https://www.cbp.gov/travel/us-citizens/know-before-you-go/prohibited-and-restricted-items";
+                        break;
+                    default :
+                        customsURL = "Unable to find " + buyerCountry + "'s customs page";
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
         //Values will be submitted to the "products" node in the JSON tree
         databaseProducts = FirebaseDatabase.getInstance().getReference("products");
 
@@ -94,7 +145,7 @@ public class AddRequestActivity extends AppCompatActivity {
                 if(userEmail.equals("guest@dabao4me.com")) {
                     showGuestDialog();
                 } else {
-                    addProduct();
+                    addProduct(false);
                 }
             }
         });
@@ -188,6 +239,41 @@ public class AddRequestActivity extends AppCompatActivity {
 
     }
 
+    public void showCustomsDialog() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.customs_prompt, null);
+        dialogBuilder.setView(dialogView);
+
+        final Button btnBack = (Button) dialogView.findViewById(R.id.btnBack);
+        final Button btnConfirm = (Button) dialogView.findViewById(R.id.btnConfirm);
+        final TextView userCountry = (TextView) dialogView.findViewById(R.id.textViewUserCountry);
+        final TextView customsLink = (TextView) dialogView.findViewById(R.id.textViewCustomsURL);
+        userCountry.setText(buyerCountry);
+        customsLink.setText(customsURL);
+
+        final AlertDialog b = dialogBuilder.create();
+        b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        b.show();
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.dismiss();
+            }
+        });
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addProduct(true);
+                b.dismiss();
+            }
+        });
+
+    }
+
     static final int PICK_MAP_POINT_REQUEST = 999;  // The request code
     private void pickPointOnMap() {
         Intent pickPointIntent = new Intent(this, MapsActivity.class);
@@ -243,7 +329,7 @@ public class AddRequestActivity extends AppCompatActivity {
         }
     }
 
-    private void addProduct(){
+    private void addProduct(Boolean customAccepted){
 
         String buyer = userEmail;
         String courier = "NONE";
@@ -266,20 +352,27 @@ public class AddRequestActivity extends AppCompatActivity {
         String weight = editWeight.getText().toString();
         EditText editPrice = (EditText) findViewById(R.id.priceValue);
         String price = editPrice.getText().toString();
-        String url = downloadUrl.toString();
+        String url = "NONE";
+        if(downloadUrl != null){
+            url = downloadUrl.toString();
+        }
 
-        if(!TextUtils.isEmpty(producttype) && !TextUtils.isEmpty(productname) && !TextUtils.isEmpty(length) && !TextUtils.isEmpty(width) && !TextUtils.isEmpty(height) && !TextUtils.isEmpty(weight) && !TextUtils.isEmpty(price)){
+        if(!TextUtils.isEmpty(producttype) && !TextUtils.isEmpty(productname) && !TextUtils.isEmpty(length) && !TextUtils.isEmpty(width) && !TextUtils.isEmpty(height) && !TextUtils.isEmpty(weight) && !TextUtils.isEmpty(price) && !TextUtils.isEmpty((url))){
 
-            //Get the unique id of the branch
-            String id = databaseProducts.push().getKey();
-            //Define the parameters for the database entry
-            Product product = new Product(id, buyer, courier, productname, producttype, productcoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails);
-            //Submit value to database
-            databaseProducts.child(id).setValue(product);
-            Toast.makeText(this, "Request added!", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, LoggedinActivity.class);
-            addExtras(intent);
-            startActivity(intent);
+            if(customAccepted) {
+                //Get the unique id of the branch
+                String id = databaseProducts.push().getKey();
+                //Define the parameters for the database entry
+                Product product = new Product(id, buyer, courier, productname, producttype, productcoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails);
+                //Submit value to database
+                databaseProducts.child(id).setValue(product);
+                Toast.makeText(this, "Request added!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, LoggedinActivity.class);
+                addExtras(intent);
+                startActivity(intent);
+            } else {
+                showCustomsDialog();
+            }
         }else{
             Toast.makeText(this, "Please ensure all fields are completed.", Toast.LENGTH_LONG).show();
         }
