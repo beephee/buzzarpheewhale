@@ -5,8 +5,10 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -30,7 +33,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.*;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -65,6 +71,9 @@ public class BuyerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_buyer, container, false);
+
+        //Twitter
+        Twitter.initialize(getActivity());
 
         databaseProducts = FirebaseDatabase.getInstance().getReference("products");
         productList = new ArrayList<>();
@@ -151,6 +160,7 @@ public class BuyerFragment extends Fragment {
         final Button buttonBuyerPay = (Button) dialogView.findViewById(R.id.buyerPay);
         final Button buttonBuyerCompleteTransact = (Button) dialogView.findViewById(R.id.buyerCompleteTransact);
         final Button buttonUpdateDelete = (Button) dialogView.findViewById(R.id.updateDelete);
+        final ImageButton buttonPostTweet = (ImageButton) dialogView.findViewById(R.id.postTweet);
 
         final AlertDialog b = dialogBuilder.create();
         b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -203,6 +213,16 @@ public class BuyerFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 showUpdateDeleteDialog(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails);
+                b.dismiss();
+            }
+        });
+
+        buttonPostTweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TweetComposer.Builder builder = new TweetComposer.Builder(getActivity())
+                        .text("Hi friends, I'm looking for someone to buy [" + productName + "] for me from " + country + "! #dabao4me");
+                builder.show();
                 b.dismiss();
             }
         });

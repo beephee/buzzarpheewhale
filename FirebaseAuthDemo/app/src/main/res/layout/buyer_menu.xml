@@ -57,5 +57,15 @@
         android:text="Update / Delete"
         android:textSize="20sp" />
 
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/postTweet"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/updateDelete"
+        android:text="Share to Twitter"
+        android:background="@drawable/twitter_logo"
+        android:textSize="20sp" />
+
 
 </RelativeLayout>
