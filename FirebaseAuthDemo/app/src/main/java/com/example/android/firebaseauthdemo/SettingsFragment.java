@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.vision.text.Text;
@@ -329,6 +330,7 @@ public class SettingsFragment extends Fragment {
     private View.OnClickListener logOutButtonClickListener = new View.OnClickListener() {
         public void onClick(View v) {
             firebaseAuth.signOut();
+            LoginManager.getInstance().logOut();
             startActivity(new Intent(getActivity(), LoginActivity.class));
         }
     };

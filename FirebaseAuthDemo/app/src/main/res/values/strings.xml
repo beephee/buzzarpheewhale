@@ -15,4 +15,5 @@
     <string name="com.twitter.sdk.android.CONSUMER_KEY">uYnrM2Lhkq5YeMNvizNxOce59</string>
     <string name="com.twitter.sdk.android.CONSUMER_SECRET">BGylNRRtWixUL9AxIfVRZeUMFgefNDUk7tJ4dZaMkUOOyjfWil</string>
     <string name="facebook_app_id">149987402236269</string>
+    <string name="fb_login_protocol_scheme">fb149987402236269</string>
 </resources>

@@ -133,11 +133,28 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:fontFamily="sans-serif-condensed"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/loginbtn"
             android:textStyle="bold"
             android:text="LOG IN" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:gravity="center">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/fb_login_button"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </FrameLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

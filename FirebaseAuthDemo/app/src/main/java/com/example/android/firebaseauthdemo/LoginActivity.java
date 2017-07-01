@@ -6,43 +6,65 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    //defining views
+    //Defining views
     private Button buttonSignIn;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView textViewSignup;
     private TextView textViewPassword;
 
-    //firebase auth object
+    //Firebase auth object
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference dbRef;
 
-    //progress dialog
+    //Progress dialog
     private ProgressDialog progressDialog;
 
+    //Facebook Login
+    CallbackManager mCallbackManager;
+    private static final String TAG = "FacebookLogin";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //getting firebase auth object
+        //Getting firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
 
-        //if the objects getcurrentuser method is not null
+        //If the objects getcurrentuser method is not null
         //means user is already logged in
         if(firebaseAuth.getCurrentUser() != null){
             //close this activity
@@ -51,32 +73,135 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
         }
 
-        //initializing views
+        //Initializing views
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         buttonSignIn = (Button) findViewById(R.id.buttonSignin);
         textViewSignup  = (TextView) findViewById(R.id.textViewSignUp);
         textViewPassword  = (TextView) findViewById(R.id.textViewForgotPassword);
-
         progressDialog = new ProgressDialog(this);
 
-        //attaching click listener
+        //Attaching click listener
         buttonSignIn.setOnClickListener(this);
         textViewSignup.setOnClickListener(this);
         textViewPassword.setOnClickListener(this);
+
+        //Facebook Auth
+        mCallbackManager = CallbackManager.Factory.create();
+        LoginButton loginButton = (LoginButton) findViewById(R.id.fb_login_button);
+        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                handleFacebookAccessToken(loginResult.getAccessToken());
+                editTextEmail.setVisibility(View.INVISIBLE);
+                editTextPassword.setVisibility(View.INVISIBLE);
+                buttonSignIn.setText("LOGGING IN WITH FACEBOOK...");
+                buttonSignIn.setEnabled(false);
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "facebook:onCancel");
+                // ...
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "facebook:onError", error);
+                // ...
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Pass the activity result back to the Facebook SDK
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+
+                            //Grab initial Firebase Data
+                            final FirebaseUser user = firebaseAuth.getCurrentUser();
+                            final String userUID = user.getUid();
+                            dbRef = FirebaseDatabase.getInstance().getReference().child("users");
+                            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.hasChild(userUID)){
+                                        finish();
+                                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                                    } else {
+                                        fbRegister();
+                                        finish();
+                                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+    private void fbRegister(){
+        progressDialog.setMessage("Creating account with Facebook credentials...");
+        progressDialog.show();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String userEmail = user.getEmail();
+        String UID = user.getUid();
+        String buyerCountry = "NONE";
+        String userType = "registered";
+        String blacklisted = "false";
+        String tutorial = "0";
+        String custsvc = "0";
+        Boolean courierActive = false;
+        String courierCountry = "NONE";
+        String maxWeight = "0";
+        String dateDeparture = "31/12/2017";
+        String buyerBudget = "NONE";
+        String bankAccount = "NONE";
+        User newUser = new User(UID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
+        dbRef.child(UID).setValue(newUser);
+        progressDialog.dismiss();
     }
 
     private boolean isEmailValid (String email) {
         return email.contains("@");
     }
 
-    //method for user login
+    //Method for user login
     private void userLogin(){
         String email = editTextEmail.getText().toString().trim();
         String password  = editTextPassword.getText().toString().trim();
 
 
-        //checking if email and passwords are empty
+        //Checking if email and passwords are empty
         if(TextUtils.isEmpty(email) || !isEmailValid(email)){
             Toast.makeText(this,"Please enter valid email",Toast.LENGTH_LONG).show();
             return;
@@ -87,13 +212,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        //if the email and password are not empty
+        //If the email and password are not empty
         //displaying a progress dialog
 
         progressDialog.setMessage("Logging in, please wait...");
         progressDialog.show();
 
-        //logging in the user
+        //Logging in the user
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

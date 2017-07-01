@@ -15,13 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,12 +29,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.nio.charset.StandardCharsets;
-
-import okio.Utf8;
-
-import static android.R.attr.id;
-import static com.example.android.firebaseauthdemo.R.id.btnBack;
-import static com.example.android.firebaseauthdemo.R.id.btnLogin;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
