@@ -91,7 +91,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         });
 
         //displaying logged in user name
-        textViewUserEmail.setText("Welcome "+user.getEmail().split("@", 2)[0]);
+        textViewUserEmail.setText("Welcome "+ user.getEmail().split("@", 2)[0] + "!\nWhat would you like to do today?");
         userEmail = user.getEmail();
     }
 
