@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -55,21 +56,17 @@ public class BuyerFragment extends Fragment {
 
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
-    DatabaseReference databaseUsers;
     DatabaseReference databaseProducts;
     ListView listViewProducts;
     List<Product> productList;
     String userEmail;
     private static final String TAG = "BuyerFragment";
-    private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
-    String date;
     String newDate;
-    String getCoords;
-    String userBankAccount;
     Spinner spinnerProductType;
-    private BottomNavigationViewEx bottomNavigationViewBuyer;
     TextView textViewMyRequests;
+    ImageView screenCross;
+    TextView guestPrompt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -105,6 +102,8 @@ public class BuyerFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         listViewProducts = (ListView) getView().findViewById(R.id.listViewProducts);
         textViewMyRequests = (TextView) getView().findViewById(R.id.textViewMyRequests);
+        screenCross = (ImageView) getView().findViewById(R.id.imageViewScreenCross);
+        guestPrompt = (TextView) getView().findViewById(R.id.textViewGuestPrompt);
 
         listViewProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -119,7 +118,12 @@ public class BuyerFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        //textViewMyRequests.setText(userEmail2); //For debugging if email was passed
+
+        if(userEmail.equals("guest@dabao4me.com")){
+            screenCross.setVisibility(View.VISIBLE);
+            guestPrompt.setVisibility(View.VISIBLE);
+        }
+
         databaseProducts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

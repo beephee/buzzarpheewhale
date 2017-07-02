@@ -25,26 +25,44 @@
         android:id="@+id/btnContactStaff"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="5dp"
         android:text="Contact Customer Service"
         android:background="@drawable/custsvcbutton"
         android:layout_below="@+id/frameTopBar"
-        android:layout_alignLeft="@+id/listViewProducts"
-        android:layout_alignStart="@+id/listViewProducts"
+        android:layout_centerHorizontal="true"
         android:textColor="@color/white"
         android:textStyle="bold"/>
 
-    <ListView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listViewProducts"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/customborder"
-        android:layout_below="@+id/btnContactStaff"/>
+        android:layout_below="@id/btnContactStaff">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listViewProducts"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/customborder"/>
+        <ImageView
+            android:id="@+id/imageViewScreenCross"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:background="@drawable/screencross"
+            android:alpha="0.3"/>
+        <TextView
+            android:id="@+id/textViewGuestPrompt"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Registered Users Only"
+            android:textSize="30sp"/>
+    </FrameLayout>
+
 </RelativeLayout>

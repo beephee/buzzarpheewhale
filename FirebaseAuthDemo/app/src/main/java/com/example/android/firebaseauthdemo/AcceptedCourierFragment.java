@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,7 +59,9 @@ public class AcceptedCourierFragment extends Fragment {
     Button btnAccepted;
     Button btnSuggested;
     Button btnAll;
-    private Button suggestedOrders;
+    ImageView screenCross;
+    TextView guestPrompt;
+    Boolean allView = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -112,6 +116,11 @@ public class AcceptedCourierFragment extends Fragment {
     //Accepted Filter Button
     private View.OnClickListener btnAcceptedListener = new View.OnClickListener() {
         public void onClick(View v) {
+            allView = false;
+            if(userEmail.equals("guest@dabao4me.com")){
+                screenCross.setVisibility(View.VISIBLE);
+                guestPrompt.setVisibility(View.VISIBLE);
+            }
             listViewProductsAccepted.setVisibility(View.VISIBLE);
             listViewProductsAll.setVisibility(View.INVISIBLE);
             clearButtonStyle();
@@ -123,7 +132,11 @@ public class AcceptedCourierFragment extends Fragment {
     //Suggested Filter Button
     private View.OnClickListener btnSuggestedListener = new View.OnClickListener() {
         public void onClick(View v) {
-
+            allView = false;
+            if(userEmail.equals("guest@dabao4me.com")){
+                screenCross.setVisibility(View.VISIBLE);
+                guestPrompt.setVisibility(View.VISIBLE);
+            }
             // hide if courier not active or courier country not set
             if (userCourierActive == false || userCourierCountry.equals("NONE")) {
                 listFilter = "none";
@@ -144,6 +157,9 @@ public class AcceptedCourierFragment extends Fragment {
     //Display All Button
     private View.OnClickListener btnAllListener = new View.OnClickListener() {
         public void onClick(View v) {
+            allView = true;
+            screenCross.setVisibility(View.INVISIBLE);
+            guestPrompt.setVisibility(View.INVISIBLE);
             listFilter = "all";
             listViewProductsAccepted.setVisibility(View.INVISIBLE);
             listViewProductsAll.setVisibility(View.VISIBLE);
@@ -204,6 +220,8 @@ public class AcceptedCourierFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         listViewProductsAccepted = (ListView) getView().findViewById(R.id.listViewProductsAccepted);
         listViewProductsAll = (ListView) getView().findViewById(R.id.listViewProductsAll);
+        screenCross = (ImageView) getView().findViewById(R.id.imageViewScreenCross);
+        guestPrompt = (TextView) getView().findViewById(R.id.textViewGuestPrompt);
 
         listViewProductsAccepted.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -397,6 +415,11 @@ public class AcceptedCourierFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        if(userEmail.equals("guest@dabao4me.com") && !allView){
+            screenCross.setVisibility(View.VISIBLE);
+            guestPrompt.setVisibility(View.VISIBLE);
+        }
 
         //Accepted Tab
         databaseProductsAccepted.addValueEventListener(new ValueEventListener() {

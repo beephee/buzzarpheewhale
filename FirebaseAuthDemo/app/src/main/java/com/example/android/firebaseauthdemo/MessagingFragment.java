@@ -1,19 +1,16 @@
 package com.example.android.firebaseauthdemo;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,7 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.ittianyu.bottomnavigationviewex.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +36,8 @@ public class MessagingFragment extends Fragment {
     List<Product> productList;
     String userEmail;
     Button btnCustSvc;
+    ImageView screenCross;
+    TextView guestPrompt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,6 +78,8 @@ public class MessagingFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         listViewProducts = (ListView) getView().findViewById(R.id.listViewProducts);
+        screenCross = (ImageView) getView().findViewById(R.id.imageViewScreenCross);
+        guestPrompt = (TextView) getView().findViewById(R.id.textViewGuestPrompt);
 
         listViewProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -101,6 +101,11 @@ public class MessagingFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        if(userEmail.equals("guest@dabao4me.com")){
+            screenCross.setVisibility(View.VISIBLE);
+            guestPrompt.setVisibility(View.VISIBLE);
+        }
 
         databaseProducts.addValueEventListener(new ValueEventListener() {
             @Override
