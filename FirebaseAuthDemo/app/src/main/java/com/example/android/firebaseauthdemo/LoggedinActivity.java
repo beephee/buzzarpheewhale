@@ -166,26 +166,47 @@ public class LoggedinActivity extends AppCompatActivity {
     //If user logs in for the first time
     public void showTutorial() {
 
-        //Screen 0
+        //Buyer Fragment
         final RelativeLayout tutScreen0 = (RelativeLayout) findViewById(R.id.tutScreen0);
         Button btnMessage0 = (Button) findViewById(R.id.btnMessage0);
         tutScreen0.setVisibility(View.VISIBLE);
 
-        //Screen 1
         final RelativeLayout tutScreen1 = (RelativeLayout) findViewById(R.id.tutScreen1);
         Button btnMessage1 = (Button) findViewById(R.id.btnMessage1);
 
-        //Screen 2
         final RelativeLayout tutScreen2 = (RelativeLayout) findViewById(R.id.tutScreen2);
         Button btnMessage2 = (Button) findViewById(R.id.btnMessage2);
 
-        //Screen 3
+        final RelativeLayout tutScreen11 = (RelativeLayout) findViewById(R.id.tutScreen11);
+        Button btnMessage11 = (Button) findViewById(R.id.btnMessage11);
+
+        //Courier Fragment
         final RelativeLayout tutScreen3 = (RelativeLayout) findViewById(R.id.tutScreen3);
         Button btnMessage3 = (Button) findViewById(R.id.btnMessage3);
 
-        //Screen 4
         final RelativeLayout tutScreen4 = (RelativeLayout) findViewById(R.id.tutScreen4);
         Button btnMessage4 = (Button) findViewById(R.id.btnMessage4);
+
+        //Chat Fragment
+        final RelativeLayout tutScreen5 = (RelativeLayout) findViewById(R.id.tutScreen5);
+        Button btnMessage5 = (Button) findViewById(R.id.btnMessage5);
+
+        final RelativeLayout tutScreen6 = (RelativeLayout) findViewById(R.id.tutScreen6);
+        Button btnMessage6 = (Button) findViewById(R.id.btnMessage6);
+
+        //Map Fragment
+        final RelativeLayout tutScreen7 = (RelativeLayout) findViewById(R.id.tutScreen7);
+        Button btnMessage7 = (Button) findViewById(R.id.btnMessage7);
+
+        final RelativeLayout tutScreen8 = (RelativeLayout) findViewById(R.id.tutScreen8);
+        Button btnMessage8 = (Button) findViewById(R.id.btnMessage8);
+
+        //Settings Fragment
+        final RelativeLayout tutScreen9 = (RelativeLayout) findViewById(R.id.tutScreen9);
+        Button btnMessage9 = (Button) findViewById(R.id.btnMessage9);
+
+        final RelativeLayout tutScreen10 = (RelativeLayout) findViewById(R.id.tutScreen10);
+        Button btnMessage10 = (Button) findViewById(R.id.btnMessage10);
 
         //Button Sequence
         btnMessage0.setOnClickListener(new View.OnClickListener() {
@@ -226,12 +247,79 @@ public class LoggedinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tutScreen4.setVisibility(View.INVISIBLE);
+                tutScreen5.setVisibility(View.VISIBLE);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 transaction.replace(R.id.frame_layout, MessagingFragment.newInstance());
                 transaction.commit();
                 bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
                 bottomNavigationView.setSelectedItemId(R.id.actionChats);
+            }
+        });
+        btnMessage5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutScreen5.setVisibility(View.INVISIBLE);
+                tutScreen6.setVisibility(View.VISIBLE);
+            }
+        });
+        btnMessage6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutScreen6.setVisibility(View.INVISIBLE);
+                tutScreen7.setVisibility(View.VISIBLE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                transaction.replace(R.id.frame_layout, MenuMapFragment.newInstance());
+                transaction.commit();
+                bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
+                bottomNavigationView.setSelectedItemId(R.id.actionMaps);
+            }
+        });
+        btnMessage7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutScreen7.setVisibility(View.INVISIBLE);
+                tutScreen8.setVisibility(View.VISIBLE);
+            }
+        });
+        btnMessage8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutScreen8.setVisibility(View.INVISIBLE);
+                tutScreen9.setVisibility(View.VISIBLE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
+                transaction.commit();
+                bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
+                bottomNavigationView.setSelectedItemId(R.id.actionSettings);
+            }
+        });
+        btnMessage9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutScreen9.setVisibility(View.INVISIBLE);
+                tutScreen10.setVisibility(View.VISIBLE);
+            }
+        });
+        btnMessage10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutScreen10.setVisibility(View.INVISIBLE);
+                tutScreen11.setVisibility(View.VISIBLE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                transaction.replace(R.id.frame_layout, BuyerFragment.newInstance());
+                transaction.commit();
+                bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
+                bottomNavigationView.setSelectedItemId(R.id.actionBuyer);
+            }
+        });
+        btnMessage11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutScreen11.setVisibility(View.INVISIBLE);
             }
         });
     }

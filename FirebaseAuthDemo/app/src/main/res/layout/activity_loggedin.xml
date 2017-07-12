@@ -37,6 +37,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="Next"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:visibility="invisible"
             android:id="@+id/tutScreen1"
@@ -63,6 +64,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="Next"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:visibility="invisible"
             android:id="@+id/tutScreen2"
@@ -91,6 +93,7 @@
                 android:layout_alignParentRight="true"
                 android:text="Next"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:visibility="invisible"
             android:id="@+id/tutScreen3"
@@ -118,6 +121,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="Next"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:visibility="invisible"
             android:id="@+id/tutScreen4"
@@ -145,6 +149,206 @@
                 android:layout_marginRight="10dp"
                 android:layout_centerHorizontal="true"
                 android:text="Next"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="invisible"
+            android:id="@+id/tutScreen5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:background="#E6000000">
+            <TextView
+                android:id="@+id/tutMessage5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="You may chat with your buyer or courier over here to check on your purchase status or to provide information about the item you are carrying over\n"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+            <Button
+                android:id="@+id/btnMessage5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tutMessage5"
+                android:layout_centerHorizontal="true"
+                android:text="Next"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="invisible"
+            android:id="@+id/tutScreen6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="80dp"
+            android:gravity="top"
+            android:background="#E6000000">
+
+            <TextView
+                android:id="@+id/tutMessage6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="You may also contact the customer service via this button if you believe you have been defrauded"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+            <Button
+                android:id="@+id/btnMessage6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tutMessage6"
+                android:layout_marginRight="10dp"
+                android:layout_centerHorizontal="true"
+                android:text="Next"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="invisible"
+            android:id="@+id/tutScreen7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="#E6000000">
+            <TextView
+                android:id="@+id/tutMessage7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="This map is where you can scroll through your list of products as a buyer and courier.\n"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+            <Button
+                android:id="@+id/btnMessage7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tutMessage7"
+                android:layout_centerHorizontal="true"
+                android:text="Next"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="invisible"
+            android:id="@+id/tutScreen8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="200dp"
+            android:gravity="bottom"
+            android:background="#E6000000">
+
+            <TextView
+                android:id="@+id/tutMessage8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="Details pertaining to individual items will be shown below. Scrolling through the list brings you to the respective item's location on the map too"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+            <Button
+                android:id="@+id/btnMessage8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tutMessage8"
+                android:layout_marginRight="10dp"
+                android:layout_centerHorizontal="true"
+                android:text="Next"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="invisible"
+            android:id="@+id/tutScreen9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="#E6000000">
+            <TextView
+                android:id="@+id/tutMessage9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="The settings page allows you to update account information\n"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+            <Button
+                android:id="@+id/btnMessage9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tutMessage9"
+                android:layout_centerHorizontal="true"
+                android:text="Next"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="invisible"
+            android:id="@+id/tutScreen10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="120dp"
+            android:gravity="bottom"
+            android:background="#E6000000">
+
+            <TextView
+                android:id="@+id/tutMessage10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="right"
+                android:text="You can also view a list of previously completed orders via this button"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp" />
+            <Button
+                android:id="@+id/btnMessage10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tutMessage10"
+                android:layout_marginRight="10dp"
+                android:layout_centerHorizontal="true"
+                android:text="Next"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="invisible"
+            android:id="@+id/tutScreen11"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="#E6000000">
+            <TextView
+                android:id="@+id/tutMessage11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Congratulations, you have completed the tutorial! We wish you a pleasant time using DaBao4Me!\n"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+            <Button
+                android:id="@+id/btnMessage11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tutMessage11"
+                android:layout_centerHorizontal="true"
+                android:text="Done"/>
         </RelativeLayout>
     </FrameLayout>
 
