@@ -342,6 +342,8 @@ public class AddRequestActivity extends AppCompatActivity {
         String producttype = spinnerProductType.getSelectedItem().toString();
         EditText editProductName = (EditText) findViewById(R.id.editTextProductName);
         String productname = editProductName.getText().toString();
+        EditText editCurrency = (EditText) findViewById(R.id.currencyValue);
+        String currency = editCurrency.getText().toString();
         EditText editLength = (EditText) findViewById(R.id.dim1);
         String length = editLength.getText().toString();
         EditText editWidth = (EditText) findViewById(R.id.dim2);
@@ -357,13 +359,13 @@ public class AddRequestActivity extends AppCompatActivity {
             url = downloadUrl.toString();
         }
 
-        if(!TextUtils.isEmpty(producttype) && !TextUtils.isEmpty(productname) && !TextUtils.isEmpty(length) && !TextUtils.isEmpty(width) && !TextUtils.isEmpty(height) && !TextUtils.isEmpty(weight) && !TextUtils.isEmpty(price) && !TextUtils.isEmpty((url))){
+        if(!TextUtils.isEmpty(producttype) && !TextUtils.isEmpty(productname) && !TextUtils.isEmpty(length) && !TextUtils.isEmpty(currency) && !TextUtils.isEmpty(width) && !TextUtils.isEmpty(height) && !TextUtils.isEmpty(weight) && !TextUtils.isEmpty(price) && !TextUtils.isEmpty((url))){
 
             if(customAccepted) {
                 //Get the unique id of the branch
                 String id = databaseProducts.push().getKey();
                 //Define the parameters for the database entry
-                Product product = new Product(id, buyer, courier, productname, producttype, productcoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails);
+                Product product = new Product(id, buyer, courier, productname, producttype, productcoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails, currency);
                 //Submit value to database
                 databaseProducts.child(id).setValue(product);
                 Toast.makeText(this, "Request added!", Toast.LENGTH_LONG).show();

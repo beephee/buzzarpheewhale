@@ -5,10 +5,68 @@
     android:orientation="vertical"
     android:background="@drawable/dialog_bg">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Price:"
+        android:id="@+id/itemPrice"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemPrice"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/prices">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="175sp"
+                android:layout_height="wrap_content"
+                android:id="@+id/originalPrice"
+                android:layout_centerHorizontal="true"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:hint="Original Price" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:layout_marginRight="5dp">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="175sp"
+                android:layout_height="wrap_content"
+                android:id="@+id/exchangePrice"
+                android:textAlignment="center"
+                android:layout_marginRight="20sp"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:hint="Exchange Price" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/cancelOrderButton"
+        android:layout_below="@id/prices"
         android:layout_centerHorizontal="true"
         android:text="Cancel Order"
         android:textSize="20sp"

@@ -1,6 +1,7 @@
 package com.example.android.firebaseauthdemo;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -8,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +34,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,6 +74,10 @@ public class AcceptedCourierFragment extends Fragment {
     ImageView screenCross;
     TextView guestPrompt;
     Boolean allView = false;
+    String currencyCode;
+    String exchangeURL;
+    Double data;
+    RequestQueue requestQueue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -227,7 +243,7 @@ public class AcceptedCourierFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Product product = productListAccepted.get(i);
-                showMenuDialog(product.getProductId(), product.getProductBuyer(), product.getProductCourier(), product.getProductName(), product.getProductType(), product.getProductCoords(), product.getLength(), product.getWidth(), product.getHeight(), product.getWeight(), product.getPrice(), product.getDate(), product.getImgurl(), product.getCountry(), product.getCourierComplete(), product.getBuyerComplete(), product.getTransit(), product.getBuyerPaid(), product.getStatus(), product.getPaymentConfirmed(), product.getPayeeDetails());
+                showMenuDialog(product.getProductId(), product.getProductBuyer(), product.getProductCourier(), product.getProductName(), product.getProductType(), product.getProductCoords(), product.getLength(), product.getWidth(), product.getHeight(), product.getWeight(), product.getPrice(), product.getDate(), product.getImgurl(), product.getCountry(), product.getCourierComplete(), product.getBuyerComplete(), product.getTransit(), product.getBuyerPaid(), product.getStatus(), product.getPaymentConfirmed(), product.getPayeeDetails(), product.getCurrency());
                 return;
             }
         });
@@ -254,12 +270,91 @@ public class AcceptedCourierFragment extends Fragment {
     }
 
     //Menu Dialog for Accepted Tab
-    private void showMenuDialog(final String productId, final String productBuyer, final String productCourier, final String productName, final String productType, final String productCoords, final String length, final String width, final String height, final String weight, final String price, final String date, final String url, final String country, final Boolean courierAccept, final Boolean buyerAccept, final Boolean transit, final Boolean buyerPaid, final String productStatus, final Boolean paymentConfirmed, final String payeeDetails) {
+    private void showMenuDialog(final String productId, final String productBuyer, final String productCourier, final String productName, final String productType, final String productCoords, final String length, final String width, final String height, final String weight, final String price, final String date, final String url, final String country, final Boolean courierAccept, final Boolean buyerAccept, final Boolean transit, final Boolean buyerPaid, final String productStatus, final Boolean paymentConfirmed, final String payeeDetails, final String currency) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.courier_accepted_menu, null);
         dialogBuilder.setView(dialogView);
+
+        final TextView originalPrice = (TextView) dialogView.findViewById(R.id.originalPrice);
+        originalPrice.setText(price + " " + currency);
+
+        switch (userCountry){
+            case "Australia" :
+                currencyCode = "AUD";
+                break;
+            case "China" :
+                currencyCode = "RMB";
+                break;
+            case "Japan" :
+                currencyCode = "JPY";
+                break;
+            case "Malaysia" :
+                currencyCode = "MYR";
+                break;
+            case "Singapore" :
+                currencyCode = "SGD";
+                break;
+            case "United Kingdom" :
+                currencyCode = "GBP";
+                break;
+            case "United States" :
+                currencyCode = "USD";
+                break;
+        }
+
+        exchangeURL = "http://api.fixer.io/latest?base=" + currency;
+
+        // to fix
+        /*
+        requestQueue = Volley.newRequestQueue(this.getActivity());
+        // Creating the JsonObjectRequest class called obreq, passing required parameters:
+        // GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,exchangeURL,null,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new Response.Listener<JSONObject>() {
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject obj = response.getJSONObject("colorObject");
+                            // Retrieves the string labeled "colorName" and "description" from
+                            // the response JSON Object
+                            // and converts them into javascript objects
+                            Double newCurrency = obj.getJSONObject("rates").getDouble(currencyCode);
+
+                            data = newCurrency;
+                        }
+                        // Try and catch are included to handle any errors due to JSON
+                        catch (JSONException e) {
+                            // If an error occurs, this prints the error to the log
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Error");
+                    }
+                }
+        );
+
+        // Adds the JSON object request "obreq" to the request queue
+        requestQueue.add(obreq);
+        */
+
+        final TextView exchangePrice = (TextView) dialogView.findViewById(R.id.exchangePrice);
+        Double oldPrice = Double.parseDouble(price);
+        data = 1.4; // supposed to be changed to updated exchange rate
+        exchangePrice.setText(String.format("%.2f",oldPrice*data) + " " + currencyCode);
+
         final Button cancelOrder = (Button) dialogView.findViewById(R.id.cancelOrderButton);
         final Button confirmPayment = (Button) dialogView.findViewById(R.id.confirmPaymentButton);
         final Button inTransit = (Button) dialogView.findViewById(R.id.transitButton);
@@ -291,7 +386,7 @@ public class AcceptedCourierFragment extends Fragment {
         cancelOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateCancel(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails);
+                updateCancel(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails, currency);
                 b.dismiss();
             }
         });
@@ -299,7 +394,7 @@ public class AcceptedCourierFragment extends Fragment {
         confirmPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateConfirm(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails);
+                updateConfirm(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails, currency);
                 b.dismiss();
             }
         });
@@ -307,7 +402,7 @@ public class AcceptedCourierFragment extends Fragment {
         inTransit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateTransit(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails);
+                updateTransit(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails, currency);
                 b.dismiss();
             }
         });
@@ -315,39 +410,39 @@ public class AcceptedCourierFragment extends Fragment {
         completeTransact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateComplete(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails);
+                updateComplete(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails, currency);
                 b.dismiss();
             }
         });
     }
 
-    private boolean updateCancel(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid, Boolean paymentConfirmed, String payeeDetails) {
+    private boolean updateCancel(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid, Boolean paymentConfirmed, String payeeDetails, String currency) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(productId);
-        Product product = new Product(productId, productBuyer, "NONE", productName, productType, productCoords, length, width, height, weight, price, date, url, country, false, false, false, false, false, "Not Applicable"); // reset values to false
+        Product product = new Product(productId, productBuyer, "NONE", productName, productType, productCoords, length, width, height, weight, price, date, url, country, false, false, false, false, false, "Not Applicable", currency); // reset values to false
         dR.setValue(product);
         Toast.makeText(getActivity().getApplicationContext(), "Order rejected!", Toast.LENGTH_LONG).show();
         return true;
     }
 
-    private boolean updateConfirm(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid, Boolean paymentConfirmed, String payeeDetails) {
+    private boolean updateConfirm(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid, Boolean paymentConfirmed, String payeeDetails, String currency) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(productId);
-        Product product = new Product(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, true, payeeDetails);
+        Product product = new Product(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, true, payeeDetails, currency);
         dR.setValue(product);
         Toast.makeText(getActivity().getApplicationContext(), "Payment confirmed!", Toast.LENGTH_LONG).show();
         return true;
     }
 
-    private boolean updateTransit(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid, Boolean paymentConfirmed, String payeeDetails) {
+    private boolean updateTransit(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid, Boolean paymentConfirmed, String payeeDetails, String currency) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(productId);
-        Product product = new Product(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, true, buyerPaid, paymentConfirmed, payeeDetails);
+        Product product = new Product(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, true, buyerPaid, paymentConfirmed, payeeDetails, currency);
         dR.setValue(product);
         Toast.makeText(getActivity().getApplicationContext(), "Order in transit!", Toast.LENGTH_LONG).show();
         return true;
     }
     
-    private boolean updateComplete(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid, Boolean paymentConfirmed, String payeeDetails) {
+    private boolean updateComplete(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String url, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid, Boolean paymentConfirmed, String payeeDetails, String currency) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(productId);
-        Product product = new Product(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, true, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails);
+        Product product = new Product(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, true, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails, currency);
         dR.setValue(product);
         Toast.makeText(getActivity().getApplicationContext(), "Transaction completed on courier's side!", Toast.LENGTH_LONG).show();
         return true;

@@ -26,12 +26,13 @@ public class Product {
     Boolean buyerPaid;
     Boolean paymentConfirmed;
     String payeeDetails;
+    String currency;
 
     public Product(){
 
     }
 
-    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String imgurl, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid, Boolean paymentConfirmed, String payeeDetails) {
+    public Product(String productId, String productBuyer, String productCourier, String productName, String productType, String productCoords, String length, String width, String height, String weight, String price, String date, String imgurl, String country, Boolean courierAccept, Boolean buyerAccept, Boolean transit, Boolean buyerPaid, Boolean paymentConfirmed, String payeeDetails, String currency) {
         this.productId = productId;
         this.productBuyer = productBuyer;
         this.productCourier = productCourier;
@@ -52,6 +53,7 @@ public class Product {
         this.buyerPaid = buyerPaid;
         this.paymentConfirmed = paymentConfirmed;
         this.payeeDetails = payeeDetails;
+        this.currency = currency;
     }
 
     public String getProductId() {
@@ -133,4 +135,6 @@ public class Product {
     public Boolean getPaymentConfirmed() { return paymentConfirmed; }
 
     public String getPayeeDetails() { return payeeDetails; }
+
+    public String getCurrency() { return currency; }
 }

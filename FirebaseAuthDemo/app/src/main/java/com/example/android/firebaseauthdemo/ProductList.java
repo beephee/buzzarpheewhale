@@ -64,11 +64,11 @@ public class ProductList extends ArrayAdapter<Product>{
         //textViewCoords.setText(product.getProductCoords().substring(0,35));
         textViewCoords.setText(product.getCountry());
         textViewBuyerEmail.setText(product.getProductBuyer().split("@", 2)[0]);
-        textViewPrice.setText(product.getPrice());
-        textViewWeight.setText(product.getWeight());
+        textViewPrice.setText(product.getPrice() + " " + product.getCurrency());
+        textViewWeight.setText(product.getWeight() + " kg");
         textViewHeight.setText(product.getHeight());
         textViewWidth.setText(product.getWidth());
-        textViewLength.setText(product.getLength());
+        textViewLength.setText(product.getLength() + " m");
         textViewDate.setText(product.getDate());
         textViewStatus.setText(product.getStatus());
         CircularImageView imageViewProduct = (CircularImageView) listViewItem.findViewById(R.id.imageViewProduct);

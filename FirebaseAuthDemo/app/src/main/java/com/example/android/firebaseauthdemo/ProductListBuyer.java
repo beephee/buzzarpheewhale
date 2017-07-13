@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.vision.text.Text;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -59,11 +60,11 @@ public class ProductListBuyer extends ArrayAdapter<Product>{
         //textViewCoords.setText(product.getProductCoords().substring(0,35));
         textViewCoords.setText(product.getCountry());
         textViewBuyerEmail.setText(product.getProductBuyer().split("@", 2)[0]);
-        textViewPrice.setText(product.getPrice());
-        textViewWeight.setText(product.getWeight());
+        textViewPrice.setText(product.getPrice() + " " + product.getCurrency());
+        textViewWeight.setText(product.getWeight() + " kg");
         textViewHeight.setText(product.getHeight());
         textViewWidth.setText(product.getWidth());
-        textViewLength.setText(product.getLength());
+        textViewLength.setText(product.getLength() + " m");
         textViewDate.setText(product.getDate());
         textViewStatus.setText(product.getStatus());
 
