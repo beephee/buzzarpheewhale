@@ -20,15 +20,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/itemPrice"
+        android:background="@drawable/customborder"
         android:orientation="horizontal"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/prices">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
             <TextView
-                android:layout_width="175sp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/originalPrice"
                 android:layout_centerHorizontal="true"
@@ -41,19 +43,18 @@
         <LinearLayout
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/black"
-            android:layout_marginRight="5dp">
+            android:background="@color/black">
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
             <TextView
-                android:layout_width="175sp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/exchangePrice"
                 android:textAlignment="center"
-                android:layout_marginRight="20sp"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:hint="Exchange Price" />
@@ -61,43 +62,129 @@
 
     </LinearLayout>
 
-
-    <Button
-        android:layout_width="300dp"
+    <FrameLayout
+        android:id="@+id/cancelOrderFrame"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:id="@+id/cancelOrderButton"
         android:layout_below="@id/prices"
         android:layout_centerHorizontal="true"
-        android:text="Cancel Order"
-        android:textSize="20sp"
-        />
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/cancelOrderButton"
+            android:text="Cancel Order"
+            android:textSize="20sp"/>
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:elevation="3dp">
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circularbg_buyer"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/cancel"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+    </FrameLayout>
 
-    <Button
-        android:layout_width="300dp"
+    <FrameLayout
+        android:id="@+id/confirmPaymentFrame"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:id="@+id/confirmPaymentButton"
+        android:layout_below="@id/cancelOrderFrame"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/cancelOrderButton"
-        android:text="Confirm Payment Receipt"
-        android:textSize="20sp" />
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/confirmPaymentButton"
+            android:text="Confirm Payment"
+            android:textSize="20sp"/>
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:elevation="3dp">
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circularbg_buyer"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/moneyicon"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+    </FrameLayout>
 
-    <Button
-        android:layout_width="300dp"
+    <FrameLayout
+        android:id="@+id/transitButtonFrame"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:id="@+id/transitButton"
+        android:layout_below="@id/confirmPaymentFrame"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/confirmPaymentButton"
-        android:text="Product In Transit"
-        android:textSize="20sp" />
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/transitButton"
+            android:text="Product in Transit"
+            android:textSize="20sp"/>
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:elevation="3dp">
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circularbg_buyer"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/intransit"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+    </FrameLayout>
 
-    <Button
-        android:layout_width="300dp"
+    <FrameLayout
+        android:id="@+id/completeTransactFrame"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:id="@+id/courierCompleteTransact"
+        android:layout_below="@id/transitButtonFrame"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/transitButton"
-        android:text="Complete Transaction"
-        android:textSize="20sp" />
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/courierCompleteTransact"
+            android:text="Complete Transaction"
+            android:textSize="20sp"/>
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:elevation="3dp">
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circularbg_buyer"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/handshake"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+    </FrameLayout>
 
 
 </RelativeLayout>

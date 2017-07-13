@@ -19,6 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/customborder"
         android:id="@+id/editBankAccountDetails"
         android:layout_below="@id/bankAccountDetails"
         android:layout_centerHorizontal="true"
@@ -28,41 +29,105 @@
         android:textColor="@color/black"
         android:hint="Bank Account Details" />
 
-    <Button
-        android:layout_width="300dp"
+    <FrameLayout
+        android:id="@+id/updateDeleteFrame"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:id="@+id/buyerPay"
-        android:layout_below="@+id/editBankAccountDetails"
+        android:layout_below="@id/editBankAccountDetails"
         android:layout_centerHorizontal="true"
-        android:text="Confirm Payment Submission"
-        android:textSize="20sp"
-        />
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/updateDelete"
+            android:text="Update / Delete"
+            android:textSize="20sp"/>
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:elevation="3dp">
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circularbg_buyer"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/update"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+    </FrameLayout>
 
-    <Button
-        android:layout_width="300dp"
+    <FrameLayout
+        android:id="@+id/buyerPayFrame"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:id="@+id/buyerCompleteTransact"
+        android:layout_below="@id/updateDeleteFrame"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/buyerPay"
-        android:text="Complete Transaction"
-        android:textSize="20sp"
-        />
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/buyerPay"
+            android:text="Payment Sent"
+            android:textSize="20sp"/>
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:elevation="3dp">
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circularbg_buyer"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/moneyicon"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+    </FrameLayout>
 
-    <Button
-        android:layout_width="300dp"
+    <FrameLayout
+        android:id="@+id/buyerCompleteTransactFrame"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:id="@+id/updateDelete"
+        android:layout_below="@id/buyerPayFrame"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/buyerCompleteTransact"
-        android:text="Update / Delete"
-        android:textSize="20sp" />
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/buyerCompleteTransact"
+            android:text="Complete Transaction"
+            android:textSize="20sp"/>
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:elevation="3dp">
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circularbg_buyer"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/handshake"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
-        android:layout_below="@id/updateDelete"
+        android:layout_below="@id/buyerCompleteTransactFrame"
         android:layout_centerHorizontal="true">
         <ImageButton
             android:layout_width="50dp"
