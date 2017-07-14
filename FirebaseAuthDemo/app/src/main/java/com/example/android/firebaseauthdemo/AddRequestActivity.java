@@ -19,16 +19,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,19 +36,15 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
-import static android.R.attr.dial;
-import static android.R.attr.width;
-import static com.example.android.firebaseauthdemo.R.id.btnLogin;
 import static com.example.android.firebaseauthdemo.R.id.dateValue;
-import static java.security.AccessController.getContext;
 
 public class AddRequestActivity extends AppCompatActivity {
 
     Button buttonNewListing;
     Button buttonGetCoordinates;
     Spinner spinnerProductType;
-    ScrollView productScrollView;
     FirebaseAuth firebaseAuth;
     String buyerCountry;
     String customsURL;
@@ -63,8 +56,7 @@ public class AddRequestActivity extends AppCompatActivity {
     private static final int GALLERY_INTENT = 2;
     private ProgressDialog mProgressDialog;
     Uri downloadUrl;
-    ImageView productImage;
-    TextView textViewImageName;
+    CircularImageView productImage;
 
     //Product details to be stored
     String country;
@@ -152,8 +144,6 @@ public class AddRequestActivity extends AppCompatActivity {
 
         spinnerProductType = (Spinner) findViewById(R.id.spinnerProductType);
 
-        productScrollView = (ScrollView) findViewById(R.id.ScrollView01);
-
         mDisplayDate = (TextView) findViewById(dateValue);
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
@@ -187,8 +177,7 @@ public class AddRequestActivity extends AppCompatActivity {
         };
 
         //Image Upload
-        textViewImageName = (TextView) findViewById(R.id.textViewImageName);
-        productImage = (ImageView) findViewById(R.id.imageViewProduct);
+        productImage = (CircularImageView) findViewById(R.id.imageViewProduct);
         mProgressDialog = new ProgressDialog(this);
         mStorage = FirebaseStorage.getInstance().getReference();
         buttonGetImage = (Button) findViewById(R.id.buttonGetImage);
@@ -310,20 +299,11 @@ public class AddRequestActivity extends AppCompatActivity {
                     downloadUrl = taskSnapshot.getDownloadUrl();
                     mProgressDialog.dismiss();
                     Toast.makeText(AddRequestActivity.this, "Image uploaded!", Toast.LENGTH_LONG).show();
-                    // buttonGetImage.setText(downloadUrl.toString()); //Temporary, just for checking if its uploaded
-                    textViewImageName.setText(fileName);
-                    buttonGetImage.setText("SELECT ANOTHER IMAGE");
+                    buttonGetImage.setText(fileName);
                     Glide
                             .with(AddRequestActivity.this)
                             .load(downloadUrl.toString())
                             .into(productImage);
-                    productScrollView.postDelayed(new Runnable() {
-                        @Override
-                        public void run(){
-                            productScrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                        }
-                    }, 3000);
-
                 }
             });
         }

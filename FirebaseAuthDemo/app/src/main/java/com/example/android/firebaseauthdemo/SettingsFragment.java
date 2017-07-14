@@ -14,22 +14,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -42,21 +37,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static android.R.attr.country;
 import static android.app.Activity.RESULT_OK;
-import static com.example.android.firebaseauthdemo.AddRequestActivity.PICK_MAP_POINT_REQUEST;
-import static com.example.android.firebaseauthdemo.R.drawable.profilepic;
-import static com.example.android.firebaseauthdemo.R.id.button;
 import static com.example.android.firebaseauthdemo.R.id.buttonAdmin;
-import static com.example.android.firebaseauthdemo.R.id.buttonGetCoordinates;
-import static com.example.android.firebaseauthdemo.R.id.buttonGetImage;
-import static com.example.android.firebaseauthdemo.R.id.listViewProducts;
-import static com.example.android.firebaseauthdemo.R.id.textViewImageName;
-import static java.lang.System.load;
 
 
 public class SettingsFragment extends Fragment {
