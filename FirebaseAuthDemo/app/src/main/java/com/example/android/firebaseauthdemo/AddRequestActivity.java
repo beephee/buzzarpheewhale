@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +49,6 @@ public class AddRequestActivity extends AppCompatActivity {
     String customsURL;
 
     //Image Storage Variables
-    Button buttonGetImage;
     DatabaseReference databaseProducts;
     StorageReference mStorage;
     private static final int GALLERY_INTENT = 2;
@@ -180,8 +178,7 @@ public class AddRequestActivity extends AppCompatActivity {
         productImage = (CircularImageView) findViewById(R.id.imageViewProduct);
         mProgressDialog = new ProgressDialog(this);
         mStorage = FirebaseStorage.getInstance().getReference();
-        buttonGetImage = (Button) findViewById(R.id.buttonGetImage);
-        buttonGetImage.setOnClickListener(new View.OnClickListener() {
+        productImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 if(userEmail.equals("guest@dabao4me.com")){
@@ -299,7 +296,6 @@ public class AddRequestActivity extends AppCompatActivity {
                     downloadUrl = taskSnapshot.getDownloadUrl();
                     mProgressDialog.dismiss();
                     Toast.makeText(AddRequestActivity.this, "Image uploaded!", Toast.LENGTH_LONG).show();
-                    buttonGetImage.setText(fileName);
                     Glide
                             .with(AddRequestActivity.this)
                             .load(downloadUrl.toString())

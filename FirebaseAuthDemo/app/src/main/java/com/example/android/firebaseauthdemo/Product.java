@@ -1,9 +1,5 @@
 package com.example.android.firebaseauthdemo;
 
-/**
- * Created by Admin on 25/5/2017.
- */
-
 public class Product {
 
     String productId;

@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,8 +50,6 @@ public class SettingsFragment extends Fragment {
         return fragment;
     }
 
-    DatabaseReference databaseProducts;
-    ListView listViewProducts;
     List<Product> productList;
     String userEmail;
     FirebaseAuth firebaseAuth;

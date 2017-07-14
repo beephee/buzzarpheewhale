@@ -36,8 +36,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
-import static android.R.attr.country;
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;

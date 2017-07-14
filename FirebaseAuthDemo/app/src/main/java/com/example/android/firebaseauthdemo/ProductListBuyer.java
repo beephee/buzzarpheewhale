@@ -11,15 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.vision.text.Text;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
-
-/**
- * Created by Admin on 27/5/2017.
- */
 
 public class ProductListBuyer extends ArrayAdapter<Product>{
 

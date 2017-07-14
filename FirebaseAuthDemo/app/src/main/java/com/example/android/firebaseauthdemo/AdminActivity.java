@@ -25,10 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.android.firebaseauthdemo.R.id.buttonGetCoordinates;
-import static com.example.android.firebaseauthdemo.R.id.listViewProducts;
-import static java.sql.Types.BOOLEAN;
-
 public class AdminActivity extends AppCompatActivity {
 
     DatabaseReference databaseUsers;

@@ -1,6 +1,5 @@
 package com.example.android.firebaseauthdemo;
 
-import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;

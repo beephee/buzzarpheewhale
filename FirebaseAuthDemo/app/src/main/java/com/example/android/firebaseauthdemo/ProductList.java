@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,10 +20,6 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;
-
-/**
- * Created by Admin on 27/5/2017.
- */
 
 public class ProductList extends ArrayAdapter<Product>{
 
