@@ -74,6 +74,8 @@ public class LoggedinActivity extends AppCompatActivity {
 
         //Initialize navbar first as a method of it needs to be called in fragment selection
         bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.navigation);
+        bottomNavigationView.enableItemShiftingMode(false);
+        bottomNavigationView.enableShiftingMode(false);
 
         //Default fragment opened upon activity's creation
         if (savedInstanceState == null) {
