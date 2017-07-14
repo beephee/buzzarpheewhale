@@ -24,8 +24,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareButton;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,12 +36,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 public class BuyerFragment extends Fragment {
 
@@ -60,6 +67,9 @@ public class BuyerFragment extends Fragment {
     TextView textViewMyRequests;
     ImageView screenCross;
     TextView guestPrompt;
+    Button btnProductCoords;
+    String getCoordsResult;
+    String getCountryResult;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -286,14 +296,21 @@ public class BuyerFragment extends Fragment {
         editTextProductPrice.setText(price);
         final TextView showDatePicker = (TextView) dialogView.findViewById(R.id.editTextProductDate);
         showDatePicker.setText(date);
-        final EditText editTextProductCoords = (EditText) dialogView.findViewById(R.id.editTextProductCoords);
-        editTextProductCoords.setText(productCoords);
+        btnProductCoords = (Button) dialogView.findViewById(R.id.btnProductCoords);
+        btnProductCoords.setText(productCoords);
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateProduct);
         final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteProduct);
 
         final AlertDialog b = dialogBuilder.create();
         b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         b.show();
+
+        btnProductCoords.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickPointOnMap();
+            }
+        });
 
         showDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -313,10 +330,10 @@ public class BuyerFragment extends Fragment {
                 String newHeight = editTextProductHeight.getText().toString();
                 String newPrice = editTextProductPrice.getText().toString();
                 String newWeight = editTextProductWeight.getText().toString();
-                String newCoords = editTextProductCoords.getText().toString();
+                String newCoords = getCoordsResult;
                 String newCurrency = editTextProductCurrency.getText().toString();
                 newDate = showDatePicker.getText().toString();
-                String newCountry = country;
+                String newCountry = getCountryResult;
                 String newUrl = url; //Until we implement image uploader on update dialogue
                 if (!TextUtils.isEmpty(newName) && !TextUtils.isEmpty(newType) && !TextUtils.isEmpty(newLength) && !TextUtils.isEmpty(newWidth) && !TextUtils.isEmpty(newHeight) && !TextUtils.isEmpty(newWeight) && !TextUtils.isEmpty(newPrice) && !TextUtils.isEmpty(newDate) && !TextUtils.isEmpty(newCoords)) {
                     updateProduct(productId, productBuyer, productCourier, newName, newType, newCoords, newLength, newWidth, newHeight, newWeight, newPrice, newDate, newUrl, newCountry, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails, newCurrency);
@@ -335,6 +352,31 @@ public class BuyerFragment extends Fragment {
                 b.dismiss();
             }
         });
+    }
+
+    static final int PICK_MAP_POINT_REQUEST = 999;  // The request code
+    private void pickPointOnMap() {
+        Intent pickPointIntent = new Intent(getContext(), MapsActivity.class);
+        startActivityForResult(pickPointIntent, PICK_MAP_POINT_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_MAP_POINT_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                LatLng latLng = (LatLng) data.getParcelableExtra("picked_point");
+                //Convert LatLng to Double, then to String and trim string length to 10
+                Double dbLat = latLng.latitude;
+                Double dbLng = latLng.longitude;
+                String latString = dbLat.toString().substring(0,15);
+                String lngString = dbLng.toString().substring(0,15);
+                getCountryResult = data.getStringExtra("picked_country");
+                btnProductCoords.setText(latString + "," + lngString);
+                getCoordsResult = latString + "," + lngString;
+                Toast.makeText(getContext(), "Location updated!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private boolean deleteProduct(String productId) {

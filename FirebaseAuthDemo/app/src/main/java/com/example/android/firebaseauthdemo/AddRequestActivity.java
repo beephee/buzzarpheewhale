@@ -77,12 +77,6 @@ public class AddRequestActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         buttonGetCoordinates = (Button) findViewById(R.id.buttonGetCoordinates);
-        buttonGetCoordinates.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickPointOnMap();
-            }
-        });
 
         //User Info
         DatabaseReference databaseUsers = FirebaseDatabase.getInstance().getReference("users");
