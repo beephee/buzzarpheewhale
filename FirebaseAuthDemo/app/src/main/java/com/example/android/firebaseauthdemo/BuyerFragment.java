@@ -298,6 +298,8 @@ public class BuyerFragment extends Fragment {
         showDatePicker.setText(date);
         btnProductCoords = (Button) dialogView.findViewById(R.id.btnProductCoords);
         btnProductCoords.setText(productCoords);
+        getCoordsResult = productCoords;
+        getCountryResult = country;
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateProduct);
         final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteProduct);
 
