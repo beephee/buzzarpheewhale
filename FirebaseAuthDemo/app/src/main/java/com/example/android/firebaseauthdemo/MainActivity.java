@@ -13,8 +13,12 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Boolean signupEnabled;
     private Boolean guestEnabled;
     private Boolean serverMaintenance;
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog loginDialog;
 
     private static final String SIGNUP_ENABLED_KEY = "signup_enabled";
     private static final String GUEST_LOGIN_ENABLED_KEY = "guest_login_enabled";
@@ -87,6 +93,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonRegister.setOnClickListener(this);
         textViewSignin.setOnClickListener(this);
         textViewGuestLogin.setOnClickListener(this);
+    }
+
+    private void toggleLoginDialog() {
+        dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.login_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final ImageView loadIcon = (ImageView) dialogView.findViewById(R.id.rotateIcon);
+        final RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        final TextView loginMsg = (TextView) dialogView.findViewById(R.id.loginMsg);
+
+        loginMsg.setText("Logging in as guest...");
+        rotate.setDuration(1000);
+        rotate.setInterpolator(new AccelerateDecelerateInterpolator());
+        loadIcon.startAnimation(rotate);
+        rotate.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                loadIcon.startAnimation(rotate);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        loginDialog = dialogBuilder.create();
+        loginDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loginDialog.show();
     }
 
     public void showMaintenanceDialog() {
@@ -207,8 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(view == textViewGuestLogin){
             if(guestEnabled) {
-                progressDialog.setMessage("Logging in as guest...");
-                progressDialog.show();
+                toggleLoginDialog();
                 String epw64 = "ZGFiYW80bWU=";
                 byte[] epw = Base64.decode(epw64, Base64.DEFAULT);
                 String epwStr = new String(epw, StandardCharsets.UTF_8);
@@ -217,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                progressDialog.dismiss();
+                                loginDialog.dismiss();
                                 //if the task is successful
                                 if (task.isSuccessful()) {
                                     //start the profile activity

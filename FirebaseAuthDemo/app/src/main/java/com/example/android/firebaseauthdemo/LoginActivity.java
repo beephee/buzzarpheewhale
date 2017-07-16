@@ -2,14 +2,24 @@ package com.example.android.firebaseauthdemo;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +59,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //Progress dialog
     private ProgressDialog progressDialog;
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog loginDialog;
 
     //Facebook Login
     CallbackManager mCallbackManager;
@@ -201,27 +213,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         //Checking if email and passwords are empty
         if(TextUtils.isEmpty(email) || !isEmailValid(email)){
-            Toast.makeText(this,"Please enter valid email",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Please enter a valid email",Toast.LENGTH_LONG).show();
             return;
         }
 
         if(TextUtils.isEmpty(password)){
-            Toast.makeText(this,"Please enter valid password",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Please enter a valid password",Toast.LENGTH_LONG).show();
             return;
         }
 
         //If the email and password are not empty
         //displaying a progress dialog
 
-        progressDialog.setMessage("Logging in, please wait...");
-        progressDialog.show();
+        //progressDialog.setMessage("Logging in, please wait...");
+        //progressDialog.show();
+        toggleLoginDialog();
 
         //Logging in the user
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
+                        //progressDialog.dismiss();
+                        loginDialog.dismiss();
                         //if the task is successful
                         if(task.isSuccessful()){
                             //start the profile activity
@@ -233,6 +247,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
 
+    }
+
+    private void toggleLoginDialog() {
+        dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.login_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final ImageView loadIcon = (ImageView) dialogView.findViewById(R.id.rotateIcon);
+        final RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+        rotate.setDuration(1000);
+        rotate.setInterpolator(new AccelerateDecelerateInterpolator());
+        loadIcon.startAnimation(rotate);
+        rotate.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                loadIcon.startAnimation(rotate);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        loginDialog = dialogBuilder.create();
+        loginDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loginDialog.show();
     }
 
     @Override
