@@ -43,6 +43,7 @@ public class ChatList extends ArrayAdapter<Chat>{
         Chat chat = chatList.get(position);
         final CircularImageView imageViewProfilePic = (CircularImageView) listViewChat.findViewById(R.id.profilePicture);
         final ImageView imageViewPlaceholder = (ImageView) listViewChat.findViewById(R.id.placeHolder);
+        final ImageView chatImg = (ImageView) listViewChat.findViewById(R.id.chatImg);
 
         //User Info
         userID = chat.getUid();
@@ -69,12 +70,22 @@ public class ChatList extends ArrayAdapter<Chat>{
         TextView textViewMessage = (TextView) listViewChat.findViewById(R.id.textViewMessage);
         TextView textViewDate = (TextView) listViewChat.findViewById(R.id.textViewDate);
         TextView textViewTime = (TextView) listViewChat.findViewById(R.id.textViewTime);
-
-
-
+        String chatMsg = chat.getMsg();
+        String strCheck = "null";
+        if(chatMsg.length() > 23){
+            strCheck = chatMsg.substring(0, Math.min(chat.getMsg().length(), 23));
+        }
 
         textViewUserName.setText(chat.getName());
-        textViewMessage.setText(chat.getMsg());
+        if(strCheck.equals("https://firebasestorage")){
+            textViewMessage.setVisibility(View.INVISIBLE);
+            Glide
+                    .with(context.getApplicationContext())
+                    .load(chatMsg)
+                    .into(chatImg);
+        } else {
+            textViewMessage.setText(chat.getMsg());
+        }
         textViewDate.setText(chat.getDate());
         textViewTime.setText(chat.getTime());
 
