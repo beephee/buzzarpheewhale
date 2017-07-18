@@ -1,6 +1,7 @@
 package com.example.android.firebaseauthdemo;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -38,6 +39,8 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.text.ParseException;
 
@@ -76,6 +79,11 @@ public class AcceptedCourierFragment extends Fragment {
     String exchangeURL;
     Double data = 0.0;
     RequestQueue requestQueue;
+    Calendar today;
+    Calendar deadline;
+    Context mContext;
+    boolean deadlinePrompt = true;
+    Toast mToast;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,6 +92,7 @@ public class AcceptedCourierFragment extends Fragment {
         Button suggestedOrders = (Button) rootView.findViewById(R.id.suggestedButton);
         suggestedOrders.setOnClickListener(suggestedListener);
 
+        mContext = getActivity();
         databaseProductsAccepted = FirebaseDatabase.getInstance().getReference("products");
         databaseProductsAll = FirebaseDatabase.getInstance().getReference("products");
         productListAccepted = new ArrayList<>();
@@ -119,6 +128,8 @@ public class AcceptedCourierFragment extends Fragment {
             }
         });
 
+
+
         //Grabs email string from previous activity
         Bundle extras = getActivity().getIntent().getExtras();
         if(extras != null){
@@ -131,6 +142,7 @@ public class AcceptedCourierFragment extends Fragment {
     private View.OnClickListener btnAcceptedListener = new View.OnClickListener() {
         public void onClick(View v) {
             allView = false;
+            setDeadlinePrompt(true);
             if(userEmail.equals("guest@dabao4me.com")){
                 screenCross.setVisibility(View.VISIBLE);
                 guestPrompt.setVisibility(View.VISIBLE);
@@ -160,6 +172,7 @@ public class AcceptedCourierFragment extends Fragment {
             }
             listViewProductsAccepted.setVisibility(View.INVISIBLE);
             listViewProductsAll.setVisibility(View.VISIBLE);
+            setDeadlinePrompt(false);
             onStart();
             adapterAll.notifyDataSetChanged();
             clearButtonStyle();
@@ -177,6 +190,7 @@ public class AcceptedCourierFragment extends Fragment {
             listFilter = "all";
             listViewProductsAccepted.setVisibility(View.INVISIBLE);
             listViewProductsAll.setVisibility(View.VISIBLE);
+            setDeadlinePrompt(false);
             onStart();
             adapterAll.notifyDataSetChanged();
             clearButtonStyle();
@@ -249,6 +263,7 @@ public class AcceptedCourierFragment extends Fragment {
         listViewProductsAll.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                setDeadlinePrompt(false);
                 if (userEmail.equals("guest@dabao4me.com")) {
                     showGuestDialogFragment();
                 }
@@ -257,6 +272,16 @@ public class AcceptedCourierFragment extends Fragment {
                 } else {
                     Product product = productListAll.get(i);
                     String productID = product.getProductId();
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    Date d = null;
+                    try {
+                        d = formatter.parse(product.getDate());//catch exception
+                    } catch (ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    deadline = Calendar.getInstance();
+                    deadline.setTime(d);
                     DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(productID);
                     dR.child("productCourier").setValue(userEmail);
                     dR.child("payeeDetails").setValue(userBankAccount);
@@ -265,6 +290,10 @@ public class AcceptedCourierFragment extends Fragment {
                 return true;
             }
         });
+    }
+
+    private void setDeadlinePrompt(Boolean status){
+        deadlinePrompt = status;
     }
 
     //Menu Dialog for Accepted Tab
@@ -528,6 +557,37 @@ public class AcceptedCourierFragment extends Fragment {
                     String status = product.getStatus();
                     if (courierID.equals(userEmail) && !status.equals("Completed")) {
                         productListAccepted.add(product);
+
+                        //Today
+                        today = Calendar.getInstance();
+
+                        //Deadline
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        Date d = null;
+                        try {
+                            d = formatter.parse(product.getDate());//catch exception
+                        } catch (ParseException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        deadline = Calendar.getInstance();
+                        deadline.setTime(d);
+
+                        //Check for days left
+                        long diff = deadline.getTimeInMillis() - today.getTimeInMillis();
+                        long days = diff / (24 * 60 * 60 * 1000);
+
+                        if(deadlinePrompt && (!product.getStatus().equals("In Transit") || !product.getStatus().equals("Completed"))){
+                            if(days < 0){
+                                if (mToast != null) mToast.cancel();
+                                mToast = Toast.makeText(mContext, "Deadline for " + product.getProductName() + " has passed!", Toast.LENGTH_SHORT);
+                                mToast.show();
+                            } else if(days < 7){
+                                if(mToast != null) mToast.cancel();
+                                mToast = Toast.makeText(mContext, "Deadline for " + product.getProductName() + " is approaching in " + days + " days!", Toast.LENGTH_SHORT);
+                                mToast.show();
+                            }
+                        }
                     }
                 }
 
