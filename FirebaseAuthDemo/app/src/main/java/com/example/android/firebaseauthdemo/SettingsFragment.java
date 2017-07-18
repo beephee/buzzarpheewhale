@@ -40,6 +40,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.POWER_SERVICE;
 import static com.example.android.firebaseauthdemo.R.id.buttonAdmin;
 
 
@@ -153,8 +154,7 @@ public class SettingsFragment extends Fragment {
                 editMaxDate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        changeDate();
-                        editMaxDate.setText(newDate);
+                        changeDate(true);
                     }
                 });
 
@@ -318,8 +318,7 @@ public class SettingsFragment extends Fragment {
     };
 
     // Update date
-    private void changeDate() {
-        final TextView showDatePicker = (TextView) getView().findViewById(R.id.editTextMaxDate);
+    private void changeDate(Boolean firstCall) {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
@@ -331,16 +330,32 @@ public class SettingsFragment extends Fragment {
                 mDateSetListener,
                 year,month,day);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        dialog.show();
 
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                Log.d(TAG, "onDateSet: dd/mm/yyyy: " + day + "/" + month + "/" + year);
+        if(firstCall){
+            dialog.show();
+            dialog.dismiss();
+            mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    month = month + 1;
+                    Log.d(TAG, "onDateSet: dd/mm/yyyy: " + day + "/" + month + "/" + year);
+                    newDate = day + "/" + month + "/" + year;
+                    editMaxDate.setText(newDate);
+                }
+            };
+            changeDate(false);
+        } else {
+            dialog.show();
+            mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    month = month + 1;
+                    Log.d(TAG, "onDateSet: dd/mm/yyyy: " + day + "/" + month + "/" + year);
+                    newDate = day + "/" + month + "/" + year;
+                    editMaxDate.setText(newDate);
+                }
+            };
+        }
 
-                newDate = day + "/" + month + "/" + year;
-            }
-        };
     };
 }

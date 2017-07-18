@@ -70,6 +70,7 @@ public class BuyerFragment extends Fragment {
     Button btnProductCoords;
     String getCoordsResult;
     String getCountryResult;
+    TextView showDatePicker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -294,7 +295,7 @@ public class BuyerFragment extends Fragment {
         editTextProductCurrency.setText(currency);
         final EditText editTextProductPrice = (EditText) dialogView.findViewById(R.id.editTextProductPrice);
         editTextProductPrice.setText(price);
-        final TextView showDatePicker = (TextView) dialogView.findViewById(R.id.editTextProductDate);
+        showDatePicker = (TextView) dialogView.findViewById(R.id.editTextProductDate);
         showDatePicker.setText(date);
         btnProductCoords = (Button) dialogView.findViewById(R.id.btnProductCoords);
         btnProductCoords.setText(productCoords);
@@ -317,8 +318,7 @@ public class BuyerFragment extends Fragment {
         showDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeDate();
-                showDatePicker.setText(newDate);
+                changeDate(true);
             }
         });
 
@@ -389,8 +389,7 @@ public class BuyerFragment extends Fragment {
     }
 
     // Update date
-    private void changeDate() {
-        final TextView showDatePicker = (TextView) getView().findViewById(R.id.dateValue);
+    private void changeDate(Boolean firstCall) {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
@@ -402,17 +401,31 @@ public class BuyerFragment extends Fragment {
                 mDateSetListener,
                 year,month,day);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        dialog.show();
-
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                Log.d(TAG, "onDateSet: dd/mm/yyyy: " + day + "/" + month + "/" + year);
-
-                newDate = day + "/" + month + "/" + year;
-            }
-        };
+        if(firstCall){
+            dialog.show();
+            dialog.dismiss();
+            mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    month = month + 1;
+                    Log.d(TAG, "onDateSet: dd/mm/yyyy: " + day + "/" + month + "/" + year);
+                    newDate = day + "/" + month + "/" + year;
+                    showDatePicker.setText(newDate);
+                }
+            };
+            changeDate(false);
+        } else {
+            dialog.show();
+            mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    month = month + 1;
+                    Log.d(TAG, "onDateSet: dd/mm/yyyy: " + day + "/" + month + "/" + year);
+                    newDate = day + "/" + month + "/" + year;
+                    showDatePicker.setText(newDate);
+                }
+            };
+        }
     };
 
 }
