@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
-
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +32,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,7 +74,7 @@ public class AcceptedCourierFragment extends Fragment {
     Boolean allView = false;
     String currencyCode;
     String exchangeURL;
-    Double data;
+    Double data = 0.0;
     RequestQueue requestQueue;
 
     @Override
@@ -296,12 +304,10 @@ public class AcceptedCourierFragment extends Fragment {
 
         exchangeURL = "http://api.fixer.io/latest?base=" + currency;
 
-        // to fix
-        /*
         requestQueue = Volley.newRequestQueue(this.getActivity());
         // Creating the JsonObjectRequest class called obreq, passing required parameters:
         // GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
-        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,exchangeURL,null,
+        JsonObjectRequest obreq = new JsonObjectRequest(exchangeURL,null,
                 // The third parameter Listener overrides the method onResponse() and passes
                 //JSONObject as a parameter
                 new Response.Listener<JSONObject>() {
@@ -310,11 +316,11 @@ public class AcceptedCourierFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONObject obj = response.getJSONObject("colorObject");
+                            JSONObject obj = response.getJSONObject("rates");
                             // Retrieves the string labeled "colorName" and "description" from
                             // the response JSON Object
                             // and converts them into javascript objects
-                            Double newCurrency = obj.getJSONObject("rates").getDouble(currencyCode);
+                            Double newCurrency = obj.getDouble(currencyCode);
 
                             data = newCurrency;
                         }
@@ -338,11 +344,9 @@ public class AcceptedCourierFragment extends Fragment {
 
         // Adds the JSON object request "obreq" to the request queue
         requestQueue.add(obreq);
-        */
 
         final TextView exchangePrice = (TextView) dialogView.findViewById(R.id.exchangePrice);
         Double oldPrice = Double.parseDouble(price);
-        data = 1.4; // supposed to be changed to updated exchange rate
         exchangePrice.setText(String.format("%.2f",oldPrice*data) + " " + currencyCode);
 
         final Button cancelOrder = (Button) dialogView.findViewById(R.id.cancelOrderButton);
