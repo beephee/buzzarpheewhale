@@ -302,52 +302,56 @@ public class AcceptedCourierFragment extends Fragment {
                 break;
         }
 
-        exchangeURL = "http://api.fixer.io/latest?base=" + currency;
-
-        requestQueue = Volley.newRequestQueue(this.getActivity());
-        // Creating the JsonObjectRequest class called obreq, passing required parameters:
-        // GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
-        JsonObjectRequest obreq = new JsonObjectRequest(exchangeURL,null,
-                // The third parameter Listener overrides the method onResponse() and passes
-                //JSONObject as a parameter
-                new Response.Listener<JSONObject>() {
-
-                    // Takes the response from the JSON request
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONObject obj = response.getJSONObject("rates");
-                            // Retrieves the string labeled "colorName" and "description" from
-                            // the response JSON Object
-                            // and converts them into javascript objects
-                            Double newCurrency = obj.getDouble(currencyCode);
-
-                            data = newCurrency;
-                        }
-                        // Try and catch are included to handle any errors due to JSON
-                        catch (JSONException e) {
-                            // If an error occurs, this prints the error to the log
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                // The final parameter overrides the method onErrorResponse() and passes VolleyError
-                //as a parameter
-                new Response.ErrorListener() {
-                    @Override
-                    // Handles errors that occur due to Volley
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Volley", "Error");
-                    }
-                }
-        );
-
-        // Adds the JSON object request "obreq" to the request queue
-        requestQueue.add(obreq);
-
         final TextView exchangePrice = (TextView) dialogView.findViewById(R.id.exchangePrice);
-        Double oldPrice = Double.parseDouble(price);
-        exchangePrice.setText(String.format("%.2f",oldPrice*data) + " " + currencyCode);
+
+        if (currency.equals(currencyCode)) {
+            exchangePrice.setText(price + " " + currency);
+        } else {
+            exchangeURL = "http://api.fixer.io/latest?base=" + currency;
+
+            requestQueue = Volley.newRequestQueue(this.getActivity());
+            // Creating the JsonObjectRequest class called obreq, passing required parameters:
+            // GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
+            JsonObjectRequest obreq = new JsonObjectRequest(exchangeURL, null,
+                    // The third parameter Listener overrides the method onResponse() and passes
+                    //JSONObject as a parameter
+                    new Response.Listener<JSONObject>() {
+
+                        // Takes the response from the JSON request
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONObject obj = response.getJSONObject("rates");
+                                // Retrieves the string labeled "colorName" and "description" from
+                                // the response JSON Object
+                                // and converts them into javascript objects
+                                Double newCurrency = obj.getDouble(currencyCode);
+
+                                data = newCurrency;
+                            }
+                            // Try and catch are included to handle any errors due to JSON
+                            catch (JSONException e) {
+                                // If an error occurs, this prints the error to the log
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                    //as a parameter
+                    new Response.ErrorListener() {
+                        @Override
+                        // Handles errors that occur due to Volley
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("Volley", "Error");
+                        }
+                    }
+            );
+
+            // Adds the JSON object request "obreq" to the request queue
+            requestQueue.add(obreq);
+            Double oldPrice = Double.parseDouble(price);
+            exchangePrice.setText(String.format("%.2f", oldPrice * data) + " " + currencyCode);
+        }
 
         final Button cancelOrder = (Button) dialogView.findViewById(R.id.cancelOrderButton);
         final Button confirmPayment = (Button) dialogView.findViewById(R.id.confirmPaymentButton);

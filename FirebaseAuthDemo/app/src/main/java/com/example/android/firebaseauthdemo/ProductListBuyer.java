@@ -59,7 +59,7 @@ public class ProductListBuyer extends ArrayAdapter<Product>{
         textViewWeight.setText(product.getWeight() + " kg");
         textViewHeight.setText(product.getHeight());
         textViewWidth.setText(product.getWidth());
-        textViewLength.setText(product.getLength() + " m");
+        textViewLength.setText(product.getLength() + " cm");
         textViewDate.setText(product.getDate());
         textViewStatus.setText(product.getStatus());
 
