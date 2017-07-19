@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textViewGuestLogin.setOnClickListener(this);
     }
 
-    private void toggleLoginDialog() {
+    private void toggleLoadingDialog(String message) {
         dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.login_dialog, null);
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         final TextView loginMsg = (TextView) dialogView.findViewById(R.id.loginMsg);
 
-        loginMsg.setText("Logging in as guest...");
+        loginMsg.setText(message);
         rotate.setDuration(1000);
         rotate.setInterpolator(new AccelerateDecelerateInterpolator());
         loadIcon.startAnimation(rotate);
@@ -194,8 +194,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         //if valid field, show a progressbar
-        progressDialog.setMessage("Registering User...");
-        progressDialog.show();
+        toggleLoadingDialog("Registering User...");
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -225,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }else{
                             Toast.makeText(MainActivity.this, "Could not register, please try again", Toast.LENGTH_SHORT).show();
                         }
-                        progressDialog.dismiss();
+                        loginDialog.dismiss();
                     }
                 });
     }
@@ -248,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(view == textViewGuestLogin){
             if(guestEnabled) {
-                toggleLoginDialog();
+                toggleLoadingDialog("Logging in as guest...");
                 String epw64 = "ZGFiYW80bWU=";
                 byte[] epw = Base64.decode(epw64, Base64.DEFAULT);
                 String epwStr = new String(epw, StandardCharsets.UTF_8);

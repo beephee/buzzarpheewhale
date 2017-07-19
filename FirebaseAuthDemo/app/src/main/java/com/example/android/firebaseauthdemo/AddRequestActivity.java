@@ -15,9 +15,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +68,10 @@ public class AddRequestActivity extends AppCompatActivity {
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     String date;
+
+    //Loading Dialog
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -284,8 +292,7 @@ public class AddRequestActivity extends AppCompatActivity {
             }
         }
         if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK){
-            mProgressDialog.setMessage("Uploading...");
-            mProgressDialog.show();
+            toggleLoadingDialog("Uploading...");
             Uri uri = data.getData();
             final String fileName = uri.getPath().toString();
             StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
@@ -294,7 +301,7 @@ public class AddRequestActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     downloadUrl = taskSnapshot.getDownloadUrl();
-                    mProgressDialog.dismiss();
+                    loadingDialog.dismiss();
                     Toast.makeText(AddRequestActivity.this, "Image uploaded!", Toast.LENGTH_LONG).show();
                     Glide
                             .with(AddRequestActivity.this)
@@ -368,5 +375,39 @@ public class AddRequestActivity extends AppCompatActivity {
         extras.putString("email", userEmail);
         extras.putString("page", "buyer");
         intent.putExtras(extras);
+    }
+
+    private void toggleLoadingDialog(String message) {
+        dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.login_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final ImageView loadIcon = (ImageView) dialogView.findViewById(R.id.rotateIcon);
+        final RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        final TextView loginMsg = (TextView) dialogView.findViewById(R.id.loginMsg);
+
+        loginMsg.setText(message);
+        rotate.setDuration(1000);
+        rotate.setInterpolator(new AccelerateDecelerateInterpolator());
+        loadIcon.startAnimation(rotate);
+        rotate.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                loadIcon.startAnimation(rotate);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        loadingDialog = dialogBuilder.create();
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loadingDialog.show();
     }
 }

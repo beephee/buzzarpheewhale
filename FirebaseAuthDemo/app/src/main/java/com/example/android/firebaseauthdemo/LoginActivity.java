@@ -45,7 +45,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-
     //Defining views
     private Button buttonSignIn;
     private EditText editTextEmail;
@@ -57,10 +56,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth firebaseAuth;
     private DatabaseReference dbRef;
 
-    //Progress dialog
-    private ProgressDialog progressDialog;
+    //Loading Dialog
     AlertDialog.Builder dialogBuilder;
-    AlertDialog loginDialog;
+    AlertDialog loadingDialog;
 
     //Facebook Login
     CallbackManager mCallbackManager;
@@ -89,7 +87,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonSignIn = (Button) findViewById(R.id.buttonSignin);
         textViewSignup  = (TextView) findViewById(R.id.textViewSignUp);
         textViewPassword  = (TextView) findViewById(R.id.textViewForgotPassword);
-        progressDialog = new ProgressDialog(this);
 
         //Attaching click listener
         buttonSignIn.setOnClickListener(this);
@@ -180,8 +177,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void fbRegister(){
-        progressDialog.setMessage("Creating account with Facebook credentials...");
-        progressDialog.show();
+        toggleLoadingDialog("Creating account with Facebook credentials...");
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String userEmail = user.getEmail();
         String UID = user.getUid();
@@ -198,7 +194,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String bankAccount = "NONE";
         User newUser = new User(UID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
         dbRef.child(UID).setValue(newUser);
-        progressDialog.dismiss();
+        loadingDialog.dismiss();
     }
 
     private boolean isEmailValid (String email) {
@@ -227,7 +223,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         //progressDialog.setMessage("Logging in, please wait...");
         //progressDialog.show();
-        toggleLoginDialog();
+        toggleLoadingDialog("Logging in...");
 
         //Logging in the user
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -235,7 +231,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //progressDialog.dismiss();
-                        loginDialog.dismiss();
+                        loadingDialog.dismiss();
                         //if the task is successful
                         if(task.isSuccessful()){
                             //start the profile activity
@@ -249,7 +245,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void toggleLoginDialog() {
+    private void toggleLoadingDialog(String message) {
         dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.login_dialog, null);
@@ -257,7 +253,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         final ImageView loadIcon = (ImageView) dialogView.findViewById(R.id.rotateIcon);
         final RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        final TextView loginMsg = (TextView) dialogView.findViewById(R.id.loginMsg);
 
+        loginMsg.setText(message);
         rotate.setDuration(1000);
         rotate.setInterpolator(new AccelerateDecelerateInterpolator());
         loadIcon.startAnimation(rotate);
@@ -276,9 +274,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        loginDialog = dialogBuilder.create();
-        loginDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        loginDialog.show();
+        loadingDialog = dialogBuilder.create();
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loadingDialog.show();
     }
 
     @Override

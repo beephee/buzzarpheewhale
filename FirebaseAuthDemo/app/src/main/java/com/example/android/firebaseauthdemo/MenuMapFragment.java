@@ -62,6 +62,7 @@ public class MenuMapFragment extends Fragment {
     TextView textViewCategory;
     TextView textViewDeadline;
     TextView textViewStatus;
+    ValueEventListener mListener;
 
     public static MenuMapFragment newInstance() {
         MenuMapFragment fragment = new MenuMapFragment();
@@ -200,7 +201,7 @@ public class MenuMapFragment extends Fragment {
     public void onStart() {
         super.onStart();
         //textViewMyRequests.setText(userEmail2); //For debugging if email was passed
-        databaseProducts.addValueEventListener(new ValueEventListener() {
+        mListener = databaseProducts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -315,6 +316,7 @@ public class MenuMapFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
+        databaseProducts.removeEventListener(mListener);
     }
 
     @Override

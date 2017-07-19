@@ -513,7 +513,7 @@ public class AcceptedCourierFragment extends Fragment {
 
     public static boolean checkDates(String startDate, String endDate) {
 
-        SimpleDateFormat dfDate = new SimpleDateFormat("dd/mm/yyyy");
+        SimpleDateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy");
 
         boolean b = false;
 

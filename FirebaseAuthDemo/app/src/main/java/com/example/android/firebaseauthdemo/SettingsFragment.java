@@ -14,9 +14,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,6 +84,10 @@ public class SettingsFragment extends Fragment {
     ProgressDialog mProgressDialog;
     Uri downloadUrl;
     private static final int GALLERY_INTENT = 2;
+
+    //Loading Dialog
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog loadingDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -195,8 +203,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK){
-            mProgressDialog.setMessage("Uploading...");
-            mProgressDialog.show();
+            toggleLoadingDialog("Uploading...");
             Uri uri = data.getData();
             StorageReference filepath = mStorage.child("Profile").child(uri.getLastPathSegment());
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -204,7 +211,7 @@ public class SettingsFragment extends Fragment {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     downloadUrl = taskSnapshot.getDownloadUrl();
-                    mProgressDialog.dismiss();
+                    loadingDialog.dismiss();
                     Toast.makeText(getActivity().getApplicationContext(), "Image uploaded!", Toast.LENGTH_LONG).show();
                     Glide
                             .with(getContext())
@@ -357,5 +364,39 @@ public class SettingsFragment extends Fragment {
             };
         }
 
-    };
+    }
+
+    private void toggleLoadingDialog(String message) {
+        dialogBuilder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.login_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final ImageView loadIcon = (ImageView) dialogView.findViewById(R.id.rotateIcon);
+        final RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        final TextView loginMsg = (TextView) dialogView.findViewById(R.id.loginMsg);
+
+        loginMsg.setText(message);
+        rotate.setDuration(1000);
+        rotate.setInterpolator(new AccelerateDecelerateInterpolator());
+        loadIcon.startAnimation(rotate);
+        rotate.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                loadIcon.startAnimation(rotate);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        loadingDialog = dialogBuilder.create();
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loadingDialog.show();
+    }
 }
