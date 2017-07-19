@@ -1,10 +1,12 @@
 package com.example.android.firebaseauthdemo;
 
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -62,7 +64,7 @@ public class MenuMapFragment extends Fragment {
     TextView textViewCategory;
     TextView textViewDeadline;
     TextView textViewStatus;
-    ValueEventListener mListener;
+    HttpURLConnection connection;
 
     public static MenuMapFragment newInstance() {
         MenuMapFragment fragment = new MenuMapFragment();
@@ -90,7 +92,7 @@ public class MenuMapFragment extends Fragment {
         btnNext.setOnClickListener(ButtonNextClickListener);
 
         Bundle extras = getActivity().getIntent().getExtras();
-        if(extras != null){
+        if (extras != null) {
             userEmail = extras.getString("email");
         }
 
@@ -124,6 +126,16 @@ public class MenuMapFragment extends Fragment {
                 googleMap.getUiSettings().setMapToolbarEnabled(false);
 
                 // Warning is fine
+                if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
                 googleMap.setMyLocationEnabled(true);
 
                 LatLng nus = new LatLng(1.2966, 103.7764);
@@ -201,7 +213,8 @@ public class MenuMapFragment extends Fragment {
     public void onStart() {
         super.onStart();
         //textViewMyRequests.setText(userEmail2); //For debugging if email was passed
-        mListener = databaseProducts.addValueEventListener(new ValueEventListener() {
+
+        databaseProducts.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -218,11 +231,8 @@ public class MenuMapFragment extends Fragment {
                         double longitude = Double.parseDouble(latlong[1]);
                         LatLng productLocation = new LatLng(latitude,longitude);
                         LocList.add(new LatLng(latitude,longitude));
-
                         ImgList.add(product.getImgurl());
-
                         ProductNameList.add(product.getProductName());
-
                         PriceList.add(product.getPrice());
 
                         if(buyerEmail.equals(userEmail)){
@@ -232,14 +242,12 @@ public class MenuMapFragment extends Fragment {
                         }
 
                         CountryList.add(product.getCountry());
-
                         CategoryList.add(product.getProductType());
-
                         DateList.add(product.getDate());
-
                         StatusList.add(product.getStatus());
 
                         //Custom marker icon
+
                         Bitmap myBitmap;
                         Bitmap scaledBitmap;
                         Bitmap arrowBitmap = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.bitmaparrow);
@@ -249,8 +257,9 @@ public class MenuMapFragment extends Fragment {
                         StrictMode.setThreadPolicy(policy);
                         try {
                             URL url = new URL(product.getImgurl());
-                            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                            connection = (HttpURLConnection) url.openConnection();
                             connection.setDoInput(true);
+                            connection.setConnectTimeout(500);
                             connection.connect();
                             InputStream input = connection.getInputStream();
                             myBitmap = BitmapFactory.decodeStream(input);
@@ -263,6 +272,7 @@ public class MenuMapFragment extends Fragment {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                        connection.disconnect();
                         MarkerOptions markerOptions = new MarkerOptions();
                         markerOptions
                                 .position(productLocation)
@@ -316,7 +326,6 @@ public class MenuMapFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
-        databaseProducts.removeEventListener(mListener);
     }
 
     @Override
