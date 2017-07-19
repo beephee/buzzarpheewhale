@@ -77,6 +77,8 @@ public class ChatRoomActivity extends AppCompatActivity{
         curUser = firebaseAuth.getCurrentUser();
         chatList = new ArrayList<>();
         listViewChat = (ListView) findViewById(R.id.listViewChat);
+        listViewChat.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
+        listViewChat.setStackFromBottom(true);
 
         btn_send_msg = (Button) findViewById(R.id.btn_send);
         btn_send_img = (Button) findViewById(R.id.btn_gallery);

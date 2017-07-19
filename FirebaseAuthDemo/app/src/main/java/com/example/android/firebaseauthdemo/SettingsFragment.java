@@ -140,7 +140,7 @@ public class SettingsFragment extends Fragment {
                 editMaxDate = (TextView) rootView.findViewById(R.id.editTextMaxDate);
                 editBankAccount = (EditText) rootView.findViewById(R.id.editTextBankAccount);
                 editBuyerCountry.setText(userBuyerCountry);
-                editMaxBudget.setText(userMaxBudget);
+                //editMaxBudget.setText(userMaxBudget);
                 if (userCourierActive == false) {
                     switchCourierActive.setChecked(false);
                 } else {
@@ -233,18 +233,18 @@ public class SettingsFragment extends Fragment {
             } else {
                 //update settings if all filled
                 String newBuyerCountry = editBuyerCountry.getText().toString();
-                String newMaxBudget = editMaxBudget.getText().toString();
+                //String newMaxBudget = editMaxBudget.getText().toString();
                 String newCourierCountry = editCourierCountry.getText().toString();
                 String newMaxWeight = editMaxWeight.getText().toString();
                 String newMaxDate = editMaxDate.getText().toString();
                 String newBankAccount = editBankAccount.getText().toString();
-                if (newBuyerCountry.equals("") || newMaxBudget.equals("") || newCourierCountry.equals("") || newMaxWeight.equals("") || newMaxDate.equals("")) {
+                if (newBuyerCountry.equals("") || newCourierCountry.equals("") || newMaxWeight.equals("") || newMaxDate.equals("")) {
                     Toast.makeText(getActivity().getApplicationContext(), "Please fill up all fields to update settings!", Toast.LENGTH_LONG).show();
                 } else {
                     DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("buyerCountry");
                     dR.setValue(newBuyerCountry);
-                    DatabaseReference dR2 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("buyerBudget");
-                    dR2.setValue(newMaxBudget);
+                    //DatabaseReference dR2 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("buyerBudget");
+                    //dR2.setValue(newMaxBudget);
                     DatabaseReference dR3 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("courierCountry");
                     dR3.setValue(newCourierCountry);
                     DatabaseReference dR4 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("maxWeight");
