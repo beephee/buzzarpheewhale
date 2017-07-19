@@ -211,6 +211,7 @@
                             android:visibility="invisible"
                             android:layout_width="15dp"
                             android:layout_height="15dp"
+                            android:layout_gravity="center"
                             android:src="@drawable/warningicon" />
                     </LinearLayout>
                     <TextView

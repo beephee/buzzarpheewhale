@@ -1,5 +1,10 @@
 package com.example.android.firebaseauthdemo;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,8 +20,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +31,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MenuMapFragment extends Fragment {
@@ -227,7 +238,38 @@ public class MenuMapFragment extends Fragment {
 
                         StatusList.add(product.getStatus());
 
-                        googleMap.addMarker(new MarkerOptions().position(productLocation).title(product.getProductName()).snippet(product.getDate()));
+                        //Custom marker icon
+                        Bitmap myBitmap;
+                        Bitmap scaledBitmap;
+                        Bitmap arrowBitmap = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.bitmaparrow);
+                        Bitmap scaledArrowBitmap = Bitmap.createScaledBitmap(arrowBitmap, 200, 200, false);
+                        Bitmap borderBitmap = null;
+                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                        StrictMode.setThreadPolicy(policy);
+                        try {
+                            URL url = new URL(product.getImgurl());
+                            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                            connection.setDoInput(true);
+                            connection.connect();
+                            InputStream input = connection.getInputStream();
+                            myBitmap = BitmapFactory.decodeStream(input);
+                            scaledBitmap = Bitmap.createScaledBitmap(myBitmap, 150, 150, false);
+                            borderBitmap = Bitmap.createBitmap(200, 200, scaledBitmap.getConfig());
+                            Canvas canvas = new Canvas(borderBitmap);
+                            //canvas.drawColor(Color.parseColor("#66000000"));
+                            canvas.drawBitmap(scaledBitmap, 25, 25, null);
+                            canvas.drawBitmap(scaledArrowBitmap, 0, 0, null);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions
+                                .position(productLocation)
+                                .title(product.getProductName())
+                                .snippet(product.getDate())
+                                .icon(BitmapDescriptorFactory.fromBitmap(borderBitmap));
+                        Marker marker = googleMap.addMarker(markerOptions);
+                        marker.showInfoWindow();
                     }
                 }
                 //Initialize first item to be display
