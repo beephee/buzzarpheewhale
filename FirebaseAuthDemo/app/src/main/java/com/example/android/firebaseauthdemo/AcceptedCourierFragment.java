@@ -488,8 +488,77 @@ public class AcceptedCourierFragment extends Fragment {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("products").child(productId);
         Product product = new Product(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, true, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails, currency);
         dR.setValue(product);
-        Toast.makeText(getActivity().getApplicationContext(), "Transaction completed on courier's side!", Toast.LENGTH_LONG).show();
+        // open ratings screen
+        showRatingsDialog(productId, productBuyer, productCourier, productName, productType, productCoords, length, width, height, weight, price, date, url, country, courierAccept, buyerAccept, transit, buyerPaid, paymentConfirmed, payeeDetails, currency);
         return true;
+    }
+
+    private void showRatingsDialog(final String productId, final String productBuyer, final String productCourier, final String productName, final String productType, final String productCoords, final String length, final String width, final String height, final String weight, final String price, final String date, final String url, final String country, final Boolean courierAccept, final Boolean buyerAccept, final Boolean transit, final Boolean buyerPaid, final Boolean paymentConfirmed, final String payeeDetails, final String currency) {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.rating_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        //need to get user UID
+        //DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(productBuyer);
+
+        final Button buttonOne = (Button) dialogView.findViewById(R.id.one);
+        final Button buttonTwo = (Button) dialogView.findViewById(R.id.two);
+        final Button buttonThree = (Button) dialogView.findViewById(R.id.three);
+        final Button buttonFour = (Button) dialogView.findViewById(R.id.four);
+        final Button buttonFive = (Button) dialogView.findViewById(R.id.five);
+
+        final AlertDialog b = dialogBuilder.create();
+        b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        b.show();
+
+        buttonOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //add one to numRatings
+                //add one to totalScore
+                Toast.makeText(getActivity().getApplicationContext(), "Transaction completed on courier's side!", Toast.LENGTH_LONG).show();
+                b.dismiss();
+            }
+        });
+        buttonTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //add one to numRatings
+                //add two to totalScore
+                Toast.makeText(getActivity().getApplicationContext(), "Transaction completed on courier's side!", Toast.LENGTH_LONG).show();
+                b.dismiss();
+            }
+        });
+        buttonThree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //add one to numRatings
+                //add three to totalScore
+                Toast.makeText(getActivity().getApplicationContext(), "Transaction completed on courier's side!", Toast.LENGTH_LONG).show();
+                b.dismiss();
+            }
+        });
+        buttonFour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //add one to numRatings
+                //add four to totalScore
+                Toast.makeText(getActivity().getApplicationContext(), "Transaction completed on courier's side!", Toast.LENGTH_LONG).show();
+                b.dismiss();
+            }
+        });
+        buttonFive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //add one to numRatings
+                //add five to totalScore
+                Toast.makeText(getActivity().getApplicationContext(), "Transaction completed on courier's side!", Toast.LENGTH_LONG).show();
+                b.dismiss();
+            }
+        });
+
     }
 
     //Can remove once filter tabs are finalized

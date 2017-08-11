@@ -192,7 +192,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String dateDeparture = "31/12/2017";
         String buyerBudget = "NONE";
         String bankAccount = "NONE";
-        User newUser = new User(UID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount);
+        Integer numReviews = 0;
+        Integer totalScore = 0;
+        User newUser = new User(UID, userEmail, userType, blacklisted, tutorial, custsvc, courierActive, buyerCountry, courierCountry, maxWeight, dateDeparture, buyerBudget, bankAccount, numReviews, totalScore);
         dbRef.child(UID).setValue(newUser);
         loadingDialog.dismiss();
     }
